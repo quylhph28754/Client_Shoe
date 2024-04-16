@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.fpoly.shoes_app"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.fpoly.shoes_app"
