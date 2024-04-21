@@ -19,4 +19,7 @@ class FirstFragment : BaseFragment<FragmentFirstBinding, FirstViewModel>(
     override fun bindViewModel() {
 
     }
+
+    override fun setOnClick() {
+    }
 }

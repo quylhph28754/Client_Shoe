@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/SlashFragment">
 
     <fragment
         android:id="@+id/FirstFragment"
@@ -38,4 +38,16 @@
         android:name="com.fpoly.shoes_app.framework.presentation.ui.third.ThirdFragment"
         android:label="ThirdFragment"
         tools:layout="@layout/fragment_third" />
+    <fragment
+        android:id="@+id/SlashFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.splash.SplashFragment"
+        android:label="SplashFragment">
+        <action
+            android:id="@+id/action_SplashFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/SlashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

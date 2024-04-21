@@ -19,4 +19,8 @@ class ThirdFragment : BaseFragment<FragmentThirdBinding, ThirdViewModel>(
     override fun bindViewModel() {
 
     }
+
+    override fun setOnClick() {
+
+    }
 }
