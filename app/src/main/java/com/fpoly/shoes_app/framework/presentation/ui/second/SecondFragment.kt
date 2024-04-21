@@ -19,4 +19,7 @@ class SecondFragment : BaseFragment<FragmentSecondBinding, SecondViewModel>(
     override fun bindViewModel() {
 
     }
+
+    override fun setOnClick() {
+    }
 }

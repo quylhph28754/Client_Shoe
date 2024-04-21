@@ -60,6 +60,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         super.onViewCreated(view, savedInstanceState)
         Log.v(TAG, "onViewCreated: $this")
         setupViews()
+        setOnClick()
         bindViewModel()
     }
 
@@ -103,4 +104,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     abstract fun setupViews()
 
     abstract fun bindViewModel()
+
+    abstract fun setOnClick()
 }

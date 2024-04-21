@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
     id ("kotlin-kapt")
     id ("com.google.dagger.hilt.android")
 }
@@ -56,6 +57,15 @@ dependencies {
     val hiltVersion = "2.51.1"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+
+    // Dots Indicator
+    implementation("com.tbuonomo:dotsindicator:5.0")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Coil
+    implementation("io.coil-kt:coil:2.4.0")
 }
 
 // Allow references to generated code
