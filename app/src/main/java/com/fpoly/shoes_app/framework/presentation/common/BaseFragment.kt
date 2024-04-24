@@ -16,6 +16,8 @@ import androidx.navigation.findNavController
 import androidx.viewbinding.ViewBinding
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.framework.presentation.ViewModelActivity
+import com.fpoly.shoes_app.utility.SharedPreferencesManager
+import javax.inject.Inject
 
 abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     private val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB,
@@ -34,6 +36,9 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     private var _navController: NavController? = null
 
     protected val navController: NavController? get() = _navController
+
+    @Inject
+    internal lateinit var sharedPreferences: SharedPreferencesManager
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
