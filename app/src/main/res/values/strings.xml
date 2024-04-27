@@ -43,4 +43,13 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="wellcome_back">Wellcome back !</string>
+    <string name="sign_in_to_your_account">Sign in to your account</string>
+    <string name="name_login">Tên Đăng Nhập</string>
+    <string name="password">Nhập mật khẩu</string>
+    <string name="remember">Ghi nhớ</string>
+    <string name="forgot">Quên mật khẩu</string>
+    <string name="loginbutton">Đăng nhập</string>
 </resources>

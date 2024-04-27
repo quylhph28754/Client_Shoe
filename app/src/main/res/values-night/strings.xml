@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wellcome_back">Wellcome back !</string>
+    <string name="sign_in_to_your_account">Sign in to your account</string>
+    <string name="name_login">Tên Đăng Nhập</string>
+    <string name="password">Nhập mật khẩu</string>
+    <string name="remember">Ghi nhớ</string>
+    <string name="forgot">Quên mật khẩu</string>
+    <string name="loginbutton">Đăng nhập</string>
+</resources>

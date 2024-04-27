@@ -31,7 +31,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
                 binding.apply {
                     viewPagerSplash.currentItem = it.page
                     btnNextPager.tvButton.text = it.textButton
-                    if (it.isNavigateToNextScreen) navigateToNextScreen()
+                    if (it.isNavigateToNextScreen)
+                        navigateToNextScreen()
                 }
             }
         }
@@ -53,6 +54,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
     }
 
     private fun navigateToNextScreen() {
-        navController?.navigate(R.id.action_SplashFragment_to_FirstFragment)
+        navController?.navigate(R.id.action_SlashFragment_to_loginFragmentScreen)
     }
 }
