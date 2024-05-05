@@ -1,12 +1,15 @@
 package com.fpoly.shoes_app.framework.presentation.ui.splash
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.framework.domain.model.PageSplash
 import com.fpoly.shoes_app.utility.SharedPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
@@ -16,6 +19,9 @@ class SplashViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SplashUiState())
     val uiState: StateFlow<SplashUiState> get() = _uiState
+
+    private val _singleEvent = MutableStateFlow<SplashSingleEvent?>(null)
+    val singleEvent: Flow<SplashSingleEvent> get() = _singleEvent.filterNotNull()
 
     init {
         getData()
@@ -60,7 +66,8 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun navigateToNextScreen() {
-        _uiState.value = _uiState.value.copy(isNavigateToNextScreen = true)
+        Log.d("123123", "navigateToNextScreen")
+        _singleEvent.value = SplashSingleEvent.NavigateToNextScreen
     }
 
     fun getPage(currentPage: Int, totalPages: Int) {
@@ -88,7 +95,7 @@ class SplashViewModel @Inject constructor(
     }
 
     private companion object {
-        const val NEXT = "Next"
-        const val GET_STARED = "Get Started"
+        const val NEXT = "Tiếp tục"
+        const val GET_STARED = "Bắt đầu"
     }
 }

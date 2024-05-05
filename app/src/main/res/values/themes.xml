@@ -6,4 +6,20 @@
     </style>
 
     <style name="Theme.Shoes_app" parent="Base.Theme.Shoes_app" />
+
+    <style name="TextStyleBottomNavActive">
+        <item name="android:textSize">@dimen/dimen_10dp</item>
+        <item name="android:paddingTop">@dimen/dimen_3dp</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:color">@color/primary_black</item>
+        <item name="android:adjustViewBounds">false</item>
+    </style>
+
+    <style name="TextStyleBottomNavInactive">
+        <item name="android:textSize">@dimen/dimen_10dp</item>
+        <item name="android:paddingTop">@dimen/dimen_3dp</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:color">@color/gray_600</item>
+        <item name="android:adjustViewBounds">false</item>
+    </style>
 </resources>
