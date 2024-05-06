@@ -13,13 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shoes_app"
         tools:targetApi="31" >
-        <activity
-            android:name=".framework.presentation.ui.activity.login.LoginScreen"
-            android:exported="false" />
+
         <activity
             android:name=".framework.presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Shoes_app" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

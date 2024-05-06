@@ -60,5 +60,75 @@
         android:id="@+id/loginFragmentScreen"
         android:name="com.fpoly.shoes_app.framework.presentation.ui.login.LoginFragmentScreen"
         android:label="fragment_login_screen"
-        tools:layout="@layout/fragment_login_screen" />
+        tools:layout="@layout/fragment_login_screen" >
+        <action
+            android:id="@+id/action_loginFragmentScreen_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragmentScreen_to_forGotFragment"
+            app:destination="@id/forGotFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.signUp.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_setUpAccountFragment"
+            app:destination="@id/setUpAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forGotFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.forgot.ForGotFragment"
+        android:label="fragment_for_got"
+        tools:layout="@layout/fragment_for_got" >
+        <action
+            android:id="@+id/action_forGotFragment_to_OPTFragment"
+            app:destination="@id/OPTFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setUpAccountFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.setUpAccount.SetUpAccountFragment"
+        android:label="fragment_set_up_account"
+        tools:layout="@layout/fragment_set_up_account" />
+    <fragment
+        android:id="@+id/OPTFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.forgot.OPTFragment"
+        android:label="fragment_o_p_t"
+        tools:layout="@layout/fragment_o_p_t" >
+        <action
+            android:id="@+id/action_OPTFragment_to_createNewPassFragment"
+            app:destination="@id/createNewPassFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createNewPassFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.forgot.CreateNewPassFragment"
+        android:label="fragment_create_new_pass"
+        tools:layout="@layout/fragment_create_new_pass" >
+        <action
+            android:id="@+id/action_createNewPassFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
 </navigation>

@@ -6,4 +6,7 @@
     </style>
 
     <style name="Theme.Shoes_app" parent="Base.Theme.Shoes_app" />
+    <style name="ThemeOverlay.Shoes_app.FullscreenContainer" parent="">
+
+    </style>
 </resources>

@@ -4,4 +4,7 @@
         <!-- Customize your dark theme here. -->
 
     </style>
+    <style name="ThemeOverlay.Shoes_app.FullscreenContainer" parent="">
+
+    </style>
 </resources>
