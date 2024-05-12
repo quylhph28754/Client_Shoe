@@ -36,6 +36,7 @@ class CreateNewPassFragment : Fragment() {
                     navOptions
                 )
             }, 2000L)
+            dialog.isCancelable= false
         }
         return binding.root
     }

@@ -37,6 +37,9 @@ class LoginFragmentScreen : Fragment() {
         _binding = FragmentLoginScreenBinding.inflate(inflater, container, false)
         binding.textSignUp.setOnClickListener {
             Navigation.findNavController(requireView()).navigate(R.id.signUpFragment, null, navOptions)
+        }
+        binding.btnLogin.setOnClickListener {
+            Navigation.findNavController(requireView()).navigate(R.id.profileFragment, null, navOptions)
 
         }
         binding.textForGot.setOnClickListener {

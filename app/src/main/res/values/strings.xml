@@ -6,6 +6,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="gg_map">AIzaSyC659j_v2LylmdRJsQ3Uw9ysEGLE9TDRVw</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -77,4 +78,5 @@
     <string name="phoneSetUpAcc">Nhập vào số điện thoại</string>
     <string name="txtContinue">Tiếp tục</string>
     <string name="txt2_custom_dialog">Tài khoản của bạn sẵn sàng sử dụng.Bạn sẽ tiến đến Trang chủ sau giây lát</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

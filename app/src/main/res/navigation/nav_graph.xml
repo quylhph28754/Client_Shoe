@@ -67,6 +67,10 @@
         <action
             android:id="@+id/action_loginFragmentScreen_to_forGotFragment"
             app:destination="@id/forGotFragment" />
+        <action
+            android:id="@+id/action_loginFragmentScreen_to_profileFragment"
+            app:destination="@id/profileFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -125,10 +129,26 @@
         <action
             android:id="@+id/action_profileFragment_to_notificationFragment"
             app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_addressDetailsFragment"
+            app:destination="@id/addressDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.AddressFragment"
+        android:label="fragment_address"
+        tools:layout="@layout/fragment_address" />
+    <fragment
+        android:id="@+id/addressDetailsFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.AddressDetailsFragment"
+        android:label="fragment_address_details"
+        tools:layout="@layout/fragment_address_details" />
 </navigation>
