@@ -9,7 +9,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="#00D0BCFF"
+    android:background="@color/color_background_toolbar"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_0dp"
         android:layout_marginTop="@dimen/dimen_25dp"
-        android:background="@drawable/bodercardlogin"
+        android:background="@drawable/border_card_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_0dp"
         android:paddingVertical="@dimen/dimen_10dp"
-        android:background="@drawable/bodercardlogin"
+        android:background="@drawable/border_card_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,18 +61,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Địa chỉ chi tiết"
+                android:text="@string/detail_address"
                 android:textColor="@color/black"
                 android:gravity="center"
-                android:textSize="@dimen/dimen_25dp"
-                android:textStyle="bold"
-                tools:ignore="SpUsage" />
+                android:textSize="@dimen/text_size_25sp"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="@dimen/dimen_1dp"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:layout_marginBottom="@dimen/dimen_8dp"
                 android:background="@android:color/darker_gray" />
         </LinearLayout>
 
@@ -88,7 +87,7 @@
                 android:id="@+id/txt1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tên địa điểm"
+                android:text="@string/point_name"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginHorizontal="@dimen/dimen_16dp"
@@ -104,24 +103,26 @@
                 tools:ignore="DuplicateIds,MissingConstraints">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/userNameEditText"
+                    android:id="@+id/nameAddressEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="@dimen/dimen_16dp"
-                    android:background="@drawable/boderedtsetupinfor"
+                    android:background="@drawable/border_edt_config_info"
                     android:drawablePadding="@dimen/dimen_10dp"
-                    android:hint="Nhà"
+                    android:hint="@string/home"
+                    android:maxLines="1"
+                    android:enabled="false"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:padding="@dimen/dimen_17dp"
-                    android:textSize="@dimen/dimen_15dp" />
+                    android:textSize="@dimen/text_size_15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
             <TextView
                 android:id="@+id/txt2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Địa điểm chi tiết"
+                android:text="@string/detail_address"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginHorizontal="@dimen/dimen_16dp"
@@ -137,18 +138,21 @@
                 app:passwordToggleTint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/passwordEditText"
+                    android:id="@+id/addressDetailEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="@dimen/dimen_16dp"
-                    android:background="@drawable/boderedtsetupinfor"
+                    android:background="@drawable/border_edt_config_info"
                     android:drawablePadding="@dimen/dimen_10dp"
-                    android:hint="Ba Đình,Hà Nội"
+                    android:hint="@string/ba_dinh_const"
                     android:drawableEnd="@drawable/baseline_add_location_alt_24"
                     android:imeOptions="actionNext"
-                    android:inputType="textPassword"
+                    android:inputType="text"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:enabled="false"
                     android:padding="@dimen/dimen_17dp"
-                    android:textSize="@dimen/dimen_15dp" />
+                    android:textSize="@dimen/text_size_15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,7 +160,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:id="@+id/address"
+            android:id="@+id/addressDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_16dp"
@@ -173,24 +177,24 @@
                 android:layout_height="wrap_content"
                 android:paddingVertical="@dimen/dimen_16dp"
                 android:textColor="@color/black"
-                android:text="Đặt làm địa chỉ mặc định"/>
+                android:text="@string/default_address"/>
         </LinearLayout>
 
         <Button
 
-            android:id="@+id/btnSignUp"
+            android:id="@+id/btnAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_16dp"
             android:background="@drawable/custom_button_login"
-            android:text="Thêm"
+            android:text="@string/add"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimen_15dp"
+            android:textSize="@dimen/text_size_15sp"
             android:backgroundTint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/address" />
+            app:layout_constraintTop_toBottomOf="@+id/addressDetail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

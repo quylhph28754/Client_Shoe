@@ -36,7 +36,7 @@ class ProfileFragment : Fragment() {
 
         }
         binding.constraintAddess.setOnClickListener {
-            findNavController(requireView()).navigate(R.id.addressDetailsFragment, null, navOptions)
+            findNavController(requireView()).navigate(R.id.addressFragment, null, navOptions)
         }
         binding.constraintNotification.setOnClickListener {
             findNavController(requireView()).navigate(R.id.notificationFragment, null, navOptions)

@@ -18,6 +18,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="ContentDescription,MissingConstraints,NotSibling" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_0dp"
         android:layout_marginTop="@dimen/dimen_56dp"
-        android:background="@drawable/bodercardlogin"
+        android:background="@drawable/border_card_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +37,7 @@
         android:id="@+id/cardViewLogin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_0dp"
-        android:background="@drawable/bodercardlogin"
+        android:background="@drawable/border_card_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,10 +60,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
-                android:text="@string/wellcome_back"
+                android:text="@string/congratulation"
                 android:textColor="@color/black"
-                android:textSize="@dimen/dimen_25dp"
-                tools:ignore="SpUsage" />
+                android:textSize="@dimen/text_size_25sp"
+                 />
 
             <TextView
                 android:id="@+id/text2"
@@ -71,8 +72,8 @@
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/sign_in_to_your_account"
                 android:textColor="@color/gray_600"
-                android:textSize="@dimen/dimen_15dp"
-                tools:ignore="SpUsage" />
+                android:textSize="@dimen/text_size_15sp"
+             />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,11 +101,11 @@
                     android:background="@color/white"
                     android:drawableStart="@drawable/baseline_contact_mail_24"
                     android:drawablePadding="@dimen/dimen_10dp"
-                    android:hint="@string/input_Email"
+                    android:hint="@string/your_email"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:padding="@dimen/dimen_17dp"
-                    android:textSize="@dimen/dimen_15dp" />
+                    android:textSize="@dimen/text_size_15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -131,7 +132,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
                     android:padding="@dimen/dimen_17dp"
-                    android:textSize="@dimen/dimen_15dp" />
+                    android:textSize="@dimen/text_size_15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -160,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
                 android:text="@string/remember"
-                android:textSize="@dimen/dimen_15dp"
+                android:textSize="@dimen/text_size_15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/switchLogin"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -170,9 +171,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="@string/forgot"
-                android:textColor="#5D81C5"
-                android:textSize="@dimen/dimen_15dp"
+                android:text="@string/forgot_password"
+                android:textColor="@color/color_text_action"
+                android:textSize="@dimen/text_size_15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -188,9 +189,9 @@
             android:layout_marginHorizontal="@dimen/dimen_16dp"
             android:layout_marginVertical="@dimen/dimen_17dp"
             android:background="@drawable/custom_button_login"
-            android:text="@string/loginbutton"
+            android:text="@string/login"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimen_15dp"
+            android:textSize="@dimen/text_size_15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
@@ -206,16 +207,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/dimen_15dp"
-                android:text="@string/dont_acc"
+                android:textSize="@dimen/text_size_15sp"
+                android:text="@string/new_user"
                 android:textColor="@color/gray_600" />
 
             <TextView
                 android:id="@+id/textSignUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/signUp_in_login"
-                android:textSize="@dimen/dimen_15dp"
+                android:text="@string/sign_in"
+                android:textSize="@dimen/text_size_15sp"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
         </LinearLayout>

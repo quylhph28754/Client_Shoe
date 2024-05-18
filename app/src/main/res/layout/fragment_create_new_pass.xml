@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#00D0BCFF"
+        android:background="@color/color_background_toolbar"
         app:navigationIcon="@drawable/baseline_keyboard_backspace_24"
         app:title="Nhập OTP"
         app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +51,7 @@
     android:layout_height="wrap_content"
     android:textSize="@dimen/dimen_20dp"
     android:gravity="center"
-    android:text="Tạo mật khẩu mới của bạn"
+    android:text="@string/create_your_password"
     tools:ignore="SpUsage" />
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutInputPhone"
@@ -64,7 +64,7 @@
                 android:id="@+id/phoneEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/boderedt"
+                android:background="@drawable/border_edt"
                 android:drawableStart="@drawable/baseline_lock_24"
                 android:drawablePadding="@dimen/dimen_10dp"
                 android:imeOptions="actionNext"
@@ -89,16 +89,15 @@
                 android:id="@+id/phoneEditText1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/boderedt"
+                android:background="@drawable/border_edt"
                 android:drawableStart="@drawable/baseline_lock_reset_24"
                 android:drawablePadding="@dimen/dimen_10dp"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
-                android:hint="@string/rePass"
+                android:hint="@string/confirm_password"
                 android:padding="@dimen/dimen_17dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/dimen_15dp"
-                tools:ignore="SpUsage" />
+                android:textSize="@dimen/text_size_15sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +105,7 @@
                 android:id="@+id/checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nhớ mật khẩu" />
+                android:text="@string/remember" />
 
 
     </LinearLayout>
@@ -115,11 +114,11 @@
         android:layout_width="match_parent"
         android:layout_marginBottom="@dimen/dimen_45dp"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/dimen_15dp"
+        android:textSize="@dimen/text_size_15sp"
         android:backgroundTint="@color/black"
         android:background="@drawable/custom_button_login"
         android:layout_marginHorizontal="@dimen/dimen_16dp"
-        android:text="@string/txtContinue"
+        android:text="@string/text_continue"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

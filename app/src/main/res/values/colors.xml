@@ -11,4 +11,7 @@
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
+    <color name="color_background_toolbar">#00D0BCFF</color>
+    <color name="background_color_field">#ACACAE</color>
+    <color name="color_text_action">#5D81C5</color>
 </resources>

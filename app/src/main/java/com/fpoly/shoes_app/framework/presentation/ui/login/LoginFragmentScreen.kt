@@ -13,7 +13,7 @@ import com.fpoly.shoes_app.databinding.FragmentLoginScreenBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragmentScreen : Fragment() {
+class  LoginFragmentScreen : Fragment() {
 
     private var _binding: FragmentLoginScreenBinding? = null
     private val binding get() = _binding!!

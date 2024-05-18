@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#00D0BCFF"
+        android:background="@color/color_background_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,13 +32,13 @@
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/boderedtsetupinfor"
+            android:background="@drawable/border_edt_config_info"
             android:drawablePadding="@dimen/dimen_10dp"
-            android:hint="@string/fullName"
+            android:hint="@string/full_name"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:padding="@dimen/dimen_17dp"
-            android:textColor="#ACACAE"
+            android:textColor="@color/background_color_field"
             android:textSize="@dimen/dimen_15dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -59,14 +59,14 @@
             android:id="@+id/dateEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/boderedtsetupinfor"
+            android:background="@drawable/border_edt_config_info"
             android:drawablePadding="@dimen/dimen_10dp"
             android:focusable="false"
             android:hint="@string/date"
             android:imeOptions="actionNext"
             android:inputType="date"
             android:padding="@dimen/dimen_17dp"
-            android:textColor="#ACACAE"
+            android:textColor="@color/background_color_field"
             android:textSize="@dimen/dimen_15dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -87,13 +87,13 @@
             android:id="@+id/mailEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/boderedtsetupinfor"
+            android:background="@drawable/border_edt_config_info"
             android:drawablePadding="@dimen/dimen_10dp"
-            android:hint="@string/emailSetUpAcc"
+            android:hint="@string/email_config"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:padding="@dimen/dimen_17dp"
-            android:textColor="#ACACAE"
+            android:textColor="@color/background_color_field"
             android:textSize="@dimen/dimen_15dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -112,14 +112,14 @@
             android:id="@+id/phoneEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/boderedtsetupinfor"
+            android:background="@drawable/border_edt_config_info"
             android:drawablePadding="@dimen/dimen_10dp"
-            android:hint="@string/phoneSetUpAcc"
+            android:hint="@string/phone_config"
             android:imeOptions="actionNext"
             android:inputType="phone"
             android:maxLength="10"
             android:padding="@dimen/dimen_17dp"
-            android:textColor="#ACACAE"
+            android:textColor="@color/background_color_field"
             android:textSize="@dimen/dimen_15dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -129,7 +129,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_16dp"
-        android:background="@drawable/boderedtsetupinfor"
+        android:background="@drawable/border_edt_config_info"
         android:padding="@dimen/dimen_17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +144,7 @@
         android:layout_marginBottom="@dimen/dimen_45dp"
         android:background="@drawable/custom_button_login"
         android:backgroundTint="@color/black"
-        android:text="Cập nhật"
+        android:text="@string/update"
         android:textColor="@color/white"
         android:textSize="@dimen/dimen_15dp"
         app:layout_constraintBottom_toBottomOf="parent"

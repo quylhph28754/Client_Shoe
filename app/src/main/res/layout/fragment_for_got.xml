@@ -11,9 +11,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#00D0BCFF"
+        android:background="@color/color_background_toolbar"
         app:navigationIcon="@drawable/baseline_keyboard_backspace_24"
-        app:title="@string/_textForGot"
+        app:title="@string/forgot_password"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="OTP Verification"
+            android:text="@string/otp_verification"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="We will send otp to your entered mobile number."
+            android:text="@string/send_otp_to_your_mobile_phone_number"
             app:layout_constraintEnd_toEndOf="@+id/textView"
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -75,16 +75,16 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/dimen_16dp"
             android:textColor="@color/black"
-            android:background="@drawable/boderedt"
+            android:background="@drawable/border_edt"
             android:maxLength="10"
             android:drawablePadding="@dimen/dimen_10dp"
             android:imeOptions="actionNext"
             android:inputType="phone"
             android:drawableStart="@drawable/baseline_local_phone_24"
             android:padding="@dimen/dimen_17dp"
-            android:textSize="@dimen/dimen_15dp"
+            android:textSize="@dimen/text_size_15sp"
             android:drawableEnd="@drawable/baseline_change_circle_24"
-            tools:ignore="SpUsage" />
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,11 +93,11 @@
         android:layout_width="match_parent"
         android:layout_marginBottom="@dimen/dimen_45dp"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/dimen_15dp"
+        android:textSize="@dimen/text_size_15sp"
         android:backgroundTint="@color/black"
         android:background="@drawable/custom_button_login"
         android:layout_marginHorizontal="@dimen/dimen_16dp"
-        android:text="@string/txtContinue"
+        android:text="@string/text_continue"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

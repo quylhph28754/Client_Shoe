@@ -99,7 +99,7 @@
         android:id="@+id/OPTFragment"
         android:name="com.fpoly.shoes_app.framework.presentation.ui.forgot.OPTFragment"
         android:label="fragment_o_p_t"
-        tools:layout="@layout/fragment_o_p_t" >
+        tools:layout="@layout/fragment_otp" >
         <action
             android:id="@+id/action_OPTFragment_to_createNewPassFragment"
             app:destination="@id/createNewPassFragment" />

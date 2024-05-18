@@ -35,7 +35,7 @@ class ForGotFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View{
         _binding = FragmentForGotBinding.inflate(inflater, container, false)
-        binding.phoneEditText.hint = getString(R.string.phoneSetUpAcc)
+        binding.phoneEditText.hint = getString(R.string.phone_config)
 
         binding.phoneEditText.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
@@ -65,7 +65,7 @@ class ForGotFragment : Fragment() {
                 R.drawable.baseline_change_circle_24,
                 0
             )
-            binding.phoneEditText.hint = getString(R.string.phoneSetUpAcc)
+            binding.phoneEditText.hint = getString(R.string.phone_config)
             binding.phoneEditText.inputType = InputType.TYPE_CLASS_PHONE
         } else {
             // Chế độ email
@@ -75,7 +75,7 @@ class ForGotFragment : Fragment() {
                 R.drawable.baseline_change_circle_24,
                 0
             )
-            binding.phoneEditText.hint = getString(R.string.emailSetUpAcc)
+            binding.phoneEditText.hint = getString(R.string.email_config)
             binding.phoneEditText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         }
     }

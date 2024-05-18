@@ -11,7 +11,7 @@ import com.google.android.material.textfield.TextInputLayout
 object CheckValidate {
     fun checkPhone(context: Context, edtData: TextInputEditText, layoutData: TextInputLayout,button: Button): Boolean {
         return if ((edtData.text?.length ?: 0) < 10) {
-            layoutData.error = context.getString(R.string.phone10)
+            layoutData.error = context.getString(R.string.is_number_phone)
             false
         } else {
             layoutData.error = null
@@ -22,10 +22,10 @@ object CheckValidate {
 
     fun checkEmail(context: Context, edtData: TextInputEditText, layoutData: TextInputLayout,layoutDataMail: TextInputLayout): Boolean {
         return if ((edtData.text?.length ?: 0) == 0) {
-            layoutData.error = context.getString(R.string._email)
+            layoutData.error = context.getString(R.string.force_input_email)
             false
         } else if (!isValidEmail(edtData.text)) {
-            layoutData.error = context.getString(R.string._formemail)
+            layoutData.error = context.getString(R.string.error_format_email)
             false
         } else {
             layoutData.error = null
