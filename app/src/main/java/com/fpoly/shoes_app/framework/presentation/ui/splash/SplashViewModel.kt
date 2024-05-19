@@ -3,15 +3,26 @@ package com.fpoly.shoes_app.framework.presentation.ui.splash
 import androidx.lifecycle.ViewModel
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.framework.domain.model.PageSplash
+import com.fpoly.shoes_app.utility.SharedPreferencesManager
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
-class SplashViewModel : ViewModel() {
+@HiltViewModel
+class SplashViewModel @Inject constructor(
+    private val sharedPreferences: SharedPreferencesManager
+) : ViewModel() {
     private val _uiState = MutableStateFlow(SplashUiState())
     val uiState: StateFlow<SplashUiState> get() = _uiState
 
     init {
+        getData()
+        checkSplashScreenStatus()
+    }
+
+    private fun getData() {
         val list = arrayListOf(
             PageSplash(
                 "1",
@@ -43,15 +54,41 @@ class SplashViewModel : ViewModel() {
         }
     }
 
-    fun getPage(currentPage: Int) {
+    private fun checkSplashScreenStatus() {
+        if (sharedPreferences.isSplashScreenSkipped())
+            navigateToNextScreen()
+    }
+
+    private fun navigateToNextScreen() {
+        _uiState.value = _uiState.value.copy(isNavigateToNextScreen = true)
+    }
+
+    fun getPage(currentPage: Int, totalPages: Int) {
+        val textButton = if (currentPage >= totalPages - 1) GET_STARED else NEXT
         _uiState.update { state ->
-            state.copy(page = currentPage)
+            state.copy(
+                page = currentPage,
+                textButton = textButton
+            )
         }
     }
 
-    fun nextPage(currentPage: Int) {
-        _uiState.update { state ->
-            state.copy(page = currentPage + 1)
+    fun nextPage(currentPage: Int, totalPages: Int) {
+        val isLastPage = currentPage >= totalPages - 1
+        if (isLastPage) {
+            navigateToNextScreen()
+            sharedPreferences.setSplashScreenSkipped(true)
+        } else {
+            _uiState.update { state ->
+                state.copy(
+                    page = currentPage + 1
+                )
+            }
         }
+    }
+
+    private companion object {
+        const val NEXT = "Next"
+        const val GET_STARED = "Get Started"
     }
 }

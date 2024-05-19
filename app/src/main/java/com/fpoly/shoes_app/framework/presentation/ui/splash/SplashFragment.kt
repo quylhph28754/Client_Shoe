@@ -30,12 +30,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
                 splashAdapter.submitList(it.pagesSplash)
                 binding.apply {
                     viewPagerSplash.currentItem = it.page
-                    val totalPages = it.pagesSplash?.size ?: 0
-                    val currentPage = it.page
-                    if (currentPage >= totalPages)
-                        navController?.navigate(R.id.action_SplashFragment_to_FirstFragment)
-                    btnNextPager.tvButton.text =
-                        if (currentPage >= totalPages - 1) GET_STARED else NEXT
+                    btnNextPager.tvButton.text = it.textButton
+                    if (it.isNavigateToNextScreen)
+                        navigateToNextScreen()
                 }
             }
         }
@@ -43,7 +40,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
 
     override fun setOnClick() {
         binding.btnNextPager.root.setOnClickListener {
-            viewModel?.nextPage(binding.viewPagerSplash.currentItem)
+            viewModel?.nextPage(binding.viewPagerSplash.currentItem, splashAdapter.itemCount)
         }
     }
 
@@ -51,13 +48,12 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
         binding.viewPagerSplash.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                viewModel?.getPage(binding.viewPagerSplash.currentItem)
+                viewModel?.getPage(binding.viewPagerSplash.currentItem, splashAdapter.itemCount)
             }
         })
     }
 
-    private companion object {
-        const val NEXT = "Next"
-        const val GET_STARED = "Get Started"
+    private fun navigateToNextScreen() {
+        navController?.navigate(R.id.action_SlashFragment_to_loginFragmentScreen)
     }
 }
