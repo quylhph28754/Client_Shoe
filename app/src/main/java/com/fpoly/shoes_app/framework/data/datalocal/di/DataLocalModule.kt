@@ -1,4 +1,4 @@
-package com.fpoly.shoes_app.framework.data.module
+package com.fpoly.shoes_app.framework.data.datalocal.di
 
 import android.app.Application
 import android.content.Context
@@ -11,7 +11,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataModule {
+object DataLocalModule {
 
     @Provides
     fun provideSharedPreferences(application: Application): SharedPreferences =

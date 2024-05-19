@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.viewbinding.ViewBinding
 import com.fpoly.shoes_app.R
+import com.fpoly.shoes_app.framework.presentation.MainActivity
 import com.fpoly.shoes_app.framework.presentation.ViewModelActivity
 import com.fpoly.shoes_app.utility.SharedPreferencesManager
 import javax.inject.Inject
@@ -29,7 +30,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
 
     protected val viewModelActivity: ViewModelActivity by activityViewModels()
 
-    protected val viewModel: VM? by lazy {
+    protected val viewModel: VM by lazy {
         ViewModelProvider(this)[viewModelClass]
     }
 
@@ -64,6 +65,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.v(TAG, "onViewCreated: $this")
+        (requireActivity() as MainActivity).showBottomNavigation(false)
         setupViews()
         setOnClick()
         bindViewModel()
