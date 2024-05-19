@@ -4,6 +4,7 @@ plugins {
     id("kotlin-parcelize")
     id ("kotlin-kapt")
     id ("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -42,6 +43,18 @@ android {
 }
 
 dependencies {
+//quy
+    //service location
+    //coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    //map
+    implementation ("com.google.maps:google-maps-services:0.18.0")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    //stdlib
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.5.21")
+    //stdlib
+    implementation("com.google.android.libraries.stdlib:places:3.4.0")
+    //end quy
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
