@@ -7,6 +7,8 @@ import com.fpoly.shoes_app.framework.presentation.MainActivity
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
 import com.fpoly.shoes_app.framework.presentation.ui.brands.CategoriesWithImageAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,8 +28,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     override fun bindViewModel() {
         lifecycleScope.launch {
-            viewModel.uiState.collect{state ->
-                categoriesWithImageAdapter.submitList(state.categories)
+            viewModel.uiState.mapNotNull {
+                it.categories
+            }.distinctUntilChanged().collect {
+                categoriesWithImageAdapter.submitList(it)
             }
         }
     }
@@ -37,9 +41,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     private fun setupCategories() {
-        binding.rcvCategory.apply {
-            layoutManager = StaggeredGridLayoutManager(SPAN_COUNT_CATEGORIES, StaggeredGridLayoutManager.VERTICAL)
-            setHasFixedSize(true)
+        binding.rcvCategory.run {
+            layoutManager = StaggeredGridLayoutManager(
+                SPAN_COUNT_CATEGORIES,
+                StaggeredGridLayoutManager.VERTICAL
+            )
             adapter = categoriesWithImageAdapter
         }
     }

@@ -26,14 +26,14 @@ class CategoriesWithImageAdapter @Inject constructor() :
         )
 
     override fun onBindViewHolder(holder: BrandWithImageViewHolder, position: Int) {
-        holder.bind(getItem(position), position)
+        holder.bind(getItem(position))
     }
 }
 
 class BrandWithImageViewHolder(
     private val binding: ItemBrandWithImageViewBinding
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(brand: Category, position: Int) {
+    fun bind(brand: Category) {
         binding.run {
             imgBrand.loadImage(brand.image)
             tvBrand.text = brand.name
