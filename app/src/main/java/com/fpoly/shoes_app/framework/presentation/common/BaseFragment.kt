@@ -30,7 +30,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
 
     protected val viewModelActivity: ViewModelActivity by activityViewModels()
 
-    protected val viewModel: VM? by lazy {
+    protected val viewModel: VM by lazy {
         ViewModelProvider(this)[viewModelClass]
     }
 

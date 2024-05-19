@@ -26,17 +26,17 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
 
     override fun bindViewModel() {
         lifecycleScope.launch {
-            viewModel?.uiState?.collect {
-                splashAdapter.submitList(it.pagesSplash)
+            viewModel.uiState.collect {state ->
+                splashAdapter.submitList(state.pagesSplash)
                 binding.apply {
-                    viewPagerSplash.currentItem = it.page
-                    btnNextPager.tvButton.text = it.textButton
+                    viewPagerSplash.currentItem = state.page
+                    btnNextPager.tvButton.text = state.textButton
                 }
             }
         }
 
         lifecycleScope.launch {
-            viewModel?.singleEvent?.collect { event ->
+            viewModel.singleEvent.collect { event ->
                 when (event) {
                     is SplashSingleEvent.NavigateToNextScreen ->
                         navController?.navigate(R.id.action_SlashFragment_to_homeFragment)
@@ -47,7 +47,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
 
     override fun setOnClick() {
         binding.btnNextPager.root.setOnClickListener {
-            viewModel?.nextPage(binding.viewPagerSplash.currentItem, splashAdapter.itemCount)
+            viewModel.nextPage(binding.viewPagerSplash.currentItem, splashAdapter.itemCount)
         }
     }
 
@@ -55,7 +55,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
         binding.viewPagerSplash.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                viewModel?.getPage(binding.viewPagerSplash.currentItem, splashAdapter.itemCount)
+                viewModel.getPage(binding.viewPagerSplash.currentItem, splashAdapter.itemCount)
             }
         })
     }

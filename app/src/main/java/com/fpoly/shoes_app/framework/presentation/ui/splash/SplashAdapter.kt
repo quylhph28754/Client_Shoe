@@ -10,17 +10,15 @@ import com.fpoly.shoes_app.framework.domain.model.PageSplash
 import com.fpoly.shoes_app.utility.loadImage
 import javax.inject.Inject
 
-val PageSplashDiff = object : DiffUtil.ItemCallback<PageSplash>() {
-    override fun areItemsTheSame(
-        oldItem: PageSplash, newItem: PageSplash
-    ) = oldItem.id == newItem.id
+private val pageSplashDiff = object : DiffUtil.ItemCallback<PageSplash>() {
+    override fun areItemsTheSame(oldItem: PageSplash, newItem: PageSplash) =
+        oldItem.id == newItem.id
 
-    override fun areContentsTheSame(
-        oldItem: PageSplash, newItem: PageSplash
-    ) = oldItem == newItem
+    override fun areContentsTheSame(oldItem: PageSplash, newItem: PageSplash) = oldItem == newItem
 }
 
-class SplashAdapter @Inject constructor() : ListAdapter<PageSplash, PagerSplashViewHolder>(PageSplashDiff) {
+class SplashAdapter @Inject constructor() :
+    ListAdapter<PageSplash, PagerSplashViewHolder>(pageSplashDiff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         PagerSplashViewHolder(

@@ -1,6 +1,5 @@
 package com.fpoly.shoes_app.framework.presentation.ui.splash
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.framework.domain.model.PageSplash
@@ -66,7 +65,6 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun navigateToNextScreen() {
-        Log.d("123123", "navigateToNextScreen")
         _singleEvent.value = SplashSingleEvent.NavigateToNextScreen
     }
 
