@@ -8,4 +8,13 @@
     <color name="gray_300">#CDCDCD</color>
     <color name="gray_200">#ECECEC</color>
     <color name="gray_100">#F6F6F6</color>
+<!--    my color quy-->
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="color_background_toolbar">#00D0BCFF</color>
+    <color name="background_color_field">#ACACAE</color>
+    <color name="color_text_action">#5D81C5</color>
 </resources>
