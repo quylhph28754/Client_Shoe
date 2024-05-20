@@ -4,7 +4,8 @@ plugins {
     id("kotlin-parcelize")
     id ("kotlin-kapt")
     id ("com.google.dagger.hilt.android")
-
+    id("com.google.gms.google-services")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -46,14 +47,12 @@ dependencies {
 //quy
     //service location
     //coroutines
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     //map
-    implementation ("com.google.maps:google-maps-services:0.18.0")
+    implementation ("com.google.maps:google-maps-services:2.2.0")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     //stdlib
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.5.21")
-    //stdlib
-    implementation("com.google.android.libraries.stdlib:places:3.4.0")
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.9.24")
     //end quy
 
     implementation("androidx.core:core-ktx:1.13.1")
@@ -62,6 +61,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("com.google.android.libraries.places:places:3.4.0")
+    implementation("com.google.firebase:firebase-auth-ktx:23.0.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -79,10 +80,10 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
     // Coil
-    implementation("io.coil-kt:coil:2.4.0")
+    implementation("io.coil-kt:coil:2.6.0")
 
     // Retrofit HTTP
-    val retrofit = "2.9.0"
+    val retrofit = "2.11.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofit")
     implementation("com.squareup.retrofit2:converter-gson:$retrofit")
     implementation("com.google.code.gson:gson:$retrofit")

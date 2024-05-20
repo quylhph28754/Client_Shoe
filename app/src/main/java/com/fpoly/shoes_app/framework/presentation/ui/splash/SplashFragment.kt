@@ -39,7 +39,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
             viewModel.singleEvent.collect { event ->
                 when (event) {
                     is SplashSingleEvent.NavigateToNextScreen ->
-                        navController?.navigate(R.id.action_SlashFragment_to_homeFragment)
+                        navController?.navigate(R.id.action_slashFragment_to_loginFragmentScreen)
                 }
             }
         }
