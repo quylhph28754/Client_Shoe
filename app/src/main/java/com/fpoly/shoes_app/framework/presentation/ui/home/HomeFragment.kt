@@ -34,6 +34,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
                 categoriesWithImageAdapter.submitList(it)
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.uiState.mapNotNull {
+                it.isLoading
+            }.distinctUntilChanged().collect {
+                showProgressbar(it)
+            }
+        }
     }
 
     override fun setOnClick() {
