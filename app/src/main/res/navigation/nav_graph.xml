@@ -58,10 +58,6 @@
             android:id="@+id/action_profileFragment_to_addressFragment"
             app:destination="@id/addressFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/customDialogFragment"
-        android:name="com.fpoly.shoes_app.framework.presentation.ui.forgot.CustomDialogFragment"
-        android:label="CustomDialogFragment" />
     <fragment
         android:id="@+id/addressFragment"
         android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.AddressFragment"
@@ -97,7 +93,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragmentScreen"
-        android:name="com.fpoly.shoes_app.framework.presentation.ui.login.LoginFragmentScreen"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.login.LoginScreen"
         android:label="fragment_login_screen"
         tools:layout="@layout/fragment_login_screen">
 

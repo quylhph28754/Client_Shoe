@@ -1,4 +1,4 @@
-package com.fpoly.shoes_app.framework.data.repository
+package com.fpoly.shoes_app.framework.repository
 
 import com.fpoly.shoes_app.framework.data.dataremove.api.CategoriesApi
 import javax.inject.Inject
