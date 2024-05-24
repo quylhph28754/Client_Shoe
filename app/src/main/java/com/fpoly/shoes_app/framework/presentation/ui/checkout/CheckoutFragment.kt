@@ -1,4 +1,4 @@
-package com.fpoly.shoes_app.framework.presentation.ui.cart
+package com.fpoly.shoes_app.framework.presentation.ui.checkout
 
 import com.fpoly.shoes_app.databinding.FragmentCheckoutBinding
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
