@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/addressFragment"
-        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.AddressFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.address.AddressFragment"
         android:label="fragment_address"
         tools:layout="@layout/fragment_address">
         <action
@@ -69,22 +69,22 @@
     </fragment>
     <fragment
         android:id="@+id/addressDetailsFragment"
-        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.AddressDetailsFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.addressDetail.AddressDetailsFragment"
         android:label="fragment_address_details"
         tools:layout="@layout/fragment_address_details" />
     <fragment
         android:id="@+id/createNewPassFragment"
-        android:name="com.fpoly.shoes_app.framework.presentation.ui.forgot.CreateNewPassFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.forgot.createNewPass.CreateNewPassFragment"
         android:label="fragment_create_new_pass"
         tools:layout="@layout/fragment_create_new_pass" />
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.EditProfileFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.editProfile.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/forGotFragment"
-        android:name="com.fpoly.shoes_app.framework.presentation.ui.forgot.ForGotFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.forgot.forGotEmail.ForGotEmailFragment"
         android:label="fragment_for_got"
         tools:layout="@layout/fragment_for_got">
         <action
@@ -114,12 +114,12 @@
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.NotificationFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.notification.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
     <fragment
         android:id="@+id/OPTFragment"
-        android:name="com.fpoly.shoes_app.framework.presentation.ui.forgot.OPTFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.forgot.otpConfirm.OPTConfirmFragment"
         android:label="fragment_otp"
         tools:layout="@layout/fragment_otp">
         <action

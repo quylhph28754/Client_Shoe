@@ -1,90 +1,142 @@
 package com.fpoly.shoes_app.framework.presentation.ui.login
 
-import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import android.widget.Toast
+import androidx.activity.addCallback
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+
+import androidx.navigation.fragment.findNavController
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentLoginScreenBinding
-import com.fpoly.shoes_app.framework.domain.model.login.LoginResult
+import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
+import com.fpoly.shoes_app.utility.SharedPreferencesManager
+import com.fpoly.shoes_app.utility.Status
+import com.fpoly.shoes_app.utility.toMD5
+import dagger.hilt.android.AndroidEntryPoint
+import io.github.muddz.styleabletoast.StyleableToast
+import kotlinx.coroutines.launch
+
+@AndroidEntryPoint
+class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
+    FragmentLoginScreenBinding::inflate, LoginViewModel::class.java
+) {
+    private var check = false
+    private var username: String = ""
+    private var password: String = ""
+    private val navOptions =
+        NavOptions.Builder().setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left)
+            .setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right).build()
+
+    private val navOptions1 =
+        NavOptions.Builder().setEnterAnim(R.anim.slide_in_left).setExitAnim(R.anim.slide_out_right)
+            .setPopEnterAnim(R.anim.slide_in_right).setPopExitAnim(R.anim.slide_out_left).build()
 
 
-class LoginScreen : Fragment() {
 
-    private var _binding: FragmentLoginScreenBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var viewModel: LoginViewModel
-    private lateinit var username :String
-    private lateinit var password :String
-    private val navOptions = NavOptions.Builder()
-        .setEnterAnim(R.anim.slide_in_right)
-        .setExitAnim(R.anim.slide_out_left)
-        .setPopEnterAnim(R.anim.slide_in_left) // Optional: You may need to define this animation as well
-        .setPopExitAnim(R.anim.slide_out_right) // Optional: You may need to define this animation as well
-        .build()
-    private val navOptions1 = NavOptions.Builder()
-        .setEnterAnim(R.anim.slide_in_left)
-        .setExitAnim(R.anim.slide_out_right)
-        .setPopEnterAnim(R.anim.slide_in_right)
-        .setPopExitAnim(R.anim.slide_out_left)
-        .build()
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentLoginScreenBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-        setupListeners()
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
     private fun setupListeners() {
-        binding.textSignUp.setOnClickListener {
-            Navigation.findNavController(requireView()).navigate(R.id.signUpFragment, null, navOptions)
+        if (SharedPreferencesManager.getUserName()
+                .isNotEmpty() && SharedPreferencesManager.getPassWord().isNotEmpty()
+        ) {
+            check = true
+            viewModel.signIn(
+                SharedPreferencesManager.getUserName(), SharedPreferencesManager.getPassWord()
+            )
+            return
         }
-        binding.btnLogin.setOnClickListener {
-            username = binding.userNameEditTextLogin.text?.trim().toString()
-            password = binding.passwordEditTextLogin.text?.trim().toString()
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                viewModel.signIn(username, password).collect { result ->
-                    when (result) {
-                        is LoginResult.Success -> {
-                            val loginResponse = result.loginResponse
-                            Log.e("success",loginResponse.user.toString())
-                            if(loginResponse.success)
-                                Navigation.findNavController(requireView()).navigate(R.id.homeFragment, null, navOptions1)
-                            else{
-                                binding.layoutInputUserNameLogin.error=loginResponse.message
-                                binding.layoutInputPasswordLogin.error=loginResponse.message}
+        Log.e("user",SharedPreferencesManager.getUserName())
+        binding.userNameEditTextLogin.setText(SharedPreferencesManager.getUserName())
+
+    }
+
+    override fun bindViewModel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.loginResult.collect { result ->
+                when (result.status) {
+                    Status.SUCCESS -> {
+                        binding.progressBar.visibility = View.GONE
+                        val loginResponse = result.data
+                        if (loginResponse?.success == true) {
+                            val navController = findNavController()
+                            binding.userNameEditTextLogin.text?.clear()
+                            binding.passwordEditTextLogin.text?.clear()
+                            if (check) {
+                                SharedPreferencesManager.setPassWord(username, password.toMD5())
+                                navController.navigate(
+                                    R.id.homeFragment, null, NavOptions.Builder().setPopUpTo(
+                                            navController.currentDestination?.id ?: -1, true
+                                        ).build()
+                                )
+                                StyleableToast.makeText(
+                                    requireContext(), getString(R.string.success), R.style.success
+                                ).show()
+                                return@collect
+                            }
+                            SharedPreferencesManager.setPassWord(username, null)
+                            navController.navigate(
+                                R.id.homeFragment,
+                                null,
+                                NavOptions.Builder()
+                                    .setPopUpTo(navController.currentDestination?.id ?: -1, true)
+                                    .build()
+                            )
+                            binding.passwordEditTextLogin.text?.clear()
+                            return@collect
                         }
-                        is LoginResult.Error -> {
-                            val errorMessage = result.errorMessage
-                            Log.e("faile",errorMessage.toString())
+                        loginResponse?.message?.let { errorMessage ->
+                            StyleableToast.makeText(
+                                requireContext(), getString(R.string.fail_password), R.style.fail
+                            ).show()
+                            binding.layoutInputUserNameLogin.error = errorMessage
+                            binding.layoutInputPasswordLogin.error = errorMessage
                         }
+
+                    }
+
+                    Status.ERROR -> {
+                        val errorMessage = result.message ?: "Unknown error"
+                        Log.e("LoginFragment", "Login error: $errorMessage")
+                    }
+
+                    Status.LOADING -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+
+                    Status.INIT -> {
+                        binding.progressBar.visibility = View.GONE
+
                     }
                 }
             }
         }
-        binding.textForGot.setOnClickListener {
-            Navigation.findNavController(requireView()).navigate(R.id.forGotFragment, null, navOptions1)
-        }
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun setupViews() {
+        setupListeners()
+    }
+
+    override fun setOnClick() {
+        binding.textSignUp.setOnClickListener {
+            findNavController().navigate(R.id.signUpFragment, null, navOptions)
+        }
+        binding.btnLogin.setOnClickListener {
+            username = binding.userNameEditTextLogin.text?.trim().toString()
+            password = binding.passwordEditTextLogin.text?.trim().toString()
+            viewModel.signIn(username, password.toMD5())
+        }
+        binding.textForGot.setOnClickListener {
+            findNavController().navigate(R.id.forGotFragment, null, navOptions1)
+        }
+        binding.switchLogin.setOnCheckedChangeListener { _, isChecked ->
+            check = isChecked
+            Log.e("check", check.toString())
+        }
     }
 }

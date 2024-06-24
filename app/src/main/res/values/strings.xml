@@ -22,11 +22,14 @@
     <string name="congratulation">Chào mừng trở lại !</string>
     <string name="force_input_email">Vui lòng nhập email</string>
     <string name="forgot_password">Quên mật khẩu</string>
+    <string name="fail_password">Sai tài khoản hoặc mật khẩu</string>
+    <string name="accountAlreadyExists">Tài khoản đã tồn tại</string>
     <string name="is_number_phone">Vui lòng nhập đủ số điện thoại</string>
     <string name="error_format_email">Vui lòng nhập đúng dạng email</string>
     <string name="sign_in_to_your_account">Đăng nhập vào tài khoản của bạn</string>
     <string name="name_login">Email Đăng Nhập</string>
     <string name="password">Nhập mật khẩu</string>
+    <string name="passwordIncorrect">Nhập mật khẩu không trùng khớp</string>
     <string name="remember">Ghi nhớ</string>
     <string name="login">Đăng nhập</string>
     <string name="new_user">Bạn chưa có tài khoản ?" "</string>
@@ -51,6 +54,7 @@
     <string name="default_address">Đặt làm địa chỉ mặc định</string>
     <string name="add">Thêm</string>
     <string name="success">Thành công</string>
+    <string name="inputFullInfo">Vui lòng nhập đầy đủ thông tin</string>
     <string name="create_your_password">Tạo mật khẩu mới của bạn</string>
     <string name="update">Cập nhật</string>
     <string name="general_notification">Thông báo</string>
@@ -77,5 +81,5 @@
     <string name="cancel">Cancel</string>
     <string name="agree">Đồng ý</string>
     <string name="otp_verification">Xác thực OTP</string>
-    <string name="send_otp_to_your_mobile_phone_number">Mã OTP sẽ gửi đến số điện thoại</string>
+    <string name="send_otp_to_your_mail">Mã OTP sẽ gửi đến email của bạn</string>
 </resources>

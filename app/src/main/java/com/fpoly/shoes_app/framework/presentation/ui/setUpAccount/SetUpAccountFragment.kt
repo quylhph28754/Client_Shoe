@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,10 @@ import com.fpoly.shoes_app.databinding.FragmentSetUpAccountBinding
 import com.fpoly.shoes_app.framework.data.module.AddImage
 import com.fpoly.shoes_app.framework.data.module.CheckValidate
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Calendar
-
+@AndroidEntryPoint
 class SetUpAccountFragment : Fragment() {
     private var _binding: FragmentSetUpAccountBinding? = null
     private val binding get() = _binding!!
@@ -29,6 +32,8 @@ class SetUpAccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSetUpAccountBinding.inflate(inflater, container, false)
+        var id= arguments?.getString("id").toString()
+        Log.e("id",id)
         binding.relative.setOnClickListener {
             AddImage.openImageDialog(requireContext(),requireActivity(), this@SetUpAccountFragment)
         }

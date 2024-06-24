@@ -1,4 +1,4 @@
-package com.fpoly.shoes_app.framework.presentation.ui.forgot
+package com.fpoly.shoes_app.framework.presentation.ui.forgot.createNewPass
 
 import android.os.Bundle
 import android.os.Handler
@@ -11,8 +11,12 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentCreateNewPassBinding
+import com.fpoly.shoes_app.framework.presentation.ui.forgot.CustomDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 
-class CreateNewPassFragment : Fragment() {
+@AndroidEntryPoint
+class CreateNewPassFragment: Fragment() {
     private val binding get() = _binding!!
     private var _binding: FragmentCreateNewPassBinding? = null
     private val navOptions = NavOptions.Builder()

@@ -53,8 +53,11 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     //stdlib
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.9.24")
-
+    //toast
+    implementation ("io.github.muddz:styleabletoast:2.4.0")
     //end quy
+
+
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")

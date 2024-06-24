@@ -34,7 +34,13 @@ object CheckValidate {
         }
     }
 
-    fun isValidEmail(target: CharSequence?): Boolean {
+    private fun isValidEmail(target: CharSequence?): Boolean {
         return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target!!).matches()
+    }
+    fun strNullOrEmpty(string:String?):String{
+        if (string.isNullOrEmpty()){
+            return ""
+        }
+        return string
     }
 }

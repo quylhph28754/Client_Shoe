@@ -1,4 +1,4 @@
-package com.fpoly.shoes_app.framework.presentation.ui.profile
+package com.fpoly.shoes_app.framework.presentation.ui.profile.address
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +11,10 @@ import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentAddressBinding
 import com.fpoly.shoes_app.framework.adapter.AddressAdapter
 import com.fpoly.shoes_app.framework.domain.model.profile.AddressDetail
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 
-
+@AndroidEntryPoint
 class AddressFragment : Fragment() {
     private var _binding: FragmentAddressBinding? = null
     private var listAddressDetails =

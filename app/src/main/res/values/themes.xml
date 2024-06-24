@@ -22,4 +22,27 @@
         <item name="android:color">@color/gray_600</item>
         <item name="android:adjustViewBounds">false</item>
     </style>
+
+    <style name="success">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#FFFFFF</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">#61C566</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">#4CAF50</item>
+        <item name="stIconStart">@drawable/baseline_star_24</item>
+        <item name="stIconEnd">@drawable/baseline_check_circle_outline_24</item>
+        <item name="stLength">SHORT</item>
+        <item name="stRadius">5dp</item>
+    </style>
+    <style name="fail">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#FFFFFF</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">#FF0000</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stIconStart">@drawable/baseline_info_outline_24</item>
+        <item name="stLength">SHORT</item>
+        <item name="stRadius">50dp</item>
+    </style>
 </resources>

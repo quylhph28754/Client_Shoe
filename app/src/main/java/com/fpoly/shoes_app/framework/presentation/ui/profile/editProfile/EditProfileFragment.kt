@@ -1,4 +1,4 @@
-package com.fpoly.shoes_app.framework.presentation.ui.profile
+package com.fpoly.shoes_app.framework.presentation.ui.profile.editProfile
 
 import android.R
 import android.app.DatePickerDialog
@@ -11,15 +11,15 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavOptions
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.fpoly.shoes_app.databinding.FragmentEditProfileBinding
 import com.fpoly.shoes_app.framework.data.module.CheckValidate
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Calendar
 
-
+@AndroidEntryPoint
 class EditProfileFragment : Fragment() {
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!

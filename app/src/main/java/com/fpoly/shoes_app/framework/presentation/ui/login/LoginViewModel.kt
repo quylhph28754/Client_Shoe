@@ -2,35 +2,51 @@
 package com.fpoly.shoes_app.framework.presentation.ui.login
 
 import androidx.lifecycle.ViewModel
-import com.fpoly.shoes_app.framework.data.dataremove.api.post.LoginApi
+import androidx.lifecycle.viewModelScope
+import com.fpoly.shoes_app.framework.data.dataremove.api.postInterface.LoginInterface
 import com.fpoly.shoes_app.framework.domain.model.login.Login
-import com.fpoly.shoes_app.framework.domain.model.login.LoginResult
-import com.fpoly.shoes_app.framework.retrofitGeneral.RetrofitGeneral
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.fpoly.shoes_app.framework.domain.model.login.LoginResponse
+import com.fpoly.shoes_app.framework.domain.model.signUp.SignUp
+import com.fpoly.shoes_app.framework.domain.model.signUp.SignUpResponse
+import com.fpoly.shoes_app.framework.repository.LoginRepository
+import com.fpoly.shoes_app.framework.repository.SignUpRepository
+import com.fpoly.shoes_app.utility.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val loginRepository:LoginRepository,
+) : ViewModel() {
+    private val _loginResult = MutableStateFlow<Resource<LoginResponse>>(Resource.init(null))
+    val loginResult: StateFlow<Resource<LoginResponse>> = _loginResult
 
-    private val loginApi: LoginApi = RetrofitGeneral.retrofitInstance.create(LoginApi::class.java)
-
-    fun signIn(username: String, password: String): Flow<LoginResult> = flow {
-        try {
-            val response = loginApi.signIn(Login(username, password))
-            if (response.isSuccessful) {
-                val loginResponse = response.body()
-                if (loginResponse != null) {
-                    emit(LoginResult.Success(loginResponse))
+    fun signIn(username: String, password: String) {
+        viewModelScope.launch {
+            _loginResult.value = Resource.loading(null)
+            try {
+                val response = loginRepository.signIn(Login(username, password))
+                if (response.isSuccessful) {
+                    val signUpResponse = response.body()
+                    if (signUpResponse != null) {
+                        _loginResult.value = Resource.success(signUpResponse)
+                    } else {
+                        _loginResult.value = Resource.error(null, "Sign-in response is null")
+                    }
                 } else {
-                    emit(LoginResult.Error("Login response is null"))
+                    _loginResult.value = Resource.error(null, "Sign-in failed")
                 }
-            } else {
-                emit(LoginResult.Error("Login failed"))
+            } catch (e: HttpException) {
+                _loginResult.value = Resource.error(null, "HTTP Error: ${e.message()}")
+            } catch (e: Exception) {
+                _loginResult.value = Resource.error(null, "Network error: ${e.message}")
             }
-        } catch (e: HttpException) {
-            emit(LoginResult.Error("HTTP Error: ${e.message()}"))
-        } catch (e: Exception) {
-            emit(LoginResult.Error("Network error: ${e.message}"))
         }
     }
 }
+
+

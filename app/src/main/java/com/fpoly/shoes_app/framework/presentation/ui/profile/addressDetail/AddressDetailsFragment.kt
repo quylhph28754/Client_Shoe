@@ -1,4 +1,4 @@
-package com.fpoly.shoes_app.framework.presentation.ui.profile
+package com.fpoly.shoes_app.framework.presentation.ui.profile.addressDetail
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,9 +19,11 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@AndroidEntryPoint
 class AddressDetailsFragment : Fragment(), OnMapReadyCallback {
-
     private var _binding: FragmentAddressDetailsBinding? = null
     private val binding get() = _binding!!
     private lateinit var googleMap: GoogleMap

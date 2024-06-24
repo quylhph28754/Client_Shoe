@@ -6,14 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentProfileBinding
 import com.fpoly.shoes_app.databinding.LayoutDialogBinding
+import com.fpoly.shoes_app.utility.SharedPreferencesManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -33,14 +38,14 @@ class ProfileFragment : Fragment() {
             showBottomSheetDialog()
         }
         binding.constraintEdt.setOnClickListener {
-            findNavController(requireView()).navigate(R.id.editProfileFragment, null, navOptions)
+            findNavController().navigate(R.id.editProfileFragment, null, navOptions)
 
         }
         binding.constraintAddess.setOnClickListener {
-            findNavController(requireView()).navigate(R.id.addressFragment, null, navOptions)
+            findNavController().navigate(R.id.addressFragment, null, navOptions)
         }
         binding.constraintNotification.setOnClickListener {
-            findNavController(requireView()).navigate(R.id.notificationFragment, null, navOptions)
+            findNavController().navigate(R.id.notificationFragment, null, navOptions)
         }
         return binding.root
     }
@@ -51,7 +56,18 @@ class ProfileFragment : Fragment() {
             bottomSheetDialog.dismiss()
         }
         dialogBinding.bottomSheetOkButton.setOnClickListener {
+            SharedPreferencesManager.removePassWord()
+            val navController = findNavController()
+            navController.navigate(
+                R.id.loginFragmentScreen, null, NavOptions.Builder()
+                    .setPopUpTo(
+                        navController.currentDestination?.id ?: -1,
+                        true
+                    )
+                    .build()
+            )
             bottomSheetDialog.dismiss()
+
         }
         bottomSheetDialog.setContentView(dialogBinding.root)
         bottomSheetDialog.show()
