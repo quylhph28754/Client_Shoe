@@ -1,4 +1,5 @@
 package com.fpoly.shoes_app.framework.presentation.ui.profile.addressDetail
+
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
+
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 
@@ -41,16 +43,13 @@ class AddressDetailsFragment : Fragment(), OnMapReadyCallback {
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapFragment) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
-
         context?.let {
             Places.initialize(it, getString(R.string.key_map))
             placesClient = Places.createClient(it)
         }
-
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
         return binding.root
     }
 
@@ -75,8 +74,6 @@ class AddressDetailsFragment : Fragment(), OnMapReadyCallback {
         val markerOptions = MarkerOptions().position(destination).title("Location")
         googleMap.addMarker(markerOptions)
     }
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

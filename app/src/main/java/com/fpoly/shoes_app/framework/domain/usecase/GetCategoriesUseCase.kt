@@ -1,6 +1,6 @@
 package com.fpoly.shoes_app.framework.domain.usecase
 
-import com.fpoly.shoes_app.framework.data.repository.CategoriesRepository
+import com.fpoly.shoes_app.framework.repository.CategoriesRepository
 import com.fpoly.shoes_app.utility.Resource
 import javax.inject.Inject
 

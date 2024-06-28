@@ -47,6 +47,9 @@ class HomeViewModel @Inject constructor(
                         isLoading = false,
                         errorMessage = resource.message
                     )
+
+                    Status.INIT ->state.copy(
+                    )
                 }
             }
         }.launchIn(viewModelScope)

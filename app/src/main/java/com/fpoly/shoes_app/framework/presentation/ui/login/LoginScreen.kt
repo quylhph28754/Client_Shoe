@@ -54,16 +54,17 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
             viewModel.loginResult.collect { result ->
                 when (result.status) {
                     Status.SUCCESS -> {
+                        binding.layoutInputUserNameLogin.isEnabled = true
+                        binding.layoutInputPasswordLogin.isEnabled = true
+                        binding.switchLogin.isEnabled = true
+                        binding.textForGot.isEnabled = true
+                        binding.textSignUp.isEnabled = true
+                        binding.btnLogin.isEnabled = true
                         binding.progressBar.visibility = View.GONE
                         val loginResponse = result.data
                         if (loginResponse?.success == true) {
                             val navController = findNavController()
-                            binding.layoutInputUserNameLogin.isEnabled = true
-                            binding.layoutInputPasswordLogin.isEnabled = true
-                            binding.switchLogin.isEnabled = true
-                            binding.textForGot.isEnabled = true
-                            binding.textSignUp.isEnabled = true
-                            binding.btnLogin.isEnabled = true
+
                             if (check) {
                                 sharedPreferences.setPassWord(username, password.toMD5())
                                 fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -103,6 +104,12 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
                     }
 
                     Status.ERROR -> {
+                        binding.layoutInputUserNameLogin.isEnabled = true
+                        binding.layoutInputPasswordLogin.isEnabled = true
+                        binding.switchLogin.isEnabled = true
+                        binding.textForGot.isEnabled = true
+                        binding.textSignUp.isEnabled = true
+                        binding.btnLogin.isEnabled = true
                         val errorMessage = result.message ?: "Unknown error"
                         Log.e("LoginFragment", "Login error: $errorMessage")
                     }
