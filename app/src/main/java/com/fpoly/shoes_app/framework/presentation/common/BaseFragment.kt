@@ -18,6 +18,7 @@ import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.framework.presentation.MainActivity
 import com.fpoly.shoes_app.framework.presentation.ViewModelActivity
 import com.fpoly.shoes_app.utility.SharedPreferencesManager
+import com.fpoly.shoes_app.utility.dialog.ProgressbarDialogFragment
 import javax.inject.Inject
 
 abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
@@ -40,6 +41,9 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
 
     @Inject
     internal lateinit var sharedPreferences: SharedPreferencesManager
+
+    @Inject
+    internal lateinit var progressDialog: ProgressbarDialogFragment
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -113,4 +117,9 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     abstract fun bindViewModel()
 
     abstract fun setOnClick()
+
+    protected fun showProgressbar(isShowProgressbar: Boolean) {
+        if (isShowProgressbar) progressDialog.show(childFragmentManager, null)
+        else progressDialog.dismiss()
+    }
 }
