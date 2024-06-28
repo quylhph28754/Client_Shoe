@@ -1,24 +1,17 @@
 package com.fpoly.shoes_app.framework.presentation.ui.login
 
-import android.app.Activity
-import android.content.Context
-import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.activity.addCallback
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
-import androidx.navigation.fragment.NavHostFragment
-
 import androidx.navigation.fragment.findNavController
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentLoginScreenBinding
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
-import com.fpoly.shoes_app.utility.SharedPreferencesManager
 import com.fpoly.shoes_app.utility.Status
 import com.fpoly.shoes_app.utility.toMD5
+import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.launch
@@ -42,17 +35,17 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
 
 
     private fun setupListeners() {
-        if (SharedPreferencesManager.getUserName()
-                .isNotEmpty() && SharedPreferencesManager.getPassWord().isNotEmpty()
+        if (sharedPreferences.getUserName()
+                .isNotEmpty() && sharedPreferences.getPassWord().isNotEmpty()
         ) {
             check = true
             viewModel.signIn(
-                SharedPreferencesManager.getUserName(), SharedPreferencesManager.getPassWord()
+                sharedPreferences.getUserName(), sharedPreferences.getPassWord()
             )
             return
         }
-        Log.e("user",SharedPreferencesManager.getUserName())
-        binding.userNameEditTextLogin.setText(SharedPreferencesManager.getUserName())
+        Log.e("user",sharedPreferences.getUserName())
+        binding.userNameEditTextLogin.setText(sharedPreferences.getUserName())
 
     }
 
@@ -65,21 +58,29 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
                         val loginResponse = result.data
                         if (loginResponse?.success == true) {
                             val navController = findNavController()
-                            binding.userNameEditTextLogin.text?.clear()
-                            binding.passwordEditTextLogin.text?.clear()
+                            binding.layoutInputUserNameLogin.isEnabled = true
+                            binding.layoutInputPasswordLogin.isEnabled = true
+                            binding.switchLogin.isEnabled = true
+                            binding.textForGot.isEnabled = true
+                            binding.textSignUp.isEnabled = true
+                            binding.btnLogin.isEnabled = true
                             if (check) {
-                                SharedPreferencesManager.setPassWord(username, password.toMD5())
+                                sharedPreferences.setPassWord(username, password.toMD5())
+                                fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                                 navController.navigate(
                                     R.id.homeFragment, null, NavOptions.Builder().setPopUpTo(
                                             navController.currentDestination?.id ?: -1, true
                                         ).build()
                                 )
+                                binding.userNameEditTextLogin.text?.clear()
+                                binding.passwordEditTextLogin.text?.clear()
                                 StyleableToast.makeText(
                                     requireContext(), getString(R.string.success), R.style.success
                                 ).show()
                                 return@collect
                             }
-                            SharedPreferencesManager.setPassWord(username, null)
+                            sharedPreferences.setPassWord(username, null)
+                            fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             navController.navigate(
                                 R.id.homeFragment,
                                 null,
@@ -90,6 +91,7 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
                             binding.passwordEditTextLogin.text?.clear()
                             return@collect
                         }
+
                         loginResponse?.message?.let { errorMessage ->
                             StyleableToast.makeText(
                                 requireContext(), getString(R.string.fail_password), R.style.fail
@@ -106,6 +108,12 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
                     }
 
                     Status.LOADING -> {
+                        binding.userNameEditTextLogin.isEnabled = false
+                        binding.switchLogin.isEnabled = false
+                        binding.textForGot.isEnabled = false
+                        binding.textSignUp.isEnabled = false
+                        binding.btnLogin.isEnabled = false
+                        binding.passwordEditTextLogin.isEnabled = false
                         binding.progressBar.visibility = View.VISIBLE
                     }
 
@@ -119,6 +127,7 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
     }
 
     override fun setupViews() {
+
         setupListeners()
     }
 

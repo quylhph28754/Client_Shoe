@@ -9,7 +9,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 object CheckValidate {
-    fun checkPhone(context: Context, edtData: TextInputEditText, layoutData: TextInputLayout,button: Button): Boolean {
+    fun checkPhone(
+        context: Context, edtData: TextInputEditText, layoutData: TextInputLayout, button: Button
+    ): Boolean {
         return if ((edtData.text?.length ?: 0) < 10) {
             layoutData.error = context.getString(R.string.is_number_phone)
             false
@@ -20,7 +22,12 @@ object CheckValidate {
         }
     }
 
-    fun checkEmail(context: Context, edtData: TextInputEditText, layoutData: TextInputLayout,layoutDataMail: TextInputLayout): Boolean {
+    fun checkEmail(
+        context: Context,
+        edtData: TextInputEditText,
+        layoutData: TextInputLayout,
+        layoutDataMail: TextInputLayout
+    ): Boolean {
         return if ((edtData.text?.length ?: 0) == 0) {
             layoutData.error = context.getString(R.string.force_input_email)
             false
@@ -34,11 +41,28 @@ object CheckValidate {
         }
     }
 
+    fun checkStr(
+        context: Context,
+        edtData: TextInputEditText,
+        layoutData: TextInputLayout,
+        layoutDataMail: TextInputLayout
+    ): Boolean {
+        return if ((edtData.text?.length ?: 0) == 0) {
+            layoutData.error = context.getString(R.string.inputFullInfo)
+            false
+        } else {
+            layoutData.error = null
+            true
+            layoutDataMail.requestFocus()
+        }
+    }
+
     private fun isValidEmail(target: CharSequence?): Boolean {
         return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target!!).matches()
     }
-    fun strNullOrEmpty(string:String?):String{
-        if (string.isNullOrEmpty()){
+
+    fun strNullOrEmpty(string: String?): String {
+        if (string.isNullOrEmpty()) {
             return ""
         }
         return string

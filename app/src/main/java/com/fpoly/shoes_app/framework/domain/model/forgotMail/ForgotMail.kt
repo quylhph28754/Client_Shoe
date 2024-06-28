@@ -13,8 +13,8 @@ open class BaseErrResponse(
     @SerializedName("success") open val success: Boolean,
     @SerializedName("message") open val message: String?,
 )
-data class ForgotMailResponse(
+ class ForgotMailResponse(
     @SerializedName("idAccount") val idAccount: String?,
-    override val success: Boolean,
-    override val message: String?
+     success: Boolean,
+     message: String?
 ) : BaseErrResponse(success, message)

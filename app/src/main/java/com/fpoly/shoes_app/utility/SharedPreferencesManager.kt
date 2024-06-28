@@ -40,7 +40,7 @@ object SharedPreferencesManager {
         editor.remove(passWord).apply()
     }
 
-    fun setIdUser(id:String){
+    fun setIdUser(id:String?){
         saveStringDataByKey(idUser, id)
     }
     fun getIdUser(): String = getStringDataByKey(idUser)

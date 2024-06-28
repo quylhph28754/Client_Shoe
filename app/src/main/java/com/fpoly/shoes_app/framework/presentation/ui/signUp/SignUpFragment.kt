@@ -33,6 +33,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     override fun setupViews() {
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun bindViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.signUpResult.collect { result ->
@@ -101,7 +102,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
 
             if (!password.isNullOrEmpty() && !rePassword.isNullOrEmpty()) {
                 if (password == rePassword) {
-                    viewModel.signUp(binding.userNameEditText.text.toString().trim(), password)
+                    viewModel.signUp(binding.userNameEditText.text.toString().trim(), password.toMD5())
                 } else {
                     StyleableToast.makeText(
                         requireContext(), getString(R.string.passwordIncorrect), R.style.fail

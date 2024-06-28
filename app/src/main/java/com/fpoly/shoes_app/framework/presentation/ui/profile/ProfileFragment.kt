@@ -58,14 +58,8 @@ class ProfileFragment : Fragment() {
         dialogBinding.bottomSheetOkButton.setOnClickListener {
             SharedPreferencesManager.removePassWord()
             val navController = findNavController()
-            navController.navigate(
-                R.id.loginFragmentScreen, null, NavOptions.Builder()
-                    .setPopUpTo(
-                        navController.currentDestination?.id ?: -1,
-                        true
-                    )
-                    .build()
-            )
+            fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            navController.navigate(R.id.loginFragmentScreen)
             bottomSheetDialog.dismiss()
 
         }

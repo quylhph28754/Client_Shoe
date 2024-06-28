@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentForGotBinding
 import com.fpoly.shoes_app.framework.data.module.CheckValidate.strNullOrEmpty
+import com.fpoly.shoes_app.framework.domain.model.forgotMail.ForgotMail
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
 import com.fpoly.shoes_app.utility.SharedPreferencesManager.setIdUser
 import com.fpoly.shoes_app.utility.Status
@@ -20,11 +21,12 @@ class ForGotEmailFragment : BaseFragment<FragmentForGotBinding, ForGotEmailViewM
     FragmentForGotBinding::inflate, ForGotEmailViewModel::class.java
 ) {
     override fun setupViews() {
+
     }
 
     override fun bindViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.forGotEmailResult.collect {
+            viewModel.forgotMailResult.collect {
 
                 result ->
                 when (result.status) {
@@ -32,13 +34,13 @@ class ForGotEmailFragment : BaseFragment<FragmentForGotBinding, ForGotEmailViewM
                         binding.progressBar.visibility = View.GONE
                         val forgotMailResponse = result.data
                         if (forgotMailResponse?.success == true) {
-                            setIdUser(forgotMailResponse.idAccount!!)
                             val navController = findNavController()
                             navController.navigate(
                                 R.id.OPTFragment,null, NavOptions.Builder().setPopUpTo(
                                     navController.currentDestination?.id ?: -1, true
                                 ).build()
                             )
+                            sharedPreferences.setIdUser(forgotMailResponse.idAccount!!)
                             StyleableToast.makeText(
                                 requireContext(), getString(R.string.success), R.style.success
                             ).show()
@@ -75,7 +77,7 @@ class ForGotEmailFragment : BaseFragment<FragmentForGotBinding, ForGotEmailViewM
         binding.btnNextPager.setOnClickListener {
             binding.btnNextPager.isEnabled= false
             Log.e("email",binding.emailEditText.text.toString().trim())
-            viewModel.forGotEmail(binding.emailEditText.text.toString().trim())
+            viewModel.forgotMail(ForgotMail( binding.emailEditText.text.toString().trim()))
         }
     }
 }

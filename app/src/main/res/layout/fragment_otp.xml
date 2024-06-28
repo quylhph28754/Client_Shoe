@@ -38,20 +38,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
-
-        <EditText
-            android:id="@+id/edtOPT"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutInputOPT"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_edt"
-            android:hint="@string/input_otp"
-            android:inputType="number"
-            android:padding="@dimen/dimen_16dp"
-            android:textSize="@dimen/dimen_15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt1"
+            >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtOPT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/input_otp"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="6"
+            android:padding="@dimen/dimen_16dp"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/dimen_15dp"
             tools:ignore="Autofill,LabelFor,MissingConstraints,SpUsage" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <TextView
@@ -65,7 +72,7 @@
             android:textSize="@dimen/text_size_15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtOPT" />
+            app:layout_constraintTop_toBottomOf="@id/layoutInputOPT" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,17 +54,16 @@
     android:text="@string/create_your_password"
     tools:ignore="SpUsage" />
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutInputPhone"
+            android:id="@+id/layoutInputpassWord"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/dimen_8dp"
+            android:layout_marginVertical="@dimen/dimen_12dp"
             app:passwordToggleEnabled="true"
             tools:ignore="DuplicateIds,MissingConstraints">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phoneEditText"
+                android:id="@+id/passWordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/border_edt"
                 android:drawableStart="@drawable/baseline_lock_24"
                 android:drawablePadding="@dimen/dimen_10dp"
                 android:imeOptions="actionNext"
@@ -78,18 +77,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutInputPhone1"
+            android:id="@+id/layoutInputrePassWord"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true"
-            android:layout_marginVertical="@dimen/dimen_8dp"
+            android:layout_marginVertical="@dimen/dimen_12dp"
             tools:ignore="DuplicateIds,MissingConstraints">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phoneEditText1"
+                android:id="@+id/rePassWordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/border_edt"
                 android:drawableStart="@drawable/baseline_lock_reset_24"
                 android:drawablePadding="@dimen/dimen_10dp"
                 android:imeOptions="actionNext"
@@ -123,23 +121,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progressBar"
-        android:layout_width="@dimen/dimen_0dp"
-        android:layout_height="@dimen/dimen_0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <ProgressBar
-            android:layout_width="@dimen/dimen_100dp"
-            android:layout_height="@dimen/dimen_100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

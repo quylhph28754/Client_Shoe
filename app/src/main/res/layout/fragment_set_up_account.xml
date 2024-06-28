@@ -59,6 +59,7 @@
         android:id="@+id/layoutInputName"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_0dp"
+        android:layout_marginHorizontal="@dimen/dimen_16dp"
         android:layout_marginVertical="@dimen/dimen_8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,14 +70,12 @@
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/dimen_16dp"
-            android:background="@drawable/border_edt_config_info"
             android:drawablePadding="@dimen/dimen_10dp"
             android:hint="@string/full_name"
             android:imeOptions="actionNext"
             android:inputType="text"
+            android:textColor="@color/black"
             android:padding="@dimen/dimen_17dp"
-            android:textColor="@color/background_color_field"
             android:textSize="@dimen/dimen_15dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -98,14 +97,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/dimen_16dp"
-            android:background="@drawable/border_edt_config_info"
             android:drawablePadding="@dimen/dimen_10dp"
             android:focusable="false"
             android:hint="@string/date"
             android:imeOptions="actionNext"
             android:inputType="date"
             android:padding="@dimen/dimen_17dp"
-            android:textColor="@color/background_color_field"
+            android:textColor="@color/black"
             android:textSize="@dimen/dimen_15dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -127,13 +125,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/dimen_16dp"
-            android:background="@drawable/border_edt_config_info"
             android:drawablePadding="@dimen/dimen_10dp"
             android:hint="@string/email_config"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:padding="@dimen/dimen_17dp"
-            android:textColor="@color/background_color_field"
+            android:textColor="@color/black"
             android:textSize="@dimen/dimen_15dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -153,14 +150,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/dimen_16dp"
-            android:background="@drawable/border_edt_config_info"
             android:drawablePadding="@dimen/dimen_10dp"
             android:hint="@string/phone_config"
             android:imeOptions="actionNext"
             android:inputType="phone"
             android:maxLength="10"
             android:padding="@dimen/dimen_17dp"
-            android:textColor="@color/background_color_field"
+            android:textColor="@color/black"
             android:textSize="@dimen/dimen_15dp" />
 
     </com.google.android.material.textfield.TextInputLayout>

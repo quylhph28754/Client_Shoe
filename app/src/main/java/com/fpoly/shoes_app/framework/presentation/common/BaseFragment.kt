@@ -69,6 +69,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         setupViews()
         setOnClick()
         bindViewModel()
+
     }
 
     override fun onStart() {
@@ -107,7 +108,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         super.onDetach()
         Log.v(TAG, "onDetach: $this")
     }
-
     abstract fun setupViews()
 
     abstract fun bindViewModel()

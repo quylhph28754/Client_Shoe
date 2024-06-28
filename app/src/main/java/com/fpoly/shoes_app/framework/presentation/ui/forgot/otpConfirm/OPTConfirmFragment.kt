@@ -4,15 +4,14 @@ import android.annotation.SuppressLint
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentOtpBinding
 import com.fpoly.shoes_app.framework.data.module.CheckValidate.strNullOrEmpty
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
-import com.fpoly.shoes_app.utility.SharedPreferencesManager.getIdUser
 import com.fpoly.shoes_app.utility.Status
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.muddz.styleabletoast.StyleableToast
@@ -23,7 +22,7 @@ class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>
     FragmentOtpBinding::inflate, OTPConfirmViewModel::class.java
 ) {
     private var countDownTimer: CountDownTimer? = null
-    private var idUser: String? = null
+    private var idUser: String = ""
 
     private fun startCountdownTimer() {
         binding.let { safeBinding ->
@@ -54,7 +53,7 @@ class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>
     }
 
     override fun setupViews() {
-        idUser = getIdUser()
+        idUser = sharedPreferences.getIdUser()
         startCountdownTimer()
     }
 
@@ -67,6 +66,7 @@ class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>
                         val otpConfirmResponse = result.data
                         if (otpConfirmResponse?.success == true) {
                             val navController = findNavController()
+                            fragmentManager?.popBackStackImmediate(R.id.loginFragmentScreen, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             navController.navigate(
                                 R.id.createNewPassFragment, null, NavOptions.Builder().setPopUpTo(
                                     navController.currentDestination?.id ?: -1, true
@@ -104,8 +104,8 @@ class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>
 
     override fun setOnClick() {
         binding.btnSelect.setOnClickListener {
+            Log.e("idUser",idUser)
             viewModel.otpConfirm(idUser!!, binding.edtOPT.text.toString().trim())
-
         }
         binding.countdownTimerTextView.setOnClickListener {
             countDownTimer?.cancel()

@@ -2,7 +2,7 @@ package com.fpoly.shoes_app.framework.domain.model.signUp
 
 import android.os.Parcelable
 import com.fpoly.shoes_app.framework.domain.model.forgotMail.BaseErrResponse
-import com.fpoly.shoes_app.framework.domain.model.login.User
+import com.fpoly.shoes_app.framework.domain.model.user.User
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -12,7 +12,7 @@ data class SignUp(
     @SerializedName("namePassword") val namePassword: String,
 ): Parcelable
  class SignUpResponse(
-    @SerializedName("user") val user: User?,
-      success: Boolean,
-      message: String?
+     @SerializedName("user") val user: User?,
+     success: Boolean,
+     message: String?
 ) : BaseErrResponse(success, message)

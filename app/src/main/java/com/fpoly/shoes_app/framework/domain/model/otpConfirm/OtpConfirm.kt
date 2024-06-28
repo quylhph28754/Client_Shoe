@@ -1,7 +1,7 @@
 package com.fpoly.shoes_app.framework.domain.model.otpConfirm
 
 import android.os.Parcelable
-import com.fpoly.shoes_app.framework.domain.model.login.User
+import com.fpoly.shoes_app.framework.domain.model.user.User
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 

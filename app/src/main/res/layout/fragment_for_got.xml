@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/dimen_16dp"
-            android:background="@drawable/border_edt"
+            android:hint="@string/your_email"
             android:drawableStart="@drawable/baseline_attach_email_24"
             android:drawablePadding="@dimen/dimen_10dp"
             android:imeOptions="actionNext"
