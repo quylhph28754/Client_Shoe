@@ -1,32 +1,23 @@
 package com.fpoly.shoes_app.framework.presentation.ui.forgot.createNewPass
 
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.content.Context
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentCreateNewPassBinding
-import com.fpoly.shoes_app.databinding.FragmentForGotBinding
 import com.fpoly.shoes_app.framework.data.module.CheckValidate.strNullOrEmpty
 import com.fpoly.shoes_app.framework.domain.model.newPass.NewPass
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
 import com.fpoly.shoes_app.framework.presentation.ui.forgot.CustomDialogFragment
-import com.fpoly.shoes_app.framework.presentation.ui.forgot.forGotEmail.ForGotEmailViewModel
 import com.fpoly.shoes_app.utility.Status
 import com.fpoly.shoes_app.utility.toMD5
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.launch
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class CreateNewPassFragment : BaseFragment<FragmentCreateNewPassBinding, CreateNewPassViewModel>(
     FragmentCreateNewPassBinding::inflate, CreateNewPassViewModel::class.java
@@ -36,6 +27,9 @@ class CreateNewPassFragment : BaseFragment<FragmentCreateNewPassBinding, CreateN
 //            .setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right).build()
     private var userId = ""
     private val dialog = CustomDialogFragment()
+    override fun setupPreViews() {
+
+    }
     override fun setupViews() {
         userId = sharedPreferences.getIdUser()
     }
@@ -51,7 +45,7 @@ class CreateNewPassFragment : BaseFragment<FragmentCreateNewPassBinding, CreateN
                         val forgotMailResponse = result.data
                         if (forgotMailResponse?.success == true) {
                             val navController = findNavController()
-                            fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
                             sharedPreferences.removeIdUser()
                             navController.navigate(
                                 R.id.loginFragmentScreen,null, NavOptions.Builder().setPopUpTo(

@@ -3,6 +3,7 @@ package com.fpoly.shoes_app.framework.presentation.common
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
+import android.os.VibratorManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import com.fpoly.shoes_app.framework.presentation.MainActivity
 import com.fpoly.shoes_app.framework.presentation.ViewModelActivity
 import com.fpoly.shoes_app.utility.SharedPreferencesManager
 import com.fpoly.shoes_app.utility.dialog.ProgressbarDialogFragment
+import com.fpoly.shoes_app.utility.service.ServiceUtil
 import javax.inject.Inject
 
 abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
@@ -35,15 +37,20 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         ViewModelProvider(this)[viewModelClass]
     }
 
+
     private var _navController: NavController? = null
 
     protected val navController: NavController? get() = _navController
+
+    @Inject
+    internal lateinit var service: ServiceUtil
 
     @Inject
     internal lateinit var sharedPreferences: SharedPreferencesManager
 
     @Inject
     internal lateinit var progressDialog: ProgressbarDialogFragment
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -63,6 +70,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         Log.v(TAG, "onCreateView: $this")
         _navController = requireActivity().findNavController(R.id.nav_host_fragment_content_main)
         _binding = bindingInflater.invoke(layoutInflater, container, false)
+        setupPreViews()
         return _binding?.root
     }
 
@@ -112,6 +120,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         super.onDetach()
         Log.v(TAG, "onDetach: $this")
     }
+    abstract fun setupPreViews()
     abstract fun setupViews()
 
     abstract fun bindViewModel()

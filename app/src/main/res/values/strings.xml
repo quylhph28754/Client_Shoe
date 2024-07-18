@@ -7,14 +7,15 @@
     <string name="profile">Profile</string>
 
     <string name="search">Tìm kiếm</string>
+    <string name="tittle_Address">Address Detail</string>
     <string name="special_offers">Ưu đãi đặc biệt</string>
     <string name="most_popular">Phổ biến nhất</string>
     <string name="see_all">Tất cả</string>
 
-<!--    //quy-->
-<!--    key map-->
-    <string name="key_map">AIzaSyC659j_v2LylmdRJsQ3Uw9ysEGLE9TDRVw</string>
-<!--    string other-->
+    <!--    //quy-->
+    <!--    key map-->
+    <string name="key_map" translatable="false" templateMergeStrategy="preserve">AIzaSyBdB2gv0-gp6-QWv2E8MBKK6MBcUlkd408</string>
+    <!--    string other-->
     <string name="capture">Máy Ảnh</string>
     <string name="selectImg">Chọn Nguồn Ảnh</string>
     <string name="gallery">Thư Viện</string>
@@ -43,9 +44,10 @@
     <string name="quick_create">Tạo tài khoản nhanh</string>
     <string name="full_name">Nhập vào tên đầy đủ của bạn</string>
     <string name="date">Nhập vào ngày sinh</string>
-    <string name="email_config">Nhập vào email</string>
+    <string name="email">you.@gmail.com</string>
     <string name="phone_config">Nhập vào số điện thoại</string>
     <string name="text_continue">Tiếp tục</string>
+    <string name="new_address">Tạo Địa Chỉ Mới</string>
     <string name="txt2_custom_dialog">Tài khoản của bạn sẵn sàng sử dụng.Bạn sẽ tiến đến Trang chủ sau giây lát</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="ba_dinh_const">Ba Đình,Hà Nội</string>
@@ -71,8 +73,9 @@
     <string name="resend_code_otp">Gửi lại mã</string>
     <string name="send">Gửi</string>
     <string name="confirm">Xác nhận</string>
-<!--    <string name="profile">Cấu hình</string>-->
+    <!--    <string name="profile">Cấu hình</string>-->
     <string name="phone_suggest">0123456789</string>
+    <string name="birthDay">0000-00-00</string>
     <string name="edit_info">Sửa thông tin</string>
     <string name="address">Địa chỉ</string>
     <string name="name">Họ và tên</string>
@@ -82,4 +85,5 @@
     <string name="agree">Đồng ý</string>
     <string name="otp_verification">Xác thực OTP</string>
     <string name="send_otp_to_your_mail">Mã OTP sẽ gửi đến email của bạn</string>
+    <string name="enter_place">Enter place</string>
 </resources>

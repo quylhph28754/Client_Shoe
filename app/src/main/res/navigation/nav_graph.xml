@@ -66,6 +66,9 @@
         <action
             android:id="@+id/action_addressFragment_to_addressDetailsFragment"
             app:destination="@id/addressDetailsFragment" />
+        <action
+            android:id="@+id/action_addressFragment_to_blankFragment"
+            app:destination="@id/editoraddFragment" />
     </fragment>
     <fragment
         android:id="@+id/addressDetailsFragment"
@@ -140,4 +143,9 @@
             android:id="@+id/action_signUpFragment_to_setUpAccountFragment"
             app:destination="@id/setUpAccountFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editoraddFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.addressDetail.EditOrAddFragment"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_editoradd" />
 </navigation>

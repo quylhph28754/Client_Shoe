@@ -17,7 +17,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
 
     @Inject
     lateinit var splashAdapter: SplashAdapter
+    override fun setupPreViews() {
 
+    }
     override fun setupViews() {
         binding.viewPagerSplash.adapter = splashAdapter
         binding.dotsIndicator.attachTo(binding.viewPagerSplash)

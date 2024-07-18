@@ -8,6 +8,9 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding, OrdersViewModel>(
     FragmentOrdersBinding::inflate,
     OrdersViewModel::class.java
 ) {
+    override fun setupPreViews() {
+
+    }
     override fun setupViews() {
         (requireActivity() as MainActivity).showBottomNavigation(true)
 

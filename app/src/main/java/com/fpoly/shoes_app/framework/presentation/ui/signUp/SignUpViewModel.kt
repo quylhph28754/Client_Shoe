@@ -1,9 +1,7 @@
 package com.fpoly.shoes_app.framework.presentation.ui.signUp
 
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fpoly.shoes_app.framework.data.dataremove.api.postInterface.SignUpInterface
 import com.fpoly.shoes_app.framework.domain.model.signUp.SignUp
 import com.fpoly.shoes_app.framework.domain.model.signUp.SignUpResponse
 import com.fpoly.shoes_app.framework.repository.SignUpRepository

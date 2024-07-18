@@ -11,20 +11,21 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class SetUpAccountViewModel  @Inject constructor(
-    private val setUpAccountRepository: SetUpAccountRepository,
+    private val setUpAccountRepository: SetUpAccountRepository
 ) : ViewModel() {
     private val _setUpResult = MutableStateFlow<Resource<SetUpAccountResponse>>(Resource.init(null))
     val setUpResult: StateFlow<Resource<SetUpAccountResponse>> = _setUpResult
 
-    fun setUp(id: String,setUpAccount: SetUpAccount) {
+    fun setUp(id: String, setUpAccount: SetUpAccount, imageFile: File?) {
         viewModelScope.launch {
             _setUpResult.value = Resource.loading(null)
             try {
-                val response = setUpAccountRepository.signUp(id,setUpAccount)
+                val response = setUpAccountRepository.signUp(id, setUpAccount, imageFile)
                 if (response.isSuccessful) {
                     val setUpResponse = response.body()
                     if (setUpResponse != null) {

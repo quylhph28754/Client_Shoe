@@ -1,82 +1,94 @@
 package com.fpoly.shoes_app.framework.presentation.ui.profile.addressDetail
 
-import android.os.Build
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import android.util.Log
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentAddressDetailsBinding
-import com.fpoly.shoes_app.framework.domain.model.profile.AddressDetail
+import com.fpoly.shoes_app.framework.domain.model.profile.address.AddressDetail
+import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.net.PlacesClient
-
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.Locale
 
 @AndroidEntryPoint
-class AddressDetailsFragment : Fragment(), OnMapReadyCallback {
-    private var _binding: FragmentAddressDetailsBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var googleMap: GoogleMap
-    private lateinit var name: String
-    private lateinit var address: String
-    private var lat = 0.0
-    private var long = 0.0
-    private lateinit var placesClient: PlacesClient
+class AddressDetailsFragment : BaseFragment<FragmentAddressDetailsBinding, AddressDetailsViewModel>(
+    FragmentAddressDetailsBinding::inflate, AddressDetailsViewModel::class.java
+), OnMapReadyCallback {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAddressDetailsBinding.inflate(inflater, container, false)
+    private lateinit var mMap: GoogleMap
+    private var bundle: AddressDetail? = null
+    override fun setupViews() {
+        bundle = arguments?.getParcelable("address")
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+    override fun setupPreViews() {
 
-        val mapFragment =
-            childFragmentManager.findFragmentById(R.id.mapFragment) as? SupportMapFragment
-        mapFragment?.getMapAsync(this)
-        context?.let {
-            Places.initialize(it, getString(R.string.key_map))
-            placesClient = Places.createClient(it)
-        }
+    }
+    override fun bindViewModel() {
+
+    }
+
+    override fun setOnClick() {
+//        binding.searchMap.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                query?.let {
+//                    searchLocationByName(it)
+//                }
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                return false
+//            }
+//        })
+
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-        return binding.root
-    }
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        arguments?.getParcelable<AddressDetail>("address")?.let { myObject ->
-            name = myObject.name
-            address = myObject.address
-            lat = myObject.lat
-            long = myObject.long
-        }
-        binding.nameAddressEditText.setText(name)
-        binding.addressDetailEditText.setText(address)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        this.googleMap = googleMap
-        val destination = LatLng(lat, long)
-        val cameraPosition = CameraPosition.Builder().target(destination).zoom(18f).build()
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-        val markerOptions = MarkerOptions().position(destination).title("Location")
-        googleMap.addMarker(markerOptions)
-    }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        mMap = googleMap
+        bundle?.let {
+            val latLng = LatLng(it.lat, it.long)
+            updateMapAndAddress(latLng, it.address)
+        }
     }
 
+    private fun searchLocationByName(locationName: String) {
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        try {
+            val addresses: List<Address> = geocoder.getFromLocationName(locationName, 1)!!
+            if (addresses.isNotEmpty()) {
+                val address = addresses[0]
+                val latLng = LatLng(address.latitude, address.longitude)
+                updateMapAndAddress(latLng, address.getAddressLine(0))
+            } else {
+                binding.addressDetailEditText.hint = "Location not found"
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            binding.addressDetailEditText.hint = "Error occurred"
+        }
+    }
+
+    private fun updateMapAndAddress(latLng: LatLng, address: String) {
+        mMap.clear()
+        mMap.addMarker(MarkerOptions().position(latLng).title(address))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.0f))
+        Log.d("AddressDetailsFragment", "Updated map with address: $address")
+        binding.nameAddressEditText.hint = bundle?.name ?: ""
+        binding.addressDetailEditText.hint = address
+    }
 }

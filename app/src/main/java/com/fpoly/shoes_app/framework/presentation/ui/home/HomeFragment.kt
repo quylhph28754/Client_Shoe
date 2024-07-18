@@ -20,7 +20,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     @Inject
     lateinit var categoriesWithImageAdapter: CategoriesWithImageAdapter
+    override fun setupPreViews() {
 
+    }
     override fun setupViews() {
         (requireActivity() as MainActivity).showBottomNavigation(true)
         setupCategories()

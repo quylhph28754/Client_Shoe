@@ -9,6 +9,9 @@ class CartFragment : BaseFragment<FragmentCartBinding, CartViewModel>(
     FragmentCartBinding::inflate,
     CartViewModel::class.java
 ) {
+    override fun setupPreViews() {
+
+    }
     override fun setupViews() {
         (requireActivity() as MainActivity).showBottomNavigation(true)
 

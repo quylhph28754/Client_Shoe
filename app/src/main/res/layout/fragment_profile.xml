@@ -34,14 +34,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/baseline_bubble_chart_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint2"
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraint1">
+        app:layout_constraintTop_toBottomOf="@+id/constraint1"
+        android:layout_gravity="center">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+  >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relative"
@@ -53,7 +59,7 @@
             tools:ignore="MissingConstraints">
 
             <ImageView
-                android:id="@+id/id_avatar"
+                android:id="@+id/idAvatar"
                 android:layout_width="@dimen/dimen_100dp"
                 android:layout_height="@dimen/dimen_100dp"
                 android:background="@drawable/circular_background"
@@ -97,6 +103,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="SpUsage" />
         <TextView
+            android:id="@+id/phoneProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/dimen_10dp"
@@ -109,10 +116,11 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="SpUsage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/constraint2">
+        app:layout_constraintTop_toBottomOf="@+id/shimmerLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintEdt"

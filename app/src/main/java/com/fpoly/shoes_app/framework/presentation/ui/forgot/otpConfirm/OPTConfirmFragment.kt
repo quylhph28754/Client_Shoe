@@ -1,6 +1,7 @@
 package com.fpoly.shoes_app.framework.presentation.ui.forgot.otpConfirm
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
@@ -17,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.launch
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>(
     FragmentOtpBinding::inflate, OTPConfirmViewModel::class.java
@@ -51,7 +53,9 @@ class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>
         super.onDestroyView()
         countDownTimer?.cancel()
     }
+    override fun setupPreViews() {
 
+    }
     override fun setupViews() {
         idUser = sharedPreferences.getIdUser()
         startCountdownTimer()
@@ -62,11 +66,11 @@ class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>
             viewModel.otpConfirmResult.collect { result ->
                 when (result.status) {
                     Status.SUCCESS -> {
-                        binding.progressBar.visibility = View.GONE
+                        showProgressbar(false)
                         val otpConfirmResponse = result.data
                         if (otpConfirmResponse?.success == true) {
                             val navController = findNavController()
-                            fragmentManager?.popBackStackImmediate(R.id.loginFragmentScreen, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            fragmentManager?.popBackStackImmediate(R.id.loginFragmentScreen, FragmentManager.POP_BACK_STACK_INCLUSIVE)
                             navController.navigate(
                                 R.id.createNewPassFragment, null, NavOptions.Builder().setPopUpTo(
                                     navController.currentDestination?.id ?: -1, true
@@ -86,14 +90,14 @@ class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>
                     Status.ERROR -> {
                         val errorMessage = result.message ?: "Unknown error"
                         Log.e("LoginFragment", "Login error: $errorMessage")
+                        showProgressbar(false)
                     }
 
                     Status.LOADING -> {
-                        binding.progressBar.visibility = View.VISIBLE
+                        showProgressbar(true)
                     }
 
                     Status.INIT -> {
-                        binding.progressBar.visibility = View.GONE
 
                     }
                 }
@@ -105,7 +109,7 @@ class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>
     override fun setOnClick() {
         binding.btnSelect.setOnClickListener {
             Log.e("idUser",idUser)
-            viewModel.otpConfirm(idUser!!, binding.edtOPT.text.toString().trim())
+            viewModel.otpConfirm(idUser, binding.edtOPT.text.toString().trim())
         }
         binding.countdownTimerTextView.setOnClickListener {
             countDownTimer?.cancel()

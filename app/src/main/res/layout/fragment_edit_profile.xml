@@ -26,20 +26,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:ignore="DuplicateIds,MissingConstraints">
+     >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/border_edt_config_info"
             android:drawablePadding="@dimen/dimen_10dp"
             android:hint="@string/full_name"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:padding="@dimen/dimen_17dp"
-            android:textColor="@color/background_color_field"
-            android:textSize="@dimen/dimen_15dp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_15sp"
+            tools:ignore="VisualLintTextFieldSize" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,21 +54,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutInputName"
-        tools:ignore="DuplicateIds,MissingConstraints">
+     >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/dateEditText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/border_edt_config_info"
             android:drawablePadding="@dimen/dimen_10dp"
-            android:focusable="false"
             android:hint="@string/date"
             android:imeOptions="actionNext"
             android:inputType="date"
             android:padding="@dimen/dimen_17dp"
-            android:textColor="@color/background_color_field"
-            android:textSize="@dimen/dimen_15dp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_15sp"
+            tools:ignore="VisualLintTextFieldSize" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,20 +82,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutInputDate"
-        tools:ignore="DuplicateIds,MissingConstraints">
+        tools:ignore="VisualLintBounds">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/mailEditText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/border_edt_config_info"
-            android:drawablePadding="@dimen/dimen_10dp"
-            android:hint="@string/email_config"
+            android:hint="@string/your_email"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:padding="@dimen/dimen_17dp"
-            android:textColor="@color/background_color_field"
-            android:textSize="@dimen/dimen_15dp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_15sp"
+            tools:ignore="VisualLintTextFieldSize" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +107,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutInputMail"
-        tools:ignore="DuplicateIds,MissingConstraints">
+        tools:ignore="VisualLintBounds">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/phoneEditText"
@@ -119,8 +120,9 @@
             android:inputType="phone"
             android:maxLength="10"
             android:padding="@dimen/dimen_17dp"
-            android:textColor="@color/background_color_field"
-            android:textSize="@dimen/dimen_15dp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_15sp"
+            tools:ignore="VisualLintTextFieldSize" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,16 +131,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/border_edt_config_info"
         android:padding="@dimen/dimen_17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutInputPhone"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="VisualLintBounds" />
 
     <Button
         android:id="@+id/btnNextPager"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dimen_16dp"
         android:layout_marginBottom="@dimen/dimen_45dp"
@@ -146,28 +149,10 @@
         android:backgroundTint="@color/black"
         android:text="@string/update"
         android:textColor="@color/white"
-        android:textSize="@dimen/dimen_15dp"
+        android:textSize="@dimen/text_size_15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-       />
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/progressBar"
-        android:layout_width="@dimen/dimen_0dp"
-        android:layout_height="@dimen/dimen_0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ProgressBar
-            android:layout_width="@dimen/dimen_100dp"
-            android:layout_height="@dimen/dimen_100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

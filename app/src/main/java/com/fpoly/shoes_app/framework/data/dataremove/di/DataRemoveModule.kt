@@ -1,6 +1,8 @@
 package com.fpoly.shoes_app.framework.data.dataremove.di
 
 import com.fpoly.shoes_app.framework.data.dataremove.api.CategoriesApi
+import com.fpoly.shoes_app.framework.data.dataremove.api.getInterface.ProfileInterface
+import com.fpoly.shoes_app.framework.data.dataremove.api.postInterface.AlladdressInterface
 import com.fpoly.shoes_app.framework.data.dataremove.api.postInterface.CreateNewPassInterface
 import com.fpoly.shoes_app.framework.data.dataremove.api.postInterface.ForgotMailInterface
 import com.fpoly.shoes_app.framework.data.dataremove.api.postInterface.LoginInterface
@@ -73,7 +75,14 @@ object DataRemoveModule {
         retrofit.create(SetUpInterface::class.java)
 @Provides
     @Singleton
-    fun provideNewPassWordmApi(retrofit: Retrofit): CreateNewPassInterface =
+    fun provideNewPassWordApi(retrofit: Retrofit): CreateNewPassInterface =
         retrofit.create(CreateNewPassInterface::class.java)
+@Provides
+    @Singleton
+    fun provideProfileApi(retrofit: Retrofit): ProfileInterface =
+        retrofit.create(ProfileInterface::class.java)@Provides
+    @Singleton
+    fun provideAddressApi(retrofit: Retrofit): AlladdressInterface =
+        retrofit.create(AlladdressInterface::class.java)
 
 }

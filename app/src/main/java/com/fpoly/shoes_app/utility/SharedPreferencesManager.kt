@@ -14,7 +14,9 @@ object SharedPreferencesManager {
     lateinit var bundle: Bundle
 
     private const val SPLASH_SCREEN_NOT_SHOW = "splash_screen_not_show"
+    private const val VIBRATE_MODE_KEY = "vibrate_mode"
     private const val userName = "username"
+    private const val userNameWait = "userNameWait"
     private const val passWord = "password"
     private const val idUser = "idUser"
 
@@ -23,30 +25,42 @@ object SharedPreferencesManager {
     fun setSplashScreenSkipped(isSkipped: Boolean) {
         saveBooleanDataByKey(SPLASH_SCREEN_NOT_SHOW, isSkipped)
     }
+    fun getVibrateModeState(): Boolean = getBooleanDataByKey(VIBRATE_MODE_KEY)
+    fun saveVibrateModeState(isVibrateMode: Boolean) {
+        saveBooleanDataByKey(VIBRATE_MODE_KEY, isVibrateMode)
+    }
+    fun getUserName(): String = getStringDataByKey(userName)
 
-    fun getUserName(): String =
-        getStringDataByKey(userName)
-
+    fun getUserNameWait(): String = getStringDataByKey(userNameWait)
 
     fun setPassWord(email: String, pass: String?) {
         saveStringDataByKey(userName, email)
         saveStringDataByKey(passWord, pass)
     }
 
+    fun setUserWait() {
+        saveStringDataByKey(userNameWait, getUserName())
+    }
+
     fun getPassWord(): String = getStringDataByKey(passWord)
-
-
-    fun removePassWord() {
+    fun removeUser() {
+        editor.remove(userName).apply()
         editor.remove(passWord).apply()
     }
 
-    fun setIdUser(id:String?){
+    fun setIdUser(id: String?) {
         saveStringDataByKey(idUser, id)
     }
+
     fun getIdUser(): String = getStringDataByKey(idUser)
     fun removeIdUser() {
         editor.remove(idUser).apply()
     }
+
+    fun removeUserWait() {
+        editor.remove(userNameWait).apply()
+    }
+
     private fun saveStringDataByKey(key: String?, data: String?) {
         editor.putString(key, data).apply()
     }

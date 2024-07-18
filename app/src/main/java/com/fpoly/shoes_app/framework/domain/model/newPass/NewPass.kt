@@ -1,8 +1,7 @@
 package com.fpoly.shoes_app.framework.domain.model.newPass
 
 import android.os.Parcelable
-import com.fpoly.shoes_app.framework.domain.model.forgotMail.BaseErrResponse
-import com.fpoly.shoes_app.framework.domain.model.user.User
+import com.fpoly.shoes_app.framework.domain.model.baseError.BaseErrResponse
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 

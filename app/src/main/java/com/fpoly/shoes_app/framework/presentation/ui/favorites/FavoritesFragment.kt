@@ -8,6 +8,9 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding, FavoritesViewMo
     FragmentFavoritesBinding::inflate,
     FavoritesViewModel::class.java
 ) {
+    override fun setupPreViews() {
+
+    }
     override fun setupViews() {
         (requireActivity() as MainActivity).showBottomNavigation(true)
 

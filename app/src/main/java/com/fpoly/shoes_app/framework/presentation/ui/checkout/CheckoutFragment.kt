@@ -7,6 +7,9 @@ class CheckoutFragment : BaseFragment<FragmentCheckoutBinding, CheckoutViewModel
     FragmentCheckoutBinding::inflate,
     CheckoutViewModel::class.java
 ) {
+    override fun setupPreViews() {
+
+    }
     override fun setupViews() {
         TODO("Not yet implemented")
     }

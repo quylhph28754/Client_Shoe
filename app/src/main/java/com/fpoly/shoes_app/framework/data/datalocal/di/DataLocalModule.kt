@@ -4,10 +4,12 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.fpoly.shoes_app.utility.SharedPreferencesManager
+import com.fpoly.shoes_app.utility.service.ServiceUtil
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -30,4 +32,9 @@ object DataLocalModule {
             this.sharedPreferences = sharedPreferences
             this.editor = editor
         }
+
+    @Provides
+    fun provideServiceUtil(): ServiceUtil {
+        return ServiceUtil
+    }
 }

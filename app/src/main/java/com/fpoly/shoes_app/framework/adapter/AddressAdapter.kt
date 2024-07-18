@@ -3,23 +3,31 @@ package com.fpoly.shoes_app.framework.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.fpoly.shoes_app.R
-import com.fpoly.shoes_app.framework.domain.model.profile.AddressDetail
+import com.fpoly.shoes_app.framework.domain.model.profile.address.Addresse
 
-class AddressAdapter(private val addressDetails: List<AddressDetail>, private val onClick: (AddressDetail) -> Unit) :
-    RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() {
+class AddressAdapter(
+    private val addressDetails: MutableList<Addresse>?,
+    private val onAddressClick: (Addresse) -> Unit,
+    private val onEditClick: (Addresse) -> Unit
+) : RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() {
 
     inner class AddressViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nameTextView: TextView = itemView.findViewById(R.id.nameAddress)
-        val addressTextView: TextView = itemView.findViewById(R.id.Address)
+        private val nameTextView: TextView = itemView.findViewById(R.id.nameAddress)
+        private val addressTextView: TextView = itemView.findViewById(R.id.Address)
+        private val imageEdit: ImageView = itemView.findViewById(R.id.imageEdit)
 
-        fun bind(addressDetail: AddressDetail) {
-            nameTextView.text = addressDetail.name
-            addressTextView.text = addressDetail.address
+        fun bind(addressDetail: Addresse) {
+            nameTextView.text = addressDetail.nameAddress
+            addressTextView.text = addressDetail.detailAddress
             itemView.setOnClickListener {
-                onClick(addressDetail)
+                onAddressClick(addressDetail)
+            }
+            imageEdit.setOnClickListener {
+                onEditClick(addressDetail)
             }
         }
     }
@@ -30,8 +38,12 @@ class AddressAdapter(private val addressDetails: List<AddressDetail>, private va
     }
 
     override fun onBindViewHolder(holder: AddressViewHolder, position: Int) {
-        holder.bind(addressDetails[position])
+        holder.bind(addressDetails!![position])
     }
 
-    override fun getItemCount() = addressDetails.size
+    override fun getItemCount() = addressDetails!!.size
+    fun deleteItem(position: Int) {
+        addressDetails!!.removeAt(position)
+        notifyItemRemoved(position)
+    }
 }

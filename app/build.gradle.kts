@@ -43,14 +43,21 @@ android {
 
 dependencies {
 //quy
+    //shimmer
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
     //service location
     //coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     //map
+    implementation ("com.google.maps.android:places-ktx:3.2.0")
+    implementation ("com.google.maps.android:android-maps-utils:3.8.2")
+    implementation ("com.google.android.libraries.places:places:3.5.0")
+    implementation ("com.beust:klaxon:5.6")
     implementation ("com.google.maps:google-maps-services:2.2.0")
+    implementation ("com.google.android.gms:play-services-location:21.3.0")
     implementation("com.google.android.gms:play-services-maps:19.0.0")
     //stdlib
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.9.24")
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
     //toast
     implementation ("io.github.muddz:styleabletoast:2.4.0")
     //end quy
@@ -63,8 +70,8 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.2")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.3")
     implementation("androidx.fragment:fragment-ktx:1.8.1")
     implementation("com.google.android.libraries.places:places:3.5.0")
     testImplementation("junit:junit:4.13.2")

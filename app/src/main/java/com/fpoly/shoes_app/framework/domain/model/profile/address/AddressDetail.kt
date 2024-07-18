@@ -1,4 +1,4 @@
-package com.fpoly.shoes_app.framework.domain.model.profile
+package com.fpoly.shoes_app.framework.domain.model.profile.address
 
 import android.os.Parcel
 import android.os.Parcelable

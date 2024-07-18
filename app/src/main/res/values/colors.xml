@@ -17,4 +17,5 @@
     <color name="color_background_toolbar">#00D0BCFF</color>
     <color name="background_color_field">#ACACAE</color>
     <color name="color_text_action">#5D81C5</color>
+    <color name="red">#F44336</color>
 </resources>

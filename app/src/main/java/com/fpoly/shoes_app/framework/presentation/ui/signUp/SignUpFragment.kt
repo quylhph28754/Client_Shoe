@@ -3,25 +3,17 @@ package com.fpoly.shoes_app.framework.presentation.ui.signUp
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.fpoly.shoes_app.R
-import com.fpoly.shoes_app.databinding.FragmentLoginScreenBinding
 import com.fpoly.shoes_app.databinding.FragmentSignUpBinding
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
-import com.fpoly.shoes_app.framework.presentation.ui.login.LoginViewModel
-import com.fpoly.shoes_app.utility.SharedPreferencesManager
 import com.fpoly.shoes_app.utility.Status
 import com.fpoly.shoes_app.utility.toMD5
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.launch
 
@@ -29,7 +21,9 @@ import kotlinx.coroutines.launch
 class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     FragmentSignUpBinding::inflate, SignUpViewModel::class.java
 ) {
+    override fun setupPreViews() {
 
+    }
     override fun setupViews() {
     }
 
@@ -39,10 +33,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             viewModel.signUpResult.collect { result ->
                 when (result.status) {
                     Status.SUCCESS -> {
-                        binding.progressBar.visibility = View.GONE
+                        showProgressbar(false)
                         val signUpResponse = result.data
                         if (signUpResponse?.success == true) {
-                            var bundle = Bundle()
+                            val bundle = Bundle()
                                 bundle.putString("id", signUpResponse.user?.id)
                             val navController = findNavController()
                             binding.userNameEditText.text?.clear()
@@ -73,16 +67,15 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
 
                     Status.ERROR -> {
                         val errorMessage = result.message ?: "Unknown error"
-                        binding.progressBar.visibility = View.GONE
+                        Log.e("errorMessage",errorMessage)
+                        showProgressbar(false)
                     }
 
                     Status.LOADING -> {
-                        binding.progressBar.visibility = View.VISIBLE
+                        showProgressbar(true)
                     }
 
                     Status.INIT -> {
-                        binding.progressBar.visibility = View.GONE
-
                     }
                 }
             }
