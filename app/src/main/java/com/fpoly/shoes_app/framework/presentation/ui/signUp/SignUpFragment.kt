@@ -12,6 +12,7 @@ import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentSignUpBinding
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
 import com.fpoly.shoes_app.utility.Status
+import com.fpoly.shoes_app.utility.service.ServiceUtil.playNotificationSound
 import com.fpoly.shoes_app.utility.toMD5
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.muddz.styleabletoast.StyleableToast
@@ -42,6 +43,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                             binding.userNameEditText.text?.clear()
                             binding.passwordEditText.text?.clear()
                             binding.rePasswordEditText.text?.clear()
+                            playNotificationSound(requireContext(),"Đăng ký tài khoản thành công","")
                             navController.navigate(
                                 R.id.setUpAccountFragment, bundle, NavOptions.Builder().setPopUpTo(
                                     navController.currentDestination?.id ?: -1, true

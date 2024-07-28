@@ -37,7 +37,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
             when (item.title) {
                 getString(R.string.general_notification) -> {
                     sharedPreferences.saveNotificationModeState(isChecked)
-                    if (isChecked) service.playNotificationSound(requireContext())
+                    if (isChecked) service.playNotificationSound(requireContext(),"Thông Báo Được Bật","")
                 }
 
                 getString(R.string.sound) -> {

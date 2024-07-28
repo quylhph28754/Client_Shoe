@@ -28,6 +28,7 @@ import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
 import com.fpoly.shoes_app.utility.Imagesss
 import com.fpoly.shoes_app.utility.Status
 import com.fpoly.shoes_app.utility.getBitmapFromDrawable
+import com.fpoly.shoes_app.utility.service.ServiceUtil.playNotificationSound
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.muddz.styleabletoast.StyleableToast
@@ -106,12 +107,14 @@ class SetUpAccountFragment : BaseFragment<FragmentSetUpAccountBinding, SetUpAcco
                                 binding.nameEditText.text?.clear()
                                 binding.mailEditText.text?.clear()
                                 binding.phoneEditText.text?.clear()
+                                playNotificationSound(requireContext(),"Thiết lập tài khoản thành công","")
                                 if (sharedPreferences.getIdUser().isNullOrEmpty()){
                                 fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
                                 navController.navigate(
                                     R.id.loginFragmentScreen, null, NavOptions.Builder().setPopUpTo(
                                         navController.currentDestination?.id ?: -1, true
                                     ).build()
+
                                 )}else{
                                     findNavController().popBackStack()
                                 }
