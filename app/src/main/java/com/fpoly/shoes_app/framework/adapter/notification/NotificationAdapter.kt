@@ -1,0 +1,41 @@
+package com.fpoly.shoes_app.framework.adapter.notification
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Switch
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.fpoly.shoes_app.R
+import com.fpoly.shoes_app.framework.domain.model.profile.notification.Notification
+
+class NotificationAdapter (
+    private val notifications: List<Notification>,
+    private val onSwitchChanged: (Notification, Boolean) -> Unit
+    ) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
+
+        class NotificationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
+            val switchControl: Switch = view.findViewById(R.id.switchControl)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_notification, parent, false)
+            return NotificationViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
+            val notification = notifications[position]
+            holder.textViewTitle.text = notification.title
+            holder.switchControl.isChecked = notification.isChecked
+
+            holder.switchControl.setOnCheckedChangeListener { _, isChecked ->
+                onSwitchChanged(notification, isChecked)
+            }
+        }
+
+        override fun getItemCount(): Int {
+            return notifications.size
+        }
+}

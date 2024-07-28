@@ -2,50 +2,61 @@ package com.fpoly.shoes_app.framework.presentation.ui.profile.notification
 
 import android.content.Context
 import android.media.AudioManager
-import android.media.Ringtone
-import android.media.RingtoneManager
 import android.os.Build
-import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.VibratorManager
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
-import com.fpoly.shoes_app.databinding.FragmentEditProfileBinding
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentNotificationBinding
+import com.fpoly.shoes_app.framework.adapter.notification.NotificationAdapter
+import com.fpoly.shoes_app.framework.domain.model.profile.notification.Notification
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
-
 import dagger.hilt.android.AndroidEntryPoint
 
+@RequiresApi(Build.VERSION_CODES.S)
 @AndroidEntryPoint
 class NotificationFragment : BaseFragment<FragmentNotificationBinding, NotificationViewModel>(
     FragmentNotificationBinding::inflate, NotificationViewModel::class.java
 ) {
     private lateinit var audioManager: AudioManager
-    private fun muteApp() {
-        val audioManager = requireContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        audioManager.adjustStreamVolume(
-            AudioManager.STREAM_NOTIFICATION,
-            AudioManager.ADJUST_MUTE,
-            0
+    private val notifications by lazy {
+        listOf(
+            Notification(
+                getString(R.string.general_notification),
+                sharedPreferences.getNotificationModeState()
+            ),
+            Notification(getString(R.string.sound), sharedPreferences.getSoundModeState()),
+            Notification(getString(R.string.vibrate), sharedPreferences.getVibrateModeState()),
+            Notification(getString(R.string.app_updates), false),
+            Notification(getString(R.string.new_service_available), false),
+            Notification(getString(R.string.new_tips_available), false)
         )
     }
-    private fun unmuteApp() {
-        val audioManager = requireContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        audioManager.adjustStreamVolume(
-            AudioManager.STREAM_NOTIFICATION,
-            AudioManager.ADJUST_UNMUTE,
-            0
-        )
+    private val adapter by lazy {
+        NotificationAdapter(notifications) { item, isChecked ->
+            when (item.title) {
+                getString(R.string.general_notification) -> {
+                    sharedPreferences.saveNotificationModeState(isChecked)
+                    if (isChecked) service.playNotificationSound(requireContext())
+                }
+
+                getString(R.string.sound) -> {
+                    sharedPreferences.saveSoundModeState(isChecked)
+                    if (isChecked) service.playCustomSound(requireContext())
+                }
+
+                getString(R.string.vibrate) -> {
+                    sharedPreferences.saveVibrateModeState(isChecked)
+                    if (isChecked) service.triggerVibration(requireContext())
+                }
+            }
+        }
     }
 
     override fun setupPreViews() {
         audioManager = requireContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
-
     }
+
 //    private fun playSuccessSound() {
 //        val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 //        val ringtone: Ringtone = RingtoneManager.getRingtone(requireContext(), notification)
@@ -62,35 +73,20 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding, Notificat
 //        }
 //    }
 
-
     @RequiresApi(Build.VERSION_CODES.S)
     override fun setupViews() {
-
+        binding.recyclerViewNotifications.adapter = adapter
+        binding.recyclerViewNotifications.layoutManager = LinearLayoutManager(requireContext())
 
     }
 
     override fun bindViewModel() {
     }
+
     @RequiresApi(Build.VERSION_CODES.S)
     override fun setOnClick() {
-        binding.notification.setOnCheckedChangeListener { _, isChecked ->
-        if (isChecked) {
-            service?.playNotificationSound(requireContext())
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
         }
-    }
-        binding.switchSound.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                service?.playCustomSound(requireContext())
-            }
-        }
-        binding.switchVibrate.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                service.triggerVibration(requireContext())
-                sharedPreferences.saveVibrateModeState(true)
-            } else {
-                sharedPreferences.saveVibrateModeState(false)
-            }
-        }
-
     }
 }
