@@ -4,9 +4,11 @@ import android.content.Context
 import android.text.TextUtils
 import android.util.Patterns
 import android.widget.Button
+import android.widget.Toast
 import com.fpoly.shoes_app.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import java.io.File
 
 object CheckValidate {
     fun checkPhone(
@@ -66,5 +68,13 @@ object CheckValidate {
             return ""
         }
         return string
+    }
+    fun validateInput(context: Context, name: String, mail: String, phone: String, birth: String, gender: String, imagePath: File?): Boolean {
+        if (name.isBlank() || mail.isBlank() || phone.isBlank() || birth.isBlank() || gender.isBlank() || imagePath == null) {
+            Toast.makeText(context, "Please fill all fields and select an image", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        // Add any other validation logic as needed
+        return true
     }
 }

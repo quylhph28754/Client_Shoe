@@ -4,12 +4,15 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -19,9 +22,12 @@ import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentSetUpAccountBinding
 import com.fpoly.shoes_app.framework.data.othetasks.AddImage
 import com.fpoly.shoes_app.framework.data.module.CheckValidate
+import com.fpoly.shoes_app.framework.data.othetasks.AddImage.Glides
 import com.fpoly.shoes_app.framework.domain.model.setUp.SetUpAccount
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
+import com.fpoly.shoes_app.utility.Imagesss
 import com.fpoly.shoes_app.utility.Status
+import com.fpoly.shoes_app.utility.getBitmapFromDrawable
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.muddz.styleabletoast.StyleableToast
@@ -29,15 +35,17 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.util.Calendar
 
-@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class SetUpAccountFragment : BaseFragment<FragmentSetUpAccountBinding, SetUpAccountViewModel>(
     FragmentSetUpAccountBinding::inflate, SetUpAccountViewModel::class.java
 ) {
-    private val gender = arrayOf( "Nữ","Nam")
-    private var uriPath : Uri?=null
-    private var id=""
-    private var type=1
+    private lateinit var captureImageLauncher: ActivityResultLauncher<Intent>
+    private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
+    private val gender = arrayOf("Nữ", "Nam")
+    private var uriPath :Uri?=null
+    private var id: String = ""
+    private var type: Int = 1
+
     private fun showDatePickerDialog(dateEditText: EditText, layoutData: TextInputLayout) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -53,27 +61,34 @@ class SetUpAccountFragment : BaseFragment<FragmentSetUpAccountBinding, SetUpAcco
         datePickerDialog.show()
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            uriPath = AddImage.handleImageSelectionResult(requestCode, resultCode, data)
-            uriPath?.let {
-                Glide.with(requireContext())
-                    .load( it)
-                    .placeholder(R.drawable.baseline_account_circle_24)
-                    .error(R.drawable.baseline_account_circle_24)
-                    .circleCrop() // Bo tròn ảnh
-                    .into(binding.imgAvatar);
-//                binding.imgAvatar.setImageURI(it) // Set the image URI to the ImageView
+
+    override fun setupPreViews() {
+        captureImageLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                uriPath = AddImage.imageUri
+                handleResult(uriPath)
+            }
+        }
+
+        pickImageLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                uriPath = AddImage.handleImageSelectionResult(result.data)
+                handleResult(uriPath)
             }
         }
     }
-    override fun setupPreViews() {
-
+    private fun handleResult(uri: Uri?) {
+        uri?.let {
+            Glides(it,requireContext(),binding.imgAvatar)
+        }
     }
     override fun setupViews() {
-        id = arguments?.getString("id").toString()
+        id = arguments?.getString("id") ?: sharedPreferences.getIdUser()
+
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, gender)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinner.adapter = adapter
@@ -85,39 +100,41 @@ class SetUpAccountFragment : BaseFragment<FragmentSetUpAccountBinding, SetUpAcco
                 when (result.status) {
                     Status.SUCCESS -> {
                         showProgressbar(false)
-                        val signUpResponse = result.data
-                        if (signUpResponse?.success == true) {
-                            val navController = findNavController()
-                            binding.nameEditText.text?.clear()
-                            binding.mailEditText.text?.clear()
-                            binding.phoneEditText.text?.clear()
-                            fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-
-                            navController.navigate(
-                                R.id.loginFragmentScreen, null, NavOptions.Builder().setPopUpTo(
-                                    navController.currentDestination?.id ?: -1, true
-                                ).build()
-                            )
-                            StyleableToast.makeText(
-                                requireContext(), getString(R.string.success), R.style.success
-                            ).show()
-                            return@collect
+                        result.data?.let { signUpResponse ->
+                            if (signUpResponse.success) {
+                                val navController = findNavController()
+                                binding.nameEditText.text?.clear()
+                                binding.mailEditText.text?.clear()
+                                binding.phoneEditText.text?.clear()
+                                if (sharedPreferences.getIdUser().isNullOrEmpty()){
+                                fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                                navController.navigate(
+                                    R.id.loginFragmentScreen, null, NavOptions.Builder().setPopUpTo(
+                                        navController.currentDestination?.id ?: -1, true
+                                    ).build()
+                                )}else{
+                                    findNavController().popBackStack()
+                                }
+                                StyleableToast.makeText(
+                                    requireContext(), getString(R.string.success), R.style.success
+                                ).show()
+                                return@collect
+                            }
                         }
-
                     }
 
                     Status.ERROR -> {
                         val errorMessage = result.message ?: "Unknown error"
-                        Log.e("error",errorMessage)
-                        showProgressbar(false)
+                        Log.e("error", errorMessage)
+//                        showProgressbar(false)
                     }
 
                     Status.LOADING -> {
                         showProgressbar(true)
-                    }
 
-                    Status.INIT -> {
                     }
+//                        showProgressbar(true)
+                    Status.INIT -> { /* No-op */ }
                 }
             }
         }
@@ -125,73 +142,38 @@ class SetUpAccountFragment : BaseFragment<FragmentSetUpAccountBinding, SetUpAcco
 
     override fun setOnClick() {
         binding.relative.setOnClickListener {
-            AddImage.openImageDialog(requireContext(), requireActivity(), this@SetUpAccountFragment)
+            val bmp = requireContext().getBitmapFromDrawable(R.drawable.baseline_account_circle_24)
+            AddImage.openImageDialog(null,requireContext(), requireActivity()) { intent ->
+                when (intent.action) {
+                    MediaStore.ACTION_IMAGE_CAPTURE -> captureImageLauncher.launch(intent)
+                    Intent.ACTION_PICK -> pickImageLauncher.launch(intent)
+                }
+            }        }
+
+        binding.dateEditText.setOnClickListener {
+            showDatePickerDialog(binding.dateEditText, binding.layoutInputDate)
         }
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
-        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?, view: View?, position: Int, id: Long
-            ) {
-                parent?.getItemAtPosition(position) as String
-                type = position
-                Log.e("type",(type + position).toString())
+            if (sharedPreferences.getIdUser().isNullOrEmpty()){
+                fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            navController!!.navigate(
+                R.id.loginFragmentScreen, null, NavOptions.Builder().setPopUpTo(
+                    navController!!.currentDestination?.id ?: -1, true
+                ).build())
+                return@setNavigationOnClickListener
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Xử lý khi không có mục nào được chọn
-            }
-        }
-        binding.mailEditText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                CheckValidate.checkEmail(
-                    requireContext(),
-                    binding.mailEditText,
-                    binding.layoutInputMail,
-                    binding.layoutInputPhone
-                )
-                return@setOnEditorActionListener true
-            }
-            false
-        }
-        binding.phoneEditText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                CheckValidate.checkPhone(
-                    requireContext(),
-                    binding.phoneEditText,
-                    binding.layoutInputPhone,
-                    binding.btnNextPager
-                )
-                return@setOnEditorActionListener true
-            }
-            false
-        }
-        binding.nameEditText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                CheckValidate.checkStr(
-                    requireContext(),
-                    binding.phoneEditText,
-                    binding.layoutInputPhone,
-                    binding.layoutInputMail
-                )
-                return@setOnEditorActionListener true
-            }
-            false
-        }
-        binding.dateEditText.setOnClickListener {
-            showDatePickerDialog(binding.dateEditText, binding.layoutInputMail)
+                      findNavController().popBackStack()
         }
         binding.btnNextPager.setOnClickListener {
-            val imageAccount = uriPath?.let { Uri.parse(it.toString())?.path?.let { path -> File(path) } }
-            val fullName= binding.nameEditText.text.toString().trim()
-            val phoneNumber= binding.phoneEditText.text.toString().trim()
-            val birthDay= binding.dateEditText.text.toString().trim()
-            val grender=type.toString()
-            Log.e("uri",uriPath.toString())
-            Log.e("idUser",id)
-            Log.e("type",type.toString())
-            viewModel.setUp(id, SetUpAccount(imageAccount.toString(), fullName, "", phoneNumber, birthDay, grender), imageAccount)
+            val name = binding.nameEditText.text.toString().trim()
+            val mail = binding.mailEditText.text.toString().trim()
+            val phone = binding.phoneEditText.text.toString().trim()
+            val birth = binding.dateEditText.text.toString().trim()
+            val gender = binding.spinner.selectedItem.toString()
+            val imagePath = uriPath?.let { File(Imagesss.getPathFromUri(it, requireContext())) }
+
+                viewModel.setUp(id,imagePath,phone,name,mail,birth, gender )
+
         }
     }
 }

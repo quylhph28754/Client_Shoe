@@ -9,5 +9,5 @@ import javax.inject.Inject
 class CreateNewPassRepository  @Inject constructor(
     private val apiService: CreateNewPassInterface
 ) {
-    suspend fun newPass(id:String,newPass: NewPass) = apiService.resetPassword(id,newPass)
+    suspend fun newPass(newPass: NewPass) = apiService.resetPassword(newPass)
 }

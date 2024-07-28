@@ -7,6 +7,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface OTPConfirmInterface {
-    @POST("authenticationotp")
+    @POST("sendoforgot")
     suspend fun OTPConfirm(@Body otpConfirmRequest: OtpConfirm): Response<OtpConfirmResponse>
 }

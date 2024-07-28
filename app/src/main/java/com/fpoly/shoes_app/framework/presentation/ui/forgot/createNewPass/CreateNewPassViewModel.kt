@@ -21,11 +21,11 @@ class CreateNewPassViewModel@Inject constructor(
     private val _createPassResult = MutableStateFlow<Resource<NewPassResponse>>(Resource.init(null))
     val createPassResult: StateFlow<Resource<NewPassResponse>> = _createPassResult
 
-    fun newPass(id:String ,newPass: NewPass) {
+    fun newPass(newPass: NewPass) {
         viewModelScope.launch {
             _createPassResult.value = Resource.loading(null)
             try {
-                val response = createNewPassRepository.newPass(id,newPass)
+                val response = createNewPassRepository.newPass(newPass)
                 if (response.isSuccessful) {
                     val createPassResponse = response.body()
                     if (createPassResponse != null) {

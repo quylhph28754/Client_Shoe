@@ -86,4 +86,5 @@
     <string name="otp_verification">Xác thực OTP</string>
     <string name="send_otp_to_your_mail">Mã OTP sẽ gửi đến email của bạn</string>
     <string name="enter_place">Enter place</string>
+    <string name="noData">Không có dữ liệu</string>
 </resources>

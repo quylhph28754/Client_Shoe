@@ -17,6 +17,7 @@ import com.fpoly.shoes_app.framework.data.module.CheckValidate
 import com.fpoly.shoes_app.framework.domain.model.profile.ProfileResponse
 import com.fpoly.shoes_app.framework.domain.model.setUp.SetUpAccount
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
+import com.fpoly.shoes_app.framework.presentation.ui.setUpAccount.SetUpAccountViewModel
 import com.fpoly.shoes_app.utility.Status
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,8 +27,8 @@ import java.util.Calendar
 
 @Suppress("DEPRECATION", "UNUSED_EXPRESSION")
 @AndroidEntryPoint
-class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfileViewModel>(
-    FragmentEditProfileBinding::inflate, EditProfileViewModel::class.java
+class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, SetUpAccountViewModel>(
+    FragmentEditProfileBinding::inflate, SetUpAccountViewModel::class.java
 ) {
     private val gender = arrayOf("Nữ", "Nam")
     private var id = ""
@@ -62,7 +63,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
 
     override fun bindViewModel() {
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.editProfileResult.collect { result ->
+                viewModel.setUpResult.collect { result ->
                     when (result.status) {
                         Status.SUCCESS -> {
                             showProgressbar(false)
@@ -132,7 +133,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
                 user.phoneNumber ?: getString(com.fpoly.shoes_app.R.string.phone_suggest)
             )
             binding.dateEditText.setText(
-                user.birthDay ?: getString(com.fpoly.shoes_app.R.string.birthDay)
+                user.birthday ?: getString(com.fpoly.shoes_app.R.string.birthDay)
             )
             binding.mailEditText.setText(
                 user.gmail ?: getString(com.fpoly.shoes_app.R.string.email)
@@ -224,14 +225,13 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, EditProfile
             val gmail = binding.mailEditText
             val birthDay = binding.dateEditText
             val grender = type.toString()
-            showProgressbar(true)
             binding.btnNextPager.isEnabled = false
             fullName.isEnabled =false
             phoneNumber.isEnabled =false
             gmail.isEnabled =false
             birthDay.isEnabled =false
             viewModel.setUp(
-                id, SetUpAccount("", fullName.text.toString().trim(), gmail.text.toString().trim(), phoneNumber.text.toString().trim(), birthDay.text.toString().trim(), grender)
+                id, null,phoneNumber.text.toString().trim(), fullName.text.toString().trim(), gmail.text.toString().trim(), birthDay.text.toString().trim(), grender
             )
         }
     }

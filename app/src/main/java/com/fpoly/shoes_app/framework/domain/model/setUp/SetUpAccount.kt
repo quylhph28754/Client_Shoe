@@ -8,12 +8,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class SetUpAccount(
-    @SerializedName("imageAccount") val imageAccount: String,
     @SerializedName("fullName") val fullName: String,
     @SerializedName("nameAccount") val nameAccount: String,
     @SerializedName("phoneNumber") val phoneNumber: String,
     @SerializedName("birthDay") val birthDay: String,
-    @SerializedName("grender") val grender: String,
+    @SerializedName("grender") val grender: String
 ): Parcelable
 class SetUpAccountResponse(
     @SerializedName("user") val user: User?,

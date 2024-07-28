@@ -15,6 +15,8 @@ object SharedPreferencesManager {
 
     private const val SPLASH_SCREEN_NOT_SHOW = "splash_screen_not_show"
     private const val VIBRATE_MODE_KEY = "vibrate_mode"
+    private const val SOUND_MODE_KEY = "sound_mode"
+    private const val NOTIFICATION_MODE_KEY = "notification_mode"
     private const val userName = "username"
     private const val userNameWait = "userNameWait"
     private const val passWord = "password"
@@ -26,8 +28,16 @@ object SharedPreferencesManager {
         saveBooleanDataByKey(SPLASH_SCREEN_NOT_SHOW, isSkipped)
     }
     fun getVibrateModeState(): Boolean = getBooleanDataByKey(VIBRATE_MODE_KEY)
+    fun getSoundModeState(): Boolean = getBooleanDataByKey(SOUND_MODE_KEY)
+    fun getNotificationModeState(): Boolean = getBooleanDataByKey(NOTIFICATION_MODE_KEY)
     fun saveVibrateModeState(isVibrateMode: Boolean) {
         saveBooleanDataByKey(VIBRATE_MODE_KEY, isVibrateMode)
+    }
+    fun saveSoundModeState(isSoundMode: Boolean) {
+        saveBooleanDataByKey(SOUND_MODE_KEY, isSoundMode)
+    }
+    fun saveNotificationModeState(isNotificationMode: Boolean) {
+        saveBooleanDataByKey(NOTIFICATION_MODE_KEY, isNotificationMode)
     }
     fun getUserName(): String = getStringDataByKey(userName)
 

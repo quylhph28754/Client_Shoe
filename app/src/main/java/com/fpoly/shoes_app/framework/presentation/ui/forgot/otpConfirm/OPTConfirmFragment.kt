@@ -6,13 +6,16 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentOtpBinding
 import com.fpoly.shoes_app.framework.data.module.CheckValidate.strNullOrEmpty
+import com.fpoly.shoes_app.framework.domain.model.forgotMail.ForgotMail
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
+import com.fpoly.shoes_app.framework.presentation.ui.forgot.forGotEmail.ForGotEmailViewModel
 import com.fpoly.shoes_app.utility.Status
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.muddz.styleabletoast.StyleableToast
@@ -23,12 +26,15 @@ import kotlinx.coroutines.launch
 class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>(
     FragmentOtpBinding::inflate, OTPConfirmViewModel::class.java
 ) {
+    private val forGotEmailViewModel: ForGotEmailViewModel by activityViewModels()
     private var countDownTimer: CountDownTimer? = null
     private var idUser: String = ""
+    private lateinit var email: String
 
     private fun startCountdownTimer() {
+        binding.countdownTimerTextView.isEnabled = false
+        binding.btnSelect.isEnabled = true
         binding.let { safeBinding ->
-            safeBinding.btnSelect.isEnabled = true
             val countdownDuration = 120000
             countDownTimer = object : CountDownTimer(countdownDuration.toLong(), 1000) {
                 @SuppressLint("DefaultLocale")
@@ -42,22 +48,23 @@ class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>
                 @SuppressLint("SetTextI18n")
                 override fun onFinish() {
                     safeBinding.countdownTimerTextView.text = "00:00"
+                    safeBinding.countdownTimerTextView.text = getString(R.string.resend_code_otp)
                     safeBinding.btnSelect.isEnabled = false
+                    safeBinding.countdownTimerTextView.isEnabled = true
+                    countDownTimer?.cancel()
                 }
             }
             countDownTimer?.start()
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        countDownTimer?.cancel()
-    }
+
     override fun setupPreViews() {
+        idUser = sharedPreferences.getIdUser()
+        email = arguments?.getString("email").toString()
 
     }
     override fun setupViews() {
-        idUser = sharedPreferences.getIdUser()
         startCountdownTimer()
     }
 
@@ -103,7 +110,28 @@ class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>
                 }
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            forGotEmailViewModel.forgotMailResult.collect { result ->
+                when (result.status) {
+                    Status.SUCCESS -> {
+                        startCountdownTimer()
+                    }
 
+                    Status.ERROR -> {
+                        val errorMessage = result.message ?: "Unknown error"
+                        Log.e("OPTConfirmFragment", "Forgot Mail error: $errorMessage")
+                    }
+
+                    Status.LOADING -> {
+                        // Show loading if needed
+                    }
+
+                    Status.INIT -> {
+                        // Handle initial state if needed
+                    }
+                }
+            }
+        }
     }
 
     override fun setOnClick() {
@@ -112,8 +140,7 @@ class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>
             viewModel.otpConfirm(idUser, binding.edtOPT.text.toString().trim())
         }
         binding.countdownTimerTextView.setOnClickListener {
-            countDownTimer?.cancel()
-            startCountdownTimer()
+            forGotEmailViewModel.forgotMail(ForgotMail( email))
         }
     }
 }

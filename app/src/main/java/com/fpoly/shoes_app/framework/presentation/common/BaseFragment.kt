@@ -52,6 +52,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     internal lateinit var progressDialog: ProgressbarDialogFragment
 
 
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.v(TAG, "onAttach: $this")
@@ -131,4 +132,5 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         if (isShowProgressbar) progressDialog.show(childFragmentManager, null)
         else progressDialog.dismiss()
     }
+
 }

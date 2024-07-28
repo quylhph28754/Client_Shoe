@@ -8,6 +8,6 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface CreateNewPassInterface {
-    @POST("resetpassword/{id}")
-    suspend fun resetPassword(@Path("id") id: String, @Body newPasswordRequest: NewPass): Response<NewPassResponse>
+    @POST("resetpasswordiduser")
+    suspend fun resetPassword( @Body newPasswordRequest: NewPass): Response<NewPassResponse>
 }

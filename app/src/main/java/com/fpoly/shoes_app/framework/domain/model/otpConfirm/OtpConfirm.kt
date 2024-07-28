@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class OtpConfirm(
-    @SerializedName("id") var id: String,
+    @SerializedName("userId") var userId: String,
     @SerializedName("otp") var otp: String
 ): Parcelable
 

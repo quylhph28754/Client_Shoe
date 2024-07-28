@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class NewPass(
+    @SerializedName("userId") val userId: String,
     @SerializedName("newPassword") val newPassword: String
 ): Parcelable
 

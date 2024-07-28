@@ -29,23 +29,23 @@ class ProfileViewModel  @Inject constructor(
     fun setUp(id: String,setUpAccount: SetUpAccount) {
         viewModelScope.launch {
             _setUpResult.value = Resource.loading(null)
-            try {
-                val response = setUpAccountRepository.signUp(id,setUpAccount,null)
-                if (response.isSuccessful) {
-                    val setUpResponse = response.body()
-                    if (setUpResponse != null) {
-                        _setUpResult.value = Resource.success(setUpResponse)
-                    } else {
-                        _setUpResult.value = Resource.error(null, "Set-up response is null")
-                    }
-                } else {
-                    _setUpResult.value = Resource.error(null, "Set-up failed")
-                }
-            } catch (e: HttpException) {
-                _setUpResult.value = Resource.error(null, "HTTP Error: ${e.message()}")
-            } catch (e: Exception) {
-                _setUpResult.value = Resource.error(null, "Network error: ${e.message}")
-            }
+//            try {
+//                val response = setUpAccountRepository.setUpAccount(id,setUpAccount,null)
+//                if (response.isSuccessful) {
+//                    val setUpResponse = response.body()
+//                    if (setUpResponse != null) {
+//                        _setUpResult.value = Resource.success(setUpResponse)
+//                    } else {
+//                        _setUpResult.value = Resource.error(null, "Set-up response is null")
+//                    }
+//                } else {
+//                    _setUpResult.value = Resource.error(null, "Set-up failed")
+//                }
+//            } catch (e: HttpException) {
+//                _setUpResult.value = Resource.error(null, "HTTP Error: ${e.message()}")
+//            } catch (e: Exception) {
+//                _setUpResult.value = Resource.error(null, "Network error: ${e.message}")
+//            }
         }
     }
     fun profilefind(id: String) {

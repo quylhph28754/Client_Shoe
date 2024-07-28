@@ -93,7 +93,7 @@ class CreateNewPassFragment : BaseFragment<FragmentCreateNewPassBinding, CreateN
             val newPass = binding.passWordEditText.text.toString().trim()
             val reNewPass = binding.rePassWordEditText.text.toString().trim()
             if (newPass == reNewPass && newPass.isNotEmpty()) {
-                viewModel.newPass(userId,NewPass( newPass.toMD5()))
+                viewModel.newPass(NewPass(userId, newPass.toMD5()))
             }
         }
     }

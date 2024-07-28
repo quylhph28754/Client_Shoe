@@ -1,4 +1,4 @@
-package com.fpoly.shoes_app.framework.adapter
+package com.fpoly.shoes_app.framework.adapter.address
 
 import android.view.LayoutInflater
 import android.view.View

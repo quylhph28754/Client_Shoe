@@ -3,8 +3,15 @@ package com.fpoly.shoes_app.framework.presentation.ui.profile
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -14,24 +21,33 @@ import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentProfileBinding
 import com.fpoly.shoes_app.databinding.LayoutDialogBinding
 import com.fpoly.shoes_app.framework.data.othetasks.AddImage
+import com.fpoly.shoes_app.framework.data.othetasks.AddImage.Glides
 import com.fpoly.shoes_app.framework.domain.model.profile.ProfileResponse
-import com.fpoly.shoes_app.framework.domain.model.setUp.SetUpAccount
 import com.fpoly.shoes_app.framework.presentation.MainActivity
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
+import com.fpoly.shoes_app.framework.presentation.ui.setUpAccount.SetUpAccountViewModel
+import com.fpoly.shoes_app.utility.Imagesss
 import com.fpoly.shoes_app.utility.Status
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.maps.model.Unit
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+
 
 @AndroidEntryPoint
-class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
-    FragmentProfileBinding::inflate, ProfileViewModel::class.java
+class ProfileFragment : BaseFragment<FragmentProfileBinding, SetUpAccountViewModel>(
+    FragmentProfileBinding::inflate, SetUpAccountViewModel::class.java
 ) {
     private var uriPath :Uri?=null
-    private var idUser = ""
+    private var imageShow :String?=null
+    private lateinit var captureImageLauncher: ActivityResultLauncher<Intent>
+    private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
+    private lateinit var idUser: String
+    private var bmp: Bitmap? = null
     private val navOptions =
         NavOptions.Builder().setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left)
             .setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right).build()
@@ -47,7 +63,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
             sharedPreferences.removeUser()
             sharedPreferences.removeIdUser()
             val navController = findNavController()
-            fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            childFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             navController.navigate(R.id.loginFragmentScreen)
             Log.e("userWait", sharedPreferences.getUserNameWait())
             Log.e("user", sharedPreferences.getUserName())
@@ -58,6 +74,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
     }
 
     override fun setupPreViews() {
+        captureImageLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                uriPath = AddImage.imageUri
+                handleResult(uriPath)
+            }
+        }
+
+        pickImageLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                uriPath = AddImage.handleImageSelectionResult(result.data)
+                handleResult(uriPath)
+            }
+        }
     }
 
     override fun setupViews() {
@@ -74,10 +107,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
                     Status.SUCCESS -> {
                         val signUpResponse = result.data
                         if (signUpResponse?.success == true) {
-                            StyleableToast.makeText(
-                                requireContext(), getString(R.string.success), R.style.success
-                            ).show()
-                            service.playNotificationSound(requireContext())
+                            imageShow = signUpResponse.user?.imageAccount?.`$binary`?.base64
+//                            StyleableToast.makeText(
+//                                requireContext(), getString(R.string.success), R.style.success
+//                            ).show()
+//                            service.playNotificationSound(requireContext())
                         }
 
                     }
@@ -110,17 +144,25 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
         }
     }
 
+    private fun handleResult(uri: Uri?) {
+        val context = requireContext()
+        val bitmap = uri?.let { AddImage.rotateImageIfRequired(context, it) }
+        bitmap?.let {
+            Glides(it, context, binding.idAvatar)
+        }
+        val imagePath = uri?.let { File(Imagesss.getPathFromUri(it, context)) }
+        viewModel.setUp(idUser, imagePath, null, null, null, null, null)
+    }
     private fun handleSuccess(profileResponse: ProfileResponse?) {
         Log.e("profileResponse", profileResponse.toString())
         profileResponse?.user?.let { user ->
             binding.shimmerLayout.stopShimmer()
             binding.shimmerLayout.hideShimmer()
-            Glide.with(requireContext())
-                .load( user.imageAccount)
-                .placeholder(R.drawable.baseline_account_circle_24)
-                .error(R.drawable.baseline_account_circle_24)
-                .circleCrop() // Bo tròn ảnh
-                .into(binding.idAvatar);
+            val dataImage =user.imageAccount?.`$binary`?.base64.toString()
+            imageShow = dataImage
+            val decodeDataImg = Base64.decode(dataImage, Base64.DEFAULT)
+            bmp = BitmapFactory.decodeByteArray(decodeDataImg, 0, decodeDataImg.size)
+            bmp?.let { Glides(it,requireContext(),binding.idAvatar) }
             binding.nameProfile.text = user.fullName ?: getString(R.string.name)
             binding.phoneProfile.text = user.phoneNumber ?: getString(R.string.phone_suggest)
         }
@@ -143,7 +185,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
             showBottomSheetDialog()
         }
         binding.constraintEdt.setOnClickListener {
-            findNavController().navigate(R.id.setUpAccountFragment, null, navOptions)
+            findNavController().navigate(R.id.editProfileFragment, null, navOptions)
         }
         binding.constraintAddess.setOnClickListener {
             findNavController().navigate(R.id.addressFragment, null, navOptions)
@@ -152,26 +194,33 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(
             findNavController().navigate(R.id.notificationFragment, null, navOptions)
         }
         binding.relative.setOnClickListener {
-            AddImage.openImageDialog(requireContext(), requireActivity(), this@ProfileFragment)
+                AddImage.openImageDialog(imageShow,requireContext(), requireActivity()) { intent ->
+                    when (intent.action) {
+                        MediaStore.ACTION_IMAGE_CAPTURE -> captureImageLauncher.launch(intent)
+                        Intent.ACTION_PICK -> pickImageLauncher.launch(intent)
+                    }
+                }
+
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (resultCode == Activity.RESULT_OK) {
+//            uriPath = AddImage.handleImageSelectionResult( data)
+//            val imagePath = uriPath?.let { File(Imagesss.getPathFromUri(it, requireContext())) }
+//            uriPath?.let {
+//                Glide.with(requireContext())
+//                    .load(it)
+//                    .placeholder(R.drawable.baseline_account_circle_24)
+//                    .error(R.drawable.baseline_account_circle_24)
+//                    .circleCrop() // Bo tròn ảnh
+//                    .into(binding.idAvatar);
+////                binding.idAvatar.setImageURI(it) // Set the image URI to the ImageView
+//            }
+//            viewModel.setUp(idUser,imagePath, null, null, null, null,null)
+//        }
+//    }
 
-        if (resultCode == Activity.RESULT_OK) {
-             uriPath = AddImage.handleImageSelectionResult(requestCode, resultCode, data)
-            uriPath?.let {
-                Glide.with(requireContext())
-                    .load(it)
-                    .placeholder(R.drawable.baseline_account_circle_24)
-                    .error(R.drawable.baseline_account_circle_24)
-                    .circleCrop() // Bo tròn ảnh
-                    .into(binding.idAvatar);
-//                binding.idAvatar.setImageURI(it) // Set the image URI to the ImageView
-            }
-            viewModel.setUp(idUser, SetUpAccount(uriPath.toString(), "", "", "", "", ""))
-        }
-    }
 }

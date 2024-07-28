@@ -1,5 +1,6 @@
 package com.fpoly.shoes_app.framework.presentation.ui.forgot.forGotEmail
 
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
@@ -34,14 +35,17 @@ class ForGotEmailFragment : BaseFragment<FragmentForGotBinding, ForGotEmailViewM
                     Status.SUCCESS -> {
                         showProgressbar(false)
                         val forgotMailResponse = result.data
+                        val bundle = Bundle().apply {
+                            putString("email",binding.emailEditText.text.toString())
+                        }
                         if (forgotMailResponse?.success == true) {
                             val navController = findNavController()
                             navController.navigate(
-                                R.id.OPTFragment,null, NavOptions.Builder().setPopUpTo(
+                                R.id.OPTFragment,bundle, NavOptions.Builder().setPopUpTo(
                                     navController.currentDestination?.id ?: -1, true
                                 ).build()
                             )
-                            sharedPreferences.setIdUser(forgotMailResponse.idAccount!!)
+                            sharedPreferences.setIdUser(forgotMailResponse.idAccount)
                             StyleableToast.makeText(
                                 requireContext(), getString(R.string.success), R.style.success
                             ).show()
@@ -64,7 +68,6 @@ class ForGotEmailFragment : BaseFragment<FragmentForGotBinding, ForGotEmailViewM
                     }
 
                     Status.INIT -> {
-                        showProgressbar(false)
 
                     }
                 }

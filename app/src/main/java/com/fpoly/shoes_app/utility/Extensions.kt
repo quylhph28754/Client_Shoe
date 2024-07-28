@@ -1,6 +1,10 @@
 package com.fpoly.shoes_app.utility
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import coil.load
 import com.fpoly.shoes_app.R
 import java.math.BigInteger
@@ -18,6 +22,14 @@ fun ImageView.loadImage(imageUrl: String? = null) {
         placeholder(R.color.primary_white)
         error(R.color.primary_white)
     }
+}
+fun Context.getBitmapFromDrawable(drawableResId: Int): Bitmap {
+    val drawable = ContextCompat.getDrawable(this, drawableResId)
+    val bitmap = Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    drawable.setBounds(0, 0, canvas.width, canvas.height)
+    drawable.draw(canvas)
+    return bitmap
 }
 
 fun String.toMD5(): String {

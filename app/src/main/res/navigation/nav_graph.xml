@@ -145,7 +145,7 @@
     </fragment>
     <fragment
         android:id="@+id/editoraddFragment"
-        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.addressDetail.EditOrAddFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.profile.editOrAdd.EditOrAddFragment"
         android:label="fragment_blank"
         tools:layout="@layout/fragment_editoradd" />
 </navigation>
