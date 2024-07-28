@@ -23,6 +23,7 @@ import java.io.IOException
 class MainActivity : AppCompatActivity() {
     private val PERMISSION_REQUEST_CODE = 1001
     private lateinit var audioManager: AudioManager
+    private var isBottomNavigationSetup = false
     private val PERMISSIONS = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.CAMERA,
@@ -42,9 +43,9 @@ class MainActivity : AppCompatActivity() {
             if (!hasPermissions(this, *PERMISSIONS)) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_REQUEST_CODE)
             }
-
+            setupBottomNavigation()
         } catch (e: IOException) {
-            Log.e("catch App", e.toString())
+            Log.e("MainActivity", "Error in onCreate: ${e.message}", e)
         }
     }
 
@@ -54,13 +55,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun setupBottomNavigation() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
-        val navController = navHostFragment.navController
-        findViewById<BottomNavigationView>(R.id.navBottom).setupWithNavController(navController)
+        if (!isBottomNavigationSetup) {
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
+            val navController = navHostFragment.navController
+            val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navBottom)
+
+            bottomNavigationView.setupWithNavController(navController)
+            bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+                val currentDestination = navController.currentDestination?.id
+                if (currentDestination != item.itemId) {
+                    navController.navigate(item.itemId)
+                    true
+                } else {
+                    false
+                }
+            }
+
+            isBottomNavigationSetup = true
+        }
     }
 
     override fun onStop() {
@@ -91,7 +104,6 @@ class MainActivity : AppCompatActivity() {
                     this, "Bạn cần cấp tất cả các quyền để ứng dụng hoạt động", Toast.LENGTH_SHORT
                 ).show()
             }
-
         }
     }
 

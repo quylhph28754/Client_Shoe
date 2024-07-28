@@ -68,6 +68,7 @@ class AddressFragment : BaseFragment<FragmentAddressBinding, AddressViewModel>(
                 val position = viewHolder.adapterPosition
                 val address = listAddressDetails!![position]
                 viewModel.deleteAddress(address.id)
+                loadAgain()
                 addressAdapter.deleteItem(position)
             }
         }
@@ -79,8 +80,7 @@ class AddressFragment : BaseFragment<FragmentAddressBinding, AddressViewModel>(
 
 
     override fun setupPreViews() {
-
-        viewModel.fetchAllAddresses(sharedPreferences.getIdUser())
+        loadAgain()
     }
 
     override fun setupViews() {
@@ -89,8 +89,11 @@ class AddressFragment : BaseFragment<FragmentAddressBinding, AddressViewModel>(
             findNavController().popBackStack()
         }
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.fetchAllAddresses(sharedPreferences.getIdUser())
+            loadAgain()
         }
+    }
+    private fun loadAgain(){
+        viewModel.fetchAllAddresses(sharedPreferences.getIdUser())
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -132,6 +135,7 @@ class AddressFragment : BaseFragment<FragmentAddressBinding, AddressViewModel>(
                     Status.SUCCESS -> {
                         showProgressbar(false)
                         if (result.data?.addresses.isNullOrEmpty()){
+                            binding.swipeRefreshLayout.isRefreshing = false
                             binding.textNoData.visibility = View.VISIBLE
                             return@collect
                         }

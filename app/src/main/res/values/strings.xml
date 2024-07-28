@@ -55,6 +55,7 @@
     <string name="point_name">Tên địa điểm</string>
     <string name="default_address">Đặt làm địa chỉ mặc định</string>
     <string name="add">Thêm</string>
+    <string name="no_find_address">Không Tìm Được Địa Chỉ Trùng Khớp</string>
     <string name="success">Thành công</string>
     <string name="inputFullInfo">Vui lòng nhập đầy đủ thông tin</string>
     <string name="create_your_password">Tạo mật khẩu mới của bạn</string>

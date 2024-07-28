@@ -185,13 +185,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, SetUpAccountViewMod
             showBottomSheetDialog()
         }
         binding.constraintEdt.setOnClickListener {
-            findNavController().navigate(R.id.editProfileFragment, null, navOptions)
+            navigateToFragment(R.id.editProfileFragment)
         }
         binding.constraintAddess.setOnClickListener {
-            findNavController().navigate(R.id.addressFragment, null, navOptions)
+            navigateToFragment(R.id.addressFragment)
         }
         binding.constraintNotification.setOnClickListener {
-            findNavController().navigate(R.id.notificationFragment, null, navOptions)
+            navigateToFragment(R.id.notificationFragment)
         }
         binding.relative.setOnClickListener {
                 AddImage.openImageDialog(imageShow,requireContext(), requireActivity()) { intent ->
@@ -222,5 +222,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, SetUpAccountViewMod
 //            viewModel.setUp(idUser,imagePath, null, null, null, null,null)
 //        }
 //    }
-
+private fun navigateToFragment(fragmentId: Int) {
+    val navController = findNavController()
+    val currentDestination = navController.currentDestination
+    if (currentDestination == null || currentDestination.id != fragmentId) {
+        navController.navigate(fragmentId, null, navOptions)
+    }
+}
 }
