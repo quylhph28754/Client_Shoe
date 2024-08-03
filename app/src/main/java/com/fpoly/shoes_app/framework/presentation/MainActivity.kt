@@ -15,7 +15,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.ActivityMainBinding
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         Manifest.permission.READ_MEDIA_IMAGES,
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.POST_NOTIFICATIONS
     )
     private var _binding: ActivityMainBinding? = null
     private val binding: ActivityMainBinding? get() = _binding
@@ -44,6 +47,18 @@ class MainActivity : AppCompatActivity() {
                 ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_REQUEST_CODE)
             }
             setupBottomNavigation()
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("TAG", "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new FCM registration token
+                val tokenFcm = task.result
+                // Log and toast
+                Log.d("TAG", tokenFcm)
+                Toast.makeText(baseContext, tokenFcm, Toast.LENGTH_SHORT).show()
+            })
         } catch (e: IOException) {
             Log.e("MainActivity", "Error in onCreate: ${e.message}", e)
         }

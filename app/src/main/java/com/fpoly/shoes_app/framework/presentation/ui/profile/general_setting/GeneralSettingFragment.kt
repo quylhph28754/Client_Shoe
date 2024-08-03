@@ -1,4 +1,4 @@
-package com.fpoly.shoes_app.framework.presentation.ui.profile.notification
+package com.fpoly.shoes_app.framework.presentation.ui.profile.general_setting
 
 import android.content.Context
 import android.media.AudioManager
@@ -7,7 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fpoly.shoes_app.R
-import com.fpoly.shoes_app.databinding.FragmentNotificationBinding
+import com.fpoly.shoes_app.databinding.FragmentGeneralSettingBinding
 import com.fpoly.shoes_app.framework.adapter.notification.NotificationAdapter
 import com.fpoly.shoes_app.framework.domain.model.profile.notification.Notification
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
@@ -15,8 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @RequiresApi(Build.VERSION_CODES.S)
 @AndroidEntryPoint
-class NotificationFragment : BaseFragment<FragmentNotificationBinding, NotificationViewModel>(
-    FragmentNotificationBinding::inflate, NotificationViewModel::class.java
+class GeneralSettingFragment : BaseFragment<FragmentGeneralSettingBinding, GeneralSettingViewModel>(
+    FragmentGeneralSettingBinding::inflate, GeneralSettingViewModel::class.java
 ) {
     private lateinit var audioManager: AudioManager
     private val notifications by lazy {

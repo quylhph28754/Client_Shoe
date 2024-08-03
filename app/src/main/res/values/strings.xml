@@ -88,4 +88,7 @@
     <string name="send_otp_to_your_mail">Mã OTP sẽ gửi đến email của bạn</string>
     <string name="enter_place">Enter place</string>
     <string name="noData">Không có dữ liệu</string>
+    <string name="titleShoeFbee">Thông báo mới từ ShoeFbee</string>
+    <string name="messageShoeFbee">Nội dung mới từ ShoeFbee</string>
+    <string name="msg_token_fmt">msg_token_fmt</string>
 </resources>

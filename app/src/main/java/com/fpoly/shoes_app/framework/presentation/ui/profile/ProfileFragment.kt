@@ -11,12 +11,10 @@ import android.util.Base64
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toUri
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentProfileBinding
 import com.fpoly.shoes_app.databinding.LayoutDialogBinding
@@ -29,9 +27,7 @@ import com.fpoly.shoes_app.framework.presentation.ui.setUpAccount.SetUpAccountVi
 import com.fpoly.shoes_app.utility.Imagesss
 import com.fpoly.shoes_app.utility.Status
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.maps.model.Unit
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -191,7 +187,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, SetUpAccountViewMod
             navigateToFragment(R.id.addressFragment)
         }
         binding.constraintNotification.setOnClickListener {
-            navigateToFragment(R.id.notificationFragment)
+            navigateToFragment(R.id.generalSettingFragment)
         }
         binding.relative.setOnClickListener {
                 AddImage.openImageDialog(imageShow,requireContext(), requireActivity()) { intent ->
