@@ -3,8 +3,6 @@ package com.fpoly.shoes_app.utility
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import com.fpoly.shoes_app.framework.presentation.ui.forgot.forGotEmail.ForGotEmailFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -21,6 +19,7 @@ object SharedPreferencesManager {
     private const val userNameWait = "userNameWait"
     private const val passWord = "password"
     private const val idUser = "idUser"
+    private const val tokenKey = "tokenKey"
 
     fun isSplashScreenSkipped(): Boolean = getBooleanDataByKey(SPLASH_SCREEN_NOT_SHOW)
 
@@ -63,6 +62,11 @@ object SharedPreferencesManager {
     }
 
     fun getIdUser(): String = getStringDataByKey(idUser)
+    fun setToken(token: String?) {
+        saveStringDataByKey(tokenKey, token)
+    }
+
+    fun getToken(): String = getStringDataByKey(tokenKey)
     fun removeIdUser() {
         editor.remove(idUser).apply()
     }

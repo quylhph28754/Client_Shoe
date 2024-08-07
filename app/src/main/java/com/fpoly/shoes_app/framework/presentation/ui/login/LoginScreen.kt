@@ -1,8 +1,8 @@
 package com.fpoly.shoes_app.framework.presentation.ui.login
 
-import android.content.Context
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -10,6 +10,7 @@ import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentLoginScreenBinding
 import com.fpoly.shoes_app.framework.domain.model.login.LoginResponse
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
+import com.fpoly.shoes_app.utility.SharedPreferencesManager
 import com.fpoly.shoes_app.utility.Status
 import com.fpoly.shoes_app.utility.toMD5
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,24 +32,24 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
     private val navOptions1 =
         NavOptions.Builder().setEnterAnim(R.anim.slide_in_left).setExitAnim(R.anim.slide_out_right)
             .setPopEnterAnim(R.anim.slide_in_right).setPopExitAnim(R.anim.slide_out_left).build()
+
     override fun setupPreViews() {
 
     }
-    private fun setupListeners() {
-        Log.e("user", sharedPreferences.getUserName()+sharedPreferences.getPassWord())
 
-        if (sharedPreferences.getUserName().isNotEmpty() && sharedPreferences.getPassWord()
-                .isNotEmpty()
-        ) {
-            check = true
-            viewModel.signIn(
-                sharedPreferences.getUserName(), sharedPreferences.getPassWord()
-            )
+    private fun setupListeners() {
+        with(sharedPreferences) {
+            val userName = getUserName()
+            val passWord = getPassWord()
+            if (userName.isNotEmpty() && passWord.isNotEmpty()) {
+                check = true
+                viewModel.signIn(userName, passWord)
+            }
+            val userNameWait = getUserNameWait()
+            if (userNameWait.isNotEmpty()) {
+                binding.userNameEditTextLogin.setText(userNameWait)
+            }
         }
-        Log.e("userWait", sharedPreferences.getUserNameWait())
-        if (sharedPreferences.getUserNameWait().isNotEmpty()) binding.userNameEditTextLogin.setText(
-            sharedPreferences.getUserNameWait()
-        )
     }
 
     override fun bindViewModel() {
@@ -68,6 +69,8 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
         enableInputs()
         binding.progressBar.visibility = View.GONE
         if (loginResponse?.success == true) {
+
+            Log.e("token", SharedPreferencesManager.getToken())
             loginResponse.user?.let { sharePre(it.id.toString()) }
             navigateToHome()
             clearInputs()
@@ -83,7 +86,6 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
         binding.progressBar.visibility = View.GONE
         showErrorMessage(errorMessage)
         enableInputs()
-
         Log.e("LoginFragment", "Login error: $errorMessage")
     }
 
@@ -93,33 +95,36 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
     }
 
     private fun sharePre(id: String) {
-        if ( username
-                .isNotEmpty() && password.isNotEmpty()){
+        if (username.isNotEmpty() && password.isNotEmpty()) {
             sharedPreferences.setIdUser(id)
-            if (check ) {
-            sharedPreferences.setPassWord(username, password.toMD5())
-            return
-        }
-            sharedPreferences.setPassWord(username,null)
+            if (check) {
+                sharedPreferences.setPassWord(username, password.toMD5())
+            } else {
+                sharedPreferences.setPassWord(username, null)
+            }
         }
     }
 
     private fun enableInputs() {
-        binding.layoutInputUserNameLogin.isEnabled = true
-        binding.layoutInputPasswordLogin.isEnabled = true
-        binding.switchLogin.isEnabled = true
-        binding.textForGot.isEnabled = true
-        binding.textSignUp.isEnabled = true
-        binding.btnLogin.isEnabled = true
+        binding.apply {
+            layoutInputUserNameLogin.isEnabled = true
+            layoutInputPasswordLogin.isEnabled = true
+            switchLogin.isEnabled = true
+            textForGot.isEnabled = true
+            textSignUp.isEnabled = true
+            btnLogin.isEnabled = true
+        }
     }
 
     private fun disableInputs() {
-        binding.userNameEditTextLogin.isEnabled = false
-        binding.switchLogin.isEnabled = false
-        binding.textForGot.isEnabled = false
-        binding.textSignUp.isEnabled = false
-        binding.btnLogin.isEnabled = false
-        binding.passwordEditTextLogin.isEnabled = false
+        binding.apply {
+            userNameEditTextLogin.isEnabled = false
+            switchLogin.isEnabled = false
+            textForGot.isEnabled = false
+            textSignUp.isEnabled = false
+            btnLogin.isEnabled = false
+            passwordEditTextLogin.isEnabled = false
+        }
     }
 
     private fun navigateToHome() {
@@ -139,11 +144,15 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
         StyleableToast.makeText(
             requireContext(), getString(R.string.fail_password), R.style.fail
         ).show()
-        binding.layoutInputUserNameLogin.error = errorMessage
-        binding.layoutInputPasswordLogin.error = errorMessage
+        binding.apply {
+            layoutInputUserNameLogin.error = errorMessage
+            layoutInputPasswordLogin.error = errorMessage
+        }
         delay(2000)
-        binding.layoutInputUserNameLogin.error =null
-        binding.layoutInputPasswordLogin.error =null
+        binding.apply {
+            layoutInputUserNameLogin.error = null
+            layoutInputPasswordLogin.error = null
+        }
     }
 
     override fun setupViews() {
@@ -151,20 +160,26 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
     }
 
     override fun setOnClick() {
-        binding.textSignUp.setOnClickListener {
-            findNavController().navigate(R.id.signUpFragment, null, navOptions)
-        }
-        binding.btnLogin.setOnClickListener {
-            username = binding.userNameEditTextLogin.text?.trim().toString()
-            password = binding.passwordEditTextLogin.text?.trim().toString()
-            viewModel.signIn(username, password.toMD5())
-        }
-        binding.textForGot.setOnClickListener {
-            findNavController().navigate(R.id.forGotFragment, null, navOptions1)
-        }
-        binding.switchLogin.setOnCheckedChangeListener { _, isChecked ->
-            check = isChecked
-            Log.e("check", check.toString())
+        binding.apply {
+            textSignUp.setOnClickListener {
+                findNavController().navigate(R.id.signUpFragment, null, navOptions)
+            }
+            btnLogin.setOnClickListener {
+                username = userNameEditTextLogin.text?.trim().toString()
+                password = passwordEditTextLogin.text?.trim().toString()
+                if (!username.isNullOrEmpty() && !password.isNullOrEmpty()) viewModel.signIn(
+                    username,
+                    password.toMD5()
+                ) else Toast.makeText(requireContext(), R.string.inputFullInfo, Toast.LENGTH_SHORT)
+                    .show()
+            }
+            textForGot.setOnClickListener {
+                findNavController().navigate(R.id.forGotFragment, null, navOptions1)
+            }
+            switchLogin.setOnCheckedChangeListener { _, isChecked ->
+                check = isChecked
+                Log.e("check", isChecked.toString())
+            }
         }
     }
 }

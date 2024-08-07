@@ -3,7 +3,6 @@ package com.fpoly.shoes_app.framework.presentation.ui.signUp
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -85,9 +84,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     override fun setOnClick() {
-        binding.textLogin.setOnClickListener {
-            findNavController().popBackStack()
-        }
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }

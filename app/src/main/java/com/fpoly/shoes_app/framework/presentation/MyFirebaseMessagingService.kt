@@ -29,7 +29,7 @@ FirebaseMessagingService() {
     var TAG = "MyFirebaseMesaggingService"
 
     override fun onMessageReceived(message: RemoteMessage) {
-        if (message.data.size > 0) {
+        if (message.data.isNotEmpty()) {
             Log.d(TAG, "Message Data payload: " + message.data)
         }
         if (message.notification != null) {
@@ -62,7 +62,7 @@ FirebaseMessagingService() {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder: NotificationCompat.Builder =
             NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.shoefbee)
+                .setSmallIcon(R.drawable.baseline_notifications_active_24)
                 .setContentTitle(title)
                 .setContentText(messageBody)
                 .setAutoCancel(true)

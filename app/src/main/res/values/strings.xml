@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">shoes_app</string>
+    <string name="nameApp">ShoeFbee</string>
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
     <string name="cart">Cart</string>
@@ -14,7 +15,7 @@
 
     <!--    //quy-->
     <!--    key map-->
-    <string name="key_map" translatable="false" templateMergeStrategy="preserve">AIzaSyBdB2gv0-gp6-QWv2E8MBKK6MBcUlkd408</string>
+    <string name="key_map" translatable="false" templateMergeStrategy="preserve">AIzaSyCH8B5nvbZwslomTAn6u4-ZGG145XHCXLA</string>
     <!--    string other-->
     <string name="capture">Máy Ảnh</string>
     <string name="selectImg">Chọn Nguồn Ảnh</string>
@@ -33,6 +34,7 @@
     <string name="passwordIncorrect">Nhập mật khẩu không trùng khớp</string>
     <string name="remember">Ghi nhớ</string>
     <string name="login">Đăng nhập</string>
+    <string name="login_Success">Đăng nhập thành công</string>
     <string name="new_user">Bạn chưa có tài khoản ?" "</string>
     <string name="sign_in">Đăng ký</string>
     <string name="dummy_button">Dummy Button</string>
@@ -58,6 +60,7 @@
     <string name="no_find_address">Không Tìm Được Địa Chỉ Trùng Khớp</string>
     <string name="success">Thành công</string>
     <string name="inputFullInfo">Vui lòng nhập đầy đủ thông tin</string>
+    <string name="pleaseOTP">Vui lòng nhập mã OTP</string>
     <string name="create_your_password">Tạo mật khẩu mới của bạn</string>
     <string name="update">Cập nhật</string>
     <string name="general_notification">Thông báo</string>

@@ -1,8 +1,7 @@
 package com.fpoly.shoes_app.framework.presentation.ui.forgot.forGotEmail
 
 import android.os.Bundle
-import android.util.Log
-import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -79,9 +78,11 @@ class ForGotEmailFragment : BaseFragment<FragmentForGotBinding, ForGotEmailViewM
 
     override fun setOnClick() {
         binding.btnNextPager.setOnClickListener {
+            if (!binding.emailEditText.text.toString().trim().isNullOrEmpty()){
             binding.btnNextPager.isEnabled= false
-            Log.e("email",binding.emailEditText.text.toString().trim())
-            viewModel.forgotMail(ForgotMail( binding.emailEditText.text.toString().trim()))
+            viewModel.forgotMail(ForgotMail( binding.emailEditText.text.toString().trim()))}else
+                Toast.makeText(requireContext(),getString(R.string.inputFullInfo),Toast.LENGTH_SHORT).show()
         }
+
     }
 }

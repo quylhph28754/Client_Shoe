@@ -1,10 +1,9 @@
 package com.fpoly.shoes_app.framework.presentation.ui.forgot.otpConfirm
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.CountDownTimer
 import android.util.Log
-import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -136,8 +135,11 @@ class OPTConfirmFragment : BaseFragment<FragmentOtpBinding, OTPConfirmViewModel>
 
     override fun setOnClick() {
         binding.btnSelect.setOnClickListener {
-            Log.e("idUser",idUser)
+            if (!binding.edtOPT.text.toString().trim().isNullOrEmpty())
             viewModel.otpConfirm(idUser, binding.edtOPT.text.toString().trim())
+            else
+                Toast.makeText(requireContext(),getString(R.string.pleaseOTP), Toast.LENGTH_SHORT).show()
+
         }
         binding.countdownTimerTextView.setOnClickListener {
             forGotEmailViewModel.forgotMail(ForgotMail( email))

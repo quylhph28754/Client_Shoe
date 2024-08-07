@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.ActivityMainBinding
+import com.fpoly.shoes_app.utility.SharedPreferencesManager.setToken
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
@@ -55,9 +56,8 @@ class MainActivity : AppCompatActivity() {
 
                 // Get new FCM registration token
                 val tokenFcm = task.result
-                // Log and toast
+                setToken(tokenFcm)
                 Log.d("TAG", tokenFcm)
-                Toast.makeText(baseContext, tokenFcm, Toast.LENGTH_SHORT).show()
             })
         } catch (e: IOException) {
             Log.e("MainActivity", "Error in onCreate: ${e.message}", e)
