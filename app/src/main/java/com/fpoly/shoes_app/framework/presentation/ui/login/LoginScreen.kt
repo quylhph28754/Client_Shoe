@@ -132,7 +132,7 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
         val navOptions = NavOptions.Builder().setPopUpTo(
             navController.currentDestination?.id ?: -1, true
         ).build()
-        navController.navigate(R.id.profileFragment, null, navOptions)
+        navController.navigate(R.id.homeFragment, null, navOptions)
     }
 
     private fun clearInputs() {
