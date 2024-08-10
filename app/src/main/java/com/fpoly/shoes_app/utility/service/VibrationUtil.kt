@@ -23,27 +23,33 @@ import javax.inject.Singleton
 object ServiceUtil {
     private const val CHANNEL_ID = "example_channel"
     private var notificationId = 0
+
     @RequiresApi(Build.VERSION_CODES.S)
     fun triggerVibration(context: Context) {
-        if(getVibrateModeState()){
-        val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-        val vibrator = vibratorManager.defaultVibrator
-        if (vibrator.hasVibrator()) {
-            val vibrationEffect = VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)
-            vibrator.vibrate(vibrationEffect)
-        } else {
-            Log.e("Vibration", "Device does not have a vibrator")
-        }}
+        if (getVibrateModeState()) {
+            val vibratorManager =
+                context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            val vibrator = vibratorManager.defaultVibrator
+            if (vibrator.hasVibrator()) {
+                val vibrationEffect =
+                    VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)
+                vibrator.vibrate(vibrationEffect)
+            } else {
+                Log.e("Vibration", "Device does not have a vibrator")
+            }
+        }
     }
-    @SuppressLint("MissingPermission")
-    fun playNotificationSound(context: Context, title:String, content:String) {
 
-        if(getNotificationModeState()){
+    @SuppressLint("MissingPermission")
+    fun playNotificationSound(context: Context, title: String, content: String) {
+
+        if (getNotificationModeState()) {
             val intent = Intent(context, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
-            val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-
+            val pendingIntent: PendingIntent = PendingIntent.getActivity(
+                context, 0, intent, PendingIntent.FLAG_IMMUTABLE
+            )
             // Build the notification
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notification)
@@ -57,10 +63,13 @@ object ServiceUtil {
             with(NotificationManagerCompat.from(context)) {
                 notify(notificationId++, builder.build())
             }
-    }}
+        }
+    }
+
     fun playCustomSound(context: Context) {
-        if(getSoundModeState()){
-        val mediaPlayer: MediaPlayer = MediaPlayer.create(context, R.raw.levelup)
-        mediaPlayer.start()}
+        if (getSoundModeState()) {
+            val mediaPlayer: MediaPlayer = MediaPlayer.create(context, R.raw.levelup)
+            mediaPlayer.start()
+        }
     }
 }
