@@ -15,7 +15,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.ActivityMainBinding
-import com.fpoly.shoes_app.utility.SharedPreferencesManager.setToken
+import com.fpoly.shoes_app.utility.SharedPreferencesManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
                 // Get new FCM registration token
                 val tokenFcm = task.result
-                setToken(tokenFcm)
+                SharedPreferencesManager.setToken(tokenFcm)
                 Log.d("TAG", tokenFcm)
             })
         } catch (e: IOException) {
