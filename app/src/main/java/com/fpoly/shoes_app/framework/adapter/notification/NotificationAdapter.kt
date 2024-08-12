@@ -1,5 +1,6 @@
 package com.fpoly.shoes_app.framework.adapter.notification
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ class NotificationAdapter (
 
         class NotificationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val textViewTitle: TextView = view.findViewById(R.id.textViewTitle)
+            @SuppressLint("UseSwitchCompatOrMaterialCode")
             val switchControl: Switch = view.findViewById(R.id.switchControl)
         }
 

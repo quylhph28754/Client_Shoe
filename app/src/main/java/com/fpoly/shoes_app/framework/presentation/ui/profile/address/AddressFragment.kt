@@ -75,10 +75,7 @@ class AddressFragment : BaseFragment<FragmentAddressBinding, AddressViewModel>(
 
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.recycViewAddress)
-
     }
-
-
     override fun setupPreViews() {
         loadAgain()
     }
