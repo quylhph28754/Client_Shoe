@@ -12,6 +12,7 @@ import com.fpoly.shoes_app.framework.domain.model.login.LoginResponse
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
 import com.fpoly.shoes_app.utility.SharedPreferencesManager
 import com.fpoly.shoes_app.utility.Status
+import com.fpoly.shoes_app.utility.service.ServiceUtil.playNotificationSound
 import com.fpoly.shoes_app.utility.toMD5
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.muddz.styleabletoast.StyleableToast
@@ -69,7 +70,7 @@ class LoginScreen : BaseFragment<FragmentLoginScreenBinding, LoginViewModel>(
         enableInputs()
         binding.progressBar.visibility = View.GONE
         if (loginResponse?.success == true) {
-
+            playNotificationSound(requireContext(),"Shoe_Fbee","Login Success")
             Log.e("token", SharedPreferencesManager.getToken())
             loginResponse.user?.let { sharePre(it.id.toString()) }
             navigateToHome()

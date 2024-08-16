@@ -1,7 +1,6 @@
 package com.fpoly.shoes_app.framework.presentation.ui.profile.editProfile
 
 import android.app.DatePickerDialog
-import android.content.Context
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -15,10 +14,10 @@ import androidx.navigation.fragment.findNavController
 import com.fpoly.shoes_app.databinding.FragmentEditProfileBinding
 import com.fpoly.shoes_app.framework.data.module.CheckValidate
 import com.fpoly.shoes_app.framework.domain.model.profile.ProfileResponse
-import com.fpoly.shoes_app.framework.domain.model.setUp.SetUpAccount
 import com.fpoly.shoes_app.framework.presentation.common.BaseFragment
 import com.fpoly.shoes_app.framework.presentation.ui.setUpAccount.SetUpAccountViewModel
 import com.fpoly.shoes_app.utility.Status
+import com.fpoly.shoes_app.utility.service.ServiceUtil
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.muddz.styleabletoast.StyleableToast
@@ -76,7 +75,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, SetUpAccoun
                                 fragmentManager?.popBackStackImmediate(
                                     null, FragmentManager.POP_BACK_STACK_INCLUSIVE
                                 )
-
+                                ServiceUtil.playNotificationSound(requireContext(),"Shoe_Fbee","This is new notification")
                                 navController.navigate(
                                     com.fpoly.shoes_app.R.id.profileFragment,
                                     null,
