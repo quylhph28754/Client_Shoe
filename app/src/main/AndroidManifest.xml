@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"
+        tools:ignore="SelectedPhotoAccess" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -31,7 +33,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shoes_app"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        tools:targetApi="34">
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/baseline_notifications_active_24" />

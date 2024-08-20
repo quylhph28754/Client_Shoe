@@ -104,7 +104,11 @@ class SetUpAccountFragment : BaseFragment<FragmentSetUpAccountBinding, SetUpAcco
                         showProgressbar(false)
                         Log.e("error", result.message ?: "Unknown error")
                     }
-                    Status.LOADING -> showProgressbar(true)
+                    Status.LOADING -> {showProgressbar(true)
+                    binding.apply {
+                        btnNextPager.isEnabled = false
+                    }
+                    }
                     Status.INIT -> { /* No-op */ }
                 }
             }
@@ -125,9 +129,10 @@ class SetUpAccountFragment : BaseFragment<FragmentSetUpAccountBinding, SetUpAcco
     }
 
     private fun clearInputFields() {
-        binding.nameEditText.text?.clear()
-        binding.mailEditText.text?.clear()
-        binding.phoneEditText.text?.clear()
+        binding.apply {
+        nameEditText.text?.clear()
+       mailEditText.text?.clear()
+       phoneEditText.text?.clear() }
     }
 
 
