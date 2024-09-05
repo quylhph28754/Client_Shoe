@@ -39,7 +39,7 @@ class NotificationHomeFragment : BaseFragment<FragmentNotificationHomeBinding, N
             }
 
         }
-//        viewModel.fetchNotifications(idUser)
+        viewModel.fetchNotifications(idUser)
     }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun bindViewModel() {
