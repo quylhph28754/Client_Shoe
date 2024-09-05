@@ -157,4 +157,24 @@
         android:name="com.fpoly.shoes_app.framework.presentation.ui.home.notification.NotificationHomeFragment"
         android:label="fragment_notification_home"
         tools:layout="@layout/fragment_notification_home" />
+    <fragment
+        android:id="@+id/detailActiveFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.orders.active.detailActive.DetailActiveFragment"
+        android:label="fragment_detail_active"
+        tools:layout="@layout/fragment_detail_active" />
+    <fragment
+        android:id="@+id/detailHistoryFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.orders.history.detaiHistory.DetailHistoryFragment"
+        android:label="fragment_detail_history"
+        tools:layout="@layout/fragment_detail_history" />
+    <fragment
+        android:id="@+id/activeFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.orders.active.ActiveFragment"
+        android:label="fragment_active"
+        tools:layout="@layout/fragment_active" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.fpoly.shoes_app.framework.presentation.ui.orders.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>

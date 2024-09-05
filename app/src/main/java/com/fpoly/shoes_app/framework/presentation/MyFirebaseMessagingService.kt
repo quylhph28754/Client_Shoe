@@ -41,8 +41,7 @@ FirebaseMessagingService() {
         }
     }
 
-    override fun onNewToken(token: String) {
-        Log.d(TAG, "Refreshed token: $token")
+    override fun onNewToken(token: String) { Log.d(TAG, "Refreshed token: $token")
     }
 
     private fun sendNotification(messageBody: String?, title: String?, imgUrl: Uri?) {

@@ -6,7 +6,9 @@
     <string name="cart">Cart</string>
     <string name="orders">Orders</string>
     <string name="profile">Profile</string>
-
+    <string name="leaveReview">Đánh giá</string>
+    <string name="leaveRate">Viết nhận xét về sản phẩm 🤩</string>
+    <string name="detailHistory">Chi tiết lịch sử đơn hàng</string>
     <string name="search">Tìm kiếm</string>
     <string name="tittle_Address">Address Detail</string>
     <string name="special_offers">Ưu đãi đặc biệt</string>
@@ -45,8 +47,11 @@
     <string name="create_acc">Tạo tài khoản</string>
     <string name="quick_create">Tạo tài khoản nhanh</string>
     <string name="full_name">Nhập vào tên đầy đủ của bạn</string>
-    <string name="date">Nhập vào ngày sinh</string>
+    <string name="date">Ngày tháng</string>
+    <string name="trackOrder">Đặt Ngay</string>
+    <string name="orderAgain">Đặt Lại</string>
     <string name="email">you.@gmail.com</string>
+    <string name="description">Chi tiết</string>
     <string name="phone_config">Nhập vào số điện thoại</string>
     <string name="text_continue">Tiếp tục</string>
     <string name="new_address">Tạo Địa Chỉ Mới</string>
@@ -76,6 +81,26 @@
     <string name="sent_otp_code">Mã đã gửi đến bạn</string>
     <string name="resend_code_otp">Gửi lại mã</string>
     <string name="send">Gửi</string>
+    <string name="quantity">Số lượng</string>
+    <string name="total_price">Tổng tiền</string>
+    <string name="add_to_cart">Thêm vào giỏ hàng</string>
+    <string name="procedureOrder">Quy trình đơn hàng</string>
+    <string name="price_original">Giá Gốc</string>
+    <string name="dateDemo">0000/00/00</string>
+    <string name="status">Trạng thái</string>
+    <string name="myOder">Đơn hàng của tôi</string>
+    <string name="waitAccept">Chờ Xác Nhận</string>
+    <string name="history">Lịch Sử</string>
+    <string name="one">1</string>
+    <string name="howToOrder">Đơn hàng của bạn thế nào?</string>
+    <string name="funRate">Vui lòng đưa ra đánh giá của bạn và đánh giá của bạn</string>
+
+    <string name="priceDemo">0000</string>
+    <string name="method">Phương thức thanh toán</string>
+
+    <string name="price_Sell">Số tiền được giảm</string>
+
+
     <string name="confirm">Xác nhận</string>
     <!--    <string name="profile">Cấu hình</string>-->
     <string name="phone_suggest">0123456789</string>
@@ -83,6 +108,13 @@
     <string name="edit_info">Sửa thông tin</string>
     <string name="address">Địa chỉ</string>
     <string name="name">Họ và tên</string>
+    <string name="size">Kích cỡ :</string>
+    <string name="color">Màu sắc</string>
+    <string name="White">Trắng</string>
+    <string name="Black">Đen</string>
+    <string name="Red">Đỏ</string>
+    <string name="Blue">Xanh da trời</string>
+    <string name="noData">Không có dữ liệu</string>
     <string name="logout">Đăng xuất</string>
     <string name="confirm_logout">Bạn chắc chắn muốn đăng xuất?</string>
     <string name="cancel">Cancel</string>
@@ -90,7 +122,6 @@
     <string name="otp_verification">Xác thực OTP</string>
     <string name="send_otp_to_your_mail">Mã OTP sẽ gửi đến email của bạn</string>
     <string name="enter_place">Enter place</string>
-    <string name="noData">Không có dữ liệu</string>
     <string name="titleShoeFbee">Thông báo mới từ ShoeFbee</string>
     <string name="messageShoeFbee">Nội dung mới từ ShoeFbee</string>
     <string name="msg_token_fmt">msg_token_fmt</string>

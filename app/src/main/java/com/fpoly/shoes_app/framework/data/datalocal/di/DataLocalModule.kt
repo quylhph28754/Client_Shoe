@@ -37,4 +37,5 @@ object DataLocalModule {
     fun provideServiceUtil(): ServiceUtil {
         return ServiceUtil
     }
+
 }
