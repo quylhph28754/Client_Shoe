@@ -13,7 +13,12 @@ import com.bumptech.glide.Glide
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.framework.domain.model.profile.notification.NotificationsHome
 
-class NotificationsHomeAdapter : ListAdapter<Any, RecyclerView.ViewHolder>(NotificationsDiffCallback()) {
+// Sealed class to represent either a Header or a Notification item
+sealed class NotificationsItem {
+    data class Header(val title: String) : NotificationsItem()
+    data class NotificationItem(val notification: NotificationsHome) : NotificationsItem()
+}
+class NotificationsHomeAdapter : ListAdapter<NotificationsItem, RecyclerView.ViewHolder>(NotificationsDiffCallback()) {
 
     companion object {
         private const val VIEW_TYPE_HEADER = 0
@@ -31,7 +36,10 @@ class NotificationsHomeAdapter : ListAdapter<Any, RecyclerView.ViewHolder>(Notif
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position) is String) VIEW_TYPE_HEADER else VIEW_TYPE_ITEM
+        return when (getItem(position)) {
+            is NotificationsItem.Header -> VIEW_TYPE_HEADER
+            is NotificationsItem.NotificationItem -> VIEW_TYPE_ITEM
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -49,35 +57,63 @@ class NotificationsHomeAdapter : ListAdapter<Any, RecyclerView.ViewHolder>(Notif
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             VIEW_TYPE_HEADER -> {
-                val header = getItem(position) as String
-                (holder as HeaderViewHolder).headerText.text = header
+                val header = getItem(position) as NotificationsItem.Header
+                (holder as HeaderViewHolder).headerText.text = header.title
             }
             VIEW_TYPE_ITEM -> {
-                val notification = getItem(position) as NotificationsHome
+                val notificationItem = getItem(position) as NotificationsItem.NotificationItem
+                val notification = notificationItem.notification
                 val itemViewHolder = holder as ItemViewHolder
                 itemViewHolder.title.text = notification.title
                 itemViewHolder.body.text = notification.body
-                Glide.with(holder.itemView.context).load(notification.image).into(itemViewHolder.imageView)
+                // Load image if URL is not null
+                notification.image?.let {
+                    Glide.with(holder.itemView.context)
+                        .load(it)
+                        .placeholder(R.drawable.baseline_notifications_active_24)
+                        .into(itemViewHolder.imageView)
+                } ?: itemViewHolder.imageView.setImageResource(R.drawable.baseline_notifications_active_24)
             }
+        }
+    }
+
+    // Method to append new data for load more functionality
+    @SuppressLint("NotifyDataSetChanged")
+    fun appendData(newData: List<NotificationsItem>) {
+        val currentList = currentList.toMutableList()
+
+        // Avoid adding duplicate items
+        val filteredData = newData.filterNot { newItem ->
+            currentList.any { currentItem ->
+                areItemsTheSame(currentItem, newItem)
+            }
+        }
+
+        currentList.addAll(filteredData)
+        submitList(currentList)  // Submit the updated list to the adapter
+        notifyDataSetChanged()   // Notify the adapter that data has changed
+    }
+
+    private fun areItemsTheSame(oldItem: NotificationsItem, newItem: NotificationsItem): Boolean {
+        return when {
+            oldItem is NotificationsItem.Header && newItem is NotificationsItem.Header -> oldItem.title == newItem.title
+            oldItem is NotificationsItem.NotificationItem && newItem is NotificationsItem.NotificationItem -> oldItem.notification._id == newItem.notification._id
+            else -> false
         }
     }
 }
 
-class NotificationsDiffCallback : DiffUtil.ItemCallback<Any>() {
-    override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
+class NotificationsDiffCallback : DiffUtil.ItemCallback<NotificationsItem>() {
+    override fun areItemsTheSame(oldItem: NotificationsItem, newItem: NotificationsItem): Boolean {
         return when {
-            oldItem is String && newItem is String -> oldItem == newItem
-            oldItem is NotificationsHome && newItem is NotificationsHome -> oldItem._id == newItem._id
+            oldItem is NotificationsItem.Header && newItem is NotificationsItem.Header -> oldItem.title == newItem.title
+            oldItem is NotificationsItem.NotificationItem && newItem is NotificationsItem.NotificationItem -> oldItem.notification._id == newItem.notification._id
             else -> false
         }
     }
 
     @SuppressLint("DiffUtilEquals")
-    override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
-        return when {
-            oldItem is String && newItem is String -> oldItem == newItem
-            oldItem is NotificationsHome && newItem is NotificationsHome -> oldItem == newItem
-            else -> false
-        }
+    override fun areContentsTheSame(oldItem: NotificationsItem, newItem: NotificationsItem): Boolean {
+        return oldItem == newItem
     }
 }

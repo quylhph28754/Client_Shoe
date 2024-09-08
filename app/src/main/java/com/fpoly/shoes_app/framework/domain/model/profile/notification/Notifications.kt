@@ -1,4 +1,10 @@
 package com.fpoly.shoes_app.framework.domain.model.profile.notification
+data class NotificationsHomeResponse(
+    val totalNotifications: Int,
+    val currentPage: Int,
+    val totalPages: Int,
+    val notifications: List<NotificationsHome>
+)
 
 data class NotificationsHome(
     val __v: Int?,
@@ -10,9 +16,3 @@ data class NotificationsHome(
     val typeNotification: String?,
     val userId: String?
 )
-//@Parcelize
-//data class Notifications(
-//    @SerializedName("userId") val userId: String,
-//): Parcelable
-
-//class NotificationsHomeResponse(val notification: List<NotificationsHome>?)

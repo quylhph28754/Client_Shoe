@@ -1,11 +1,6 @@
 package com.fpoly.shoes_app.framework.presentation.ui.profile.addressDetail
 
-import android.location.Address
-import android.location.Geocoder
-import android.os.Bundle
 import android.util.Log
-import android.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentAddressDetailsBinding
@@ -18,7 +13,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 
 @AndroidEntryPoint
 class AddressDetailsFragment : BaseFragment<FragmentAddressDetailsBinding, AddressDetailsViewModel>(

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">shoes_app</string>
     <string name="nameApp">ShoeFbee</string>
+    <string name="updateInfor">Thông tin cá nhân vưừa được cập nhật</string>
     <string name="home">Home</string>
     <string name="favorites">Favorites</string>
     <string name="cart">Cart</string>

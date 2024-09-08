@@ -1,6 +1,8 @@
 package com.fpoly.shoes_app.framework.presentation.ui.profile.editProfile
 
 import android.app.DatePickerDialog
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -11,6 +13,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.fpoly.shoes_app.R
 import com.fpoly.shoes_app.databinding.FragmentEditProfileBinding
 import com.fpoly.shoes_app.framework.data.module.CheckValidate
 import com.fpoly.shoes_app.framework.domain.model.profile.ProfileResponse
@@ -24,7 +27,6 @@ import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
-@Suppress("DEPRECATION", "UNUSED_EXPRESSION")
 @AndroidEntryPoint
 class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, SetUpAccountViewModel>(
     FragmentEditProfileBinding::inflate, SetUpAccountViewModel::class.java
@@ -32,6 +34,12 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, SetUpAccoun
     private val gender = arrayOf("Nữ", "Nam")
     private var id = ""
     private var type = 1
+
+    private var originalFullName: String? = null
+    private var originalPhoneNumber: String? = null
+    private var originalGmail: String? = null
+    private var originalBirthDay: String? = null
+    private var originalGender: Int = 0
 
     private fun showDatePickerDialog(dateEditText: EditText, layoutData: TextInputLayout) {
         val calendar = Calendar.getInstance()
@@ -49,7 +57,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, SetUpAccoun
     }
 
     override fun setupPreViews() {
-
+        // Any additional setup before views are initialized can go here
     }
 
     override fun setupViews() {
@@ -58,56 +66,51 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, SetUpAccoun
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, gender)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinner.adapter = adapter
+
+        // Add TextWatchers to track changes
+        addTextWatchers()
     }
 
     override fun bindViewModel() {
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.setUpResult.collect { result ->
-                    when (result.status) {
-                        Status.SUCCESS -> {
-                            showProgressbar(false)
-                            val setUpResponse = result.data
-                            if (setUpResponse?.success == true) {
-                                val navController = findNavController()
-                                binding.nameEditText.text?.clear()
-                                binding.mailEditText.text?.clear()
-                                binding.phoneEditText.text?.clear()
-                                fragmentManager?.popBackStackImmediate(
-                                    null, FragmentManager.POP_BACK_STACK_INCLUSIVE
-                                )
-                                ServiceUtil.playNotificationSound(requireContext(),"Shoe_Fbee","This is new notification")
-                                navController.navigate(
-                                    com.fpoly.shoes_app.R.id.profileFragment,
-                                    null,
-                                    NavOptions.Builder().setPopUpTo(
-                                        navController.currentDestination?.id ?: -1, true
-                                    ).build()
-                                )
-                                StyleableToast.makeText(
-                                    requireContext(),
-                                    getString(com.fpoly.shoes_app.R.string.success),
-                                    com.fpoly.shoes_app.R.style.success
-                                ).show()
-                                return@collect
-                            }
-                        }
-
-                        Status.ERROR -> {
-                            val errorMessage = result.message ?: "Unknown error"
-                            Log.e("error",errorMessage)
-                            showProgressbar(false)
-                        }
-
-                        Status.LOADING -> {
-                            showProgressbar(true)
-                        }
-
-                        Status.INIT -> {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.setUpResult.collect { result ->
+                when (result.status) {
+                    Status.SUCCESS -> {
+                        showProgressbar(false)
+                        val setUpResponse = result.data
+                        if (setUpResponse?.success == true) {
+                            val navController = findNavController()
+                            binding.nameEditText.text?.clear()
+                            binding.mailEditText.text?.clear()
+                            binding.phoneEditText.text?.clear()
+                            fragmentManager?.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                            ServiceUtil.playNotificationSound(requireContext(), getString(R.string.app_name), getString(R.string.updateInfor))
+                            navController.navigate(
+                                R.id.profileFragment,
+                                null,
+                                NavOptions.Builder().setPopUpTo(
+                                    navController.currentDestination?.id ?: -1, true
+                                ).build()
+                            )
+                            StyleableToast.makeText(
+                                requireContext(),
+                                getString(R.string.success),
+                                R.style.success
+                            ).show()
                         }
                     }
+                    Status.ERROR -> {
+                        val errorMessage = result.message ?: "Unknown error"
+                        Log.e("EditProfileFragment", errorMessage)
+                        showProgressbar(false)
+                    }
+                    Status.LOADING -> {
+                        showProgressbar(true)
+                    }
+                    Status.INIT -> {}
                 }
-
             }
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.findProfileResult.collect { result ->
@@ -118,40 +121,64 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, SetUpAccoun
                     Status.INIT -> {}
                 }
             }
-
         }
     }
 
     private fun handleSuccess(profileResponse: ProfileResponse?) {
         showProgressbar(false)
         profileResponse?.user?.let { user ->
-            binding.nameEditText.setText(
-                user.fullName ?: getString(com.fpoly.shoes_app.R.string.name)
-            )
-            binding.phoneEditText.setText(
-                user.phoneNumber ?: getString(com.fpoly.shoes_app.R.string.phone_suggest)
-            )
-            binding.dateEditText.setText(
-                user.birthday ?: getString(com.fpoly.shoes_app.R.string.birthDay)
-            )
-            binding.mailEditText.setText(
-                user.gmail ?: getString(com.fpoly.shoes_app.R.string.email)
-            )
-            if (user.grender == "Female") {
-                binding.spinner.setSelection(0)
-            } else {
-                binding.spinner.setSelection(1)
-            }
+            originalFullName = user.fullName
+            originalPhoneNumber = user.phoneNumber
+            originalGmail = user.gmail
+            originalBirthDay = user.birthday
+            originalGender = if (user.grender == "Female") 0 else 1
+
+            binding.nameEditText.setText(originalFullName ?: getString(R.string.name))
+            binding.phoneEditText.setText(originalPhoneNumber ?: getString(R.string.phone_suggest))
+            binding.dateEditText.setText(originalBirthDay ?: getString(R.string.birthDay))
+            binding.mailEditText.setText(originalGmail ?: getString(R.string.email))
+            binding.spinner.setSelection(originalGender)
         }
     }
 
     private fun handleError(errorMessage: String?) {
         showProgressbar(false)
-        Log.e("ProfileFragment", "Profile error: $errorMessage")
+        Log.e("EditProfileFragment", "Profile error: $errorMessage")
     }
 
     private fun handleLoading() {
         showProgressbar(true)
+    }
+
+    private fun addTextWatchers() {
+        binding.nameEditText.addTextChangedListener(createTextWatcher())
+        binding.phoneEditText.addTextChangedListener(createTextWatcher())
+        binding.mailEditText.addTextChangedListener(createTextWatcher())
+        binding.dateEditText.addTextChangedListener(createTextWatcher())
+    }
+
+    private fun createTextWatcher() = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            checkIfAnyFieldChanged()
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    }
+
+    private fun checkIfAnyFieldChanged() {
+        val currentFullName = binding.nameEditText.text.toString().trim()
+        val currentPhoneNumber = binding.phoneEditText.text.toString().trim()
+        val currentGmail = binding.mailEditText.text.toString().trim()
+        val currentBirthDay = binding.dateEditText.text.toString().trim()
+        val currentGender = binding.spinner.selectedItemPosition
+
+        binding.btnNextPager.isEnabled = (currentFullName != originalFullName ||
+                currentPhoneNumber != originalPhoneNumber ||
+                currentGmail != originalGmail ||
+                currentBirthDay != originalBirthDay ||
+                currentGender != originalGender)
     }
 
     override fun setOnClick() {
@@ -160,16 +187,12 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, SetUpAccoun
         }
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?, view: View?, position: Int, id: Long
-            ) {
-                parent?.getItemAtPosition(position) as String
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 type = position
+                checkIfAnyFieldChanged()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                false
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
         binding.mailEditText.setOnEditorActionListener { _, actionId, _ ->
@@ -219,18 +242,15 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, SetUpAccoun
         }
 
         binding.btnNextPager.setOnClickListener {
-            val fullName = binding.nameEditText
-            val phoneNumber = binding.phoneEditText
-            val gmail = binding.mailEditText
-            val birthDay = binding.dateEditText
+            val fullName = binding.nameEditText.text.toString().trim()
+            val phoneNumber = binding.phoneEditText.text.toString().trim()
+            val gmail = binding.mailEditText.text.toString().trim()
+            val birthDay = binding.dateEditText.text.toString().trim()
             val grender = type.toString()
+
             binding.btnNextPager.isEnabled = false
-            fullName.isEnabled =false
-            phoneNumber.isEnabled =false
-            gmail.isEnabled =false
-            birthDay.isEnabled =false
             viewModel.setUp(
-                id, null,phoneNumber.text.toString().trim(), fullName.text.toString().trim(), gmail.text.toString().trim(), birthDay.text.toString().trim(), grender
+                id, null, phoneNumber, fullName, gmail, birthDay, grender
             )
         }
     }

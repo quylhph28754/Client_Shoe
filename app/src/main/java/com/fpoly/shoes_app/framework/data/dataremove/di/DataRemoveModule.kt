@@ -127,9 +127,10 @@ object DataRemoveModule {
     @Singleton
     fun provideConfirmTakeApi(retrofit: Retrofit): ConfirmTakeInterface =
         retrofit.create(ConfirmTakeInterface::class.java)
- @Provides
+
+    @Provides
     @Singleton
-    fun provideNotificationTakeApi(retrofit: Retrofit): NotificationsInterface =
+    fun provideNotificationApi(retrofit: Retrofit): NotificationsInterface =
         retrofit.create(NotificationsInterface::class.java)
 
 
